@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['localization'])->group(function () {
+    // Admin APIs
+    Route::prefix('admin')->group(function () {
+        Route::post('login' , [AuthController::class, 'login']);
+        Route::group(['middleware' => 'jwt.verify'], function () {
+            Route::post('change-password', [ProfileController::class, 'changePassword']);
+            Route::post('profile', [ProfileController::class, 'getProfile']);
+        });
+    });
+
+  
 });
+
