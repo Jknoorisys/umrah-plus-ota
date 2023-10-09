@@ -28,7 +28,7 @@ class AuthController extends Controller
         } 
 
         try {
-            // $service = new Services();
+            $service = new Services();
             $email = $request->email;
             $password = $request->password;
 
@@ -42,7 +42,7 @@ class AuthController extends Controller
                         'uuid'  => $admin->id
                     );
 
-                    // $admin->JWT_token = $service->getSignedAccessTokenForUser($admin, $claims);
+                    $admin->JWT_token = $service->getSignedAccessTokenForUser($admin, $claims);
                     $admin->save();
 
                     return response()->json([
