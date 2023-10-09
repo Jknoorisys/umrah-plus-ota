@@ -37,6 +37,7 @@ class JWTMiddleware
         }
         
         try {
+
             $user                  =  JWTAuth::parseToken()->getPayload();
             $request->uuid         =  $user['uuid'];
 

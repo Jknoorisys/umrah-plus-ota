@@ -17,7 +17,7 @@ class Localization
     public function handle(Request $request, Closure $next): Response
     {
         // Check if 'language' header is present
-        if (!$request->hasHeader('language')) {
+        if (!$request->hasHeader('Accept-Language')) {
             return response()->json([
                 'status' => 'failed',
                 'message' =>trans('msg.localization'),
@@ -25,7 +25,7 @@ class Localization
         }
 
         // Check header request and determine localization
-        $local = ($request->hasHeader('language')) ? ($request->header('language') ?: 'en') : 'en';
+        $local = ($request->hasHeader('Accept-Language')) ? ($request->header('Accept-Language') ?: 'en') : 'en';
 
         // Set Laravel localization
         App::setLocale($local);
