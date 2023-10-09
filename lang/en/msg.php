@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'localization' => 'language header is required',
+    'localization' => 'Accept-Language header is required',
     'validation'   => 'Validation Failed!',
     'error'        => 'Something went wrong, please try again...',
      
