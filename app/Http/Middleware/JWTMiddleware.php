@@ -29,13 +29,13 @@ class JWTMiddleware
         if (is_null($header) && is_null($token)) {
             return response()->json(
                 [
-                    'status'       =>  "failed1",
-                    'errors'       =>  "",
-                    'message'      =>  trans('validation.custom.input.tokenotfound'),
+                    'status'       =>  "failed",
+                    'message'      =>  trans('msg.jwt.TokenNotSet'),
                 ],
                 Response::HTTP_UNAUTHORIZED
             );
         }
+        
         try {
             $user                  =  JWTAuth::parseToken()->getPayload();
             $request->uuid         =  $user['uuid'];
@@ -44,35 +44,31 @@ class JWTMiddleware
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
 
                 return response()->json(
-                            [
-                                'status'       =>  "failed2",
-                                'errors'       =>  "",
-                                'message'      =>  trans('validation.custom.input.invalidtoken'),
-                            ],
-                            Response::HTTP_UNAUTHORIZED
+                    [
+                        'status'       =>  "failed",
+                        'message'      =>  trans('msg.jwt.InvalidToken'),
+                    ],
+                    Response::HTTP_UNAUTHORIZED
                 );
 
-            }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+            } elseif($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
 
                 return response()->json(
-                            [
-                                'status'       =>  "failed3",
-                                'errors'       =>  "",
-                                'message'      =>  "Expired!",
-                            ],
-                            Response::HTTP_UNAUTHORIZED
+                    [
+                        'status'       =>  "failed",
+                        'message'      =>  trans('msg.jwt.expiredToken'),
+                    ],
+                    Response::HTTP_UNAUTHORIZED
                 );
 
-            }else{
+            } else {
                 return response()->json(
-                            [
-                                'status'       =>  "failed4",
-                                'errors'       =>  "",
-                                'message'      =>  "Token Not Found",
-                            ],
-                            Response::HTTP_BAD_REQUEST
+                    [
+                        'status'       =>  "failed",
+                        'message'      =>  trans('msg.jwt.TokenNotFound'),
+                    ],
+                    Response::HTTP_BAD_REQUEST
                 );
-
             }
         }
 

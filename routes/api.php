@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\api\user\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +24,19 @@ Route::middleware(['localization'])->group(function () {
         });
     });
 
+    Route::prefix('user')->group(function () {
+        Route::post('register' , [AuthController::class, 'register']);
+        Route::post('verifyOTP',[AuthController::class,'verifyOTP']);
+        Route::post('resendregOTP',[AuthController::class,'resendRegOTP']);
+        Route::post('login' , [AuthController::class, 'login']);
+        Route::post('forgetpassword' , [AuthController::class, 'forgetpassword']);
+        Route::post('forgotPasswordValidate',[AuthController::class,'forgotPasswordValidate']);
+        Route::group(['middleware' => 'jwt.verify'], function () {
+            Route::post('changepassword', [AuthController::class, 'changePassword']);
+            Route::post('getProfile', [ProfileController::class, 'getProfile']);
+        });
+    
+    });
   
 });
 
