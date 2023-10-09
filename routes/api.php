@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\admin\AuthController;
+use App\Http\Controllers\api\admin\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['localization'])->group(function () {
+    
     // Admin APIs
     Route::prefix('admin')->group(function () {
         Route::post('login' , [AuthController::class, 'login']);
