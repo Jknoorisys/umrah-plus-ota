@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use function App\Helpers\AuthUser;
 
+
 class ProfileController extends Controller
 {
     public function getProfile(Request $req)
@@ -61,9 +62,133 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateUserProfile(Request $req)
-    {
+    public function updateProfile(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'user_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
+            'fname'     => ['string', 'max:255'],
+            'lname'     => ['string', 'max:255'],
+            'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->user_id)],
+            'phone'     => ['numeric', Rule::unique('users')->ignore($request->user_id)],
+            'country_code' => ['string', 'max:255'],
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $user = AuthUser($request->user_id);
+    
+            $data = [
+                'fname'     => $request->input('fname', $user->fname),
+                'lname'     => $request->input('lname', $user->lname),
+                'email'     => $request->input('email', $user->email),
+                'country_code' => $request->input('country_code', $user->country_code),
+                'phone'     => $request->input('phone', $user->phone),
+            ];
+    
+            $update = $user->update($data);
+    
+            if ($update) {
+                $user->fresh();
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.update.success'),
+                    'data'      => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.update.failed'),
+                ], 400);
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function uploadPhoto(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'user_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
+            'photo'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $user = AuthUser($request->user_id);
+    
+            $data = [];
+    
+            $file = $request->file('photo');
+            if ($file) {
+                if ($user->photo) {
+                    $oldPhotoPath = public_path($user->photo);
+        
+                    if (file_exists($oldPhotoPath)) {
+                        unlink($oldPhotoPath); 
+                    }
+                }
+        
+                $extension = $file->getClientOriginalExtension();
+                $image_name = time().'.'.$extension;
+                $upload = $file->move('assets/uploads/user-photos/', $image_name);
+                $image_url = 'assets/uploads/user-photos/'. $image_name;
+                $data['photo'] = $image_url;
+            }
+    
+            $logo = $request->file('logo'); 
+            if ($logo) {
+                if ($user->logo) {
+                    $oldLogoPath = public_path($user->logo);
+        
+                    if (file_exists($oldLogoPath)) {
+                        unlink($oldLogoPath); 
+                    }
+                }
+
+                $extension = $logo->getClientOriginalExtension();
+                $logo_name = time().'.'.$extension;
+                $upload = $logo->move('assets/uploads/user-logos/', $logo_name);
+                $logo_url = 'assets/uploads/user-logos/'. $logo_name;
+                $data['logo'] = $logo_url; 
+            }
+    
+            $update = $user->update($data);
+    
+            if ($update) {
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.update.success'),
+                    'data'      => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.update.failed'),
+                ], 400);
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function changePassword(Request $request)
