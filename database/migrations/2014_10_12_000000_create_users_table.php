@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('otp');
             $table->string('country_code');
-            $table->string('mobile_no')->unique();
+            $table->string('phone')->unique();
             $table->string('photo');
             $table->string('password');
             $table->text('JWT_token');

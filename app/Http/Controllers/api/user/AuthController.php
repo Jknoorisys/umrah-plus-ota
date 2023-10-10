@@ -33,7 +33,6 @@ class AuthController extends Controller
         $validator = Validator::make($req->all(), [
             'fname'     => ['required', 'string', 'max:255'],
             'lname'     => ['required', 'string', 'max:255'],
-            'iso_code'  => ['required'],
             'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
             'country_code' => ['required'],
             'phone'     => ['required', 'numeric', Rule::unique('users')],
@@ -66,7 +65,7 @@ class AuthController extends Controller
                     'password' => Hash::make($req->password),
                     'email' => $req->email, 
                     'country_code' => $req->country_code,
-                    'mobile_no' => $req->phone, 
+                    'phone' => $req->phone, 
                     'otp' => $otp, 
                 ];
 
@@ -216,76 +215,6 @@ class AuthController extends Controller
             return response()->json([
                 'status'  => 'failed',
                 'message' => trans('msg.error'),
-                'error'   => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function login(Request $req)
-    {
-        $validator = Validator::make($req->all(), [
-            'email' => 'required|email',
-            'password'   => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                    'status'    => 'failed',
-                    'errors'    =>  $validator->errors(),
-                    'message'   =>  trans('msg.validation'),
-                ], 400
-            );
-        } 
-
-        try {
-            $service = new Services();
-            $email = $req->email;
-            $password = $req->password;
-            $user  = User::where('email', '=', $email)->first();
-
-            if(!empty($user)) 
-            {
-                if (Hash::check($password,$user->password)) {
-                    if ($user->status == 'active') {
-                        $claims = array(
-                            'exp'   => Carbon::now()->addDays(1)->timestamp,
-                            'uuid'  => $user->id
-                        );
-
-                        $token = $service->getSignedAccessTokenForUser($user, $claims);
-
-                        $user->JWT_token = $token;
-                        $user->save();
-
-                        return response()->json(
-                            [
-                                'status'    => 'success',
-                                'message'   =>   trans('msg.login.success'),
-                                'data'      => $user,
-                            ],200);
-                    } else {
-                        return response()->json(
-                            [
-                                'status'    => 'failed',
-                                'message'   =>  trans('msg.login.inactive'),
-                            ],400);
-                    }
-                }else {
-                    return response()->json([
-                            'status'    => 'failed',
-                            'message'   =>  trans('msg.login.invalid'),
-                    ], 400);
-                }
-            } else {
-                return response()->json([
-                        'status'    => 'failed',
-                        'message'   =>  trans('msg.login.not-found'),
-                ], 400);
-            }
-        } catch (\Throwable $e) {
-            return response()->json([
-                'status'  => 'failed',
-                'message' =>  trans('msg.error'),
                 'error'   => $e->getMessage()
             ], 500);
         }
@@ -468,6 +397,76 @@ class AuthController extends Controller
             return response()->json([
                 'status'  => 'failed',
                 'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function login(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'email' => 'required|email',
+            'password'   => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status'    => 'failed',
+                    'errors'    =>  $validator->errors(),
+                    'message'   =>  trans('msg.validation'),
+                ], 400
+            );
+        } 
+
+        try {
+            $service = new Services();
+            $email = $req->email;
+            $password = $req->password;
+            $user  = User::where('email', '=', $email)->first();
+
+            if(!empty($user)) 
+            {
+                if (Hash::check($password,$user->password)) {
+                    if ($user->status == 'active') {
+                        $claims = array(
+                            'exp'   => Carbon::now()->addDays(1)->timestamp,
+                            'uuid'  => $user->id
+                        );
+
+                        $token = $service->getSignedAccessTokenForUser($user, $claims);
+
+                        $user->JWT_token = $token;
+                        $user->save();
+
+                        return response()->json(
+                            [
+                                'status'    => 'success',
+                                'message'   =>   trans('msg.login.success'),
+                                'data'      => $user,
+                            ],200);
+                    } else {
+                        return response()->json(
+                            [
+                                'status'    => 'failed',
+                                'message'   =>  trans('msg.login.inactive'),
+                            ],400);
+                    }
+                }else {
+                    return response()->json([
+                            'status'    => 'failed',
+                            'message'   =>  trans('msg.login.invalid'),
+                    ], 400);
+                }
+            } else {
+                return response()->json([
+                        'status'    => 'failed',
+                        'message'   =>  trans('msg.login.not-found'),
+                ], 400);
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' =>  trans('msg.error'),
                 'error'   => $e->getMessage()
             ], 500);
         }
