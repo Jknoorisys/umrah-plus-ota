@@ -40,6 +40,7 @@ Route::middleware(['localization'])->group(function () {
         Route::post('forgotPasswordValidate',[UserAuthController::class,'forgotPasswordValidate']);
 
         Route::group(['middleware' => 'jwt.verify'], function () {
+            Route::post('profile' , [UserProfileController::class, 'getProfile']);
             Route::post('changepassword', [UserProfileController::class, 'changePassword']);
             Route::post('updateProfile', [UserProfileController::class, 'updateProfile']);
             Route::post('uploadPhoto', [UserProfileController::class, 'uploadPhoto']);
