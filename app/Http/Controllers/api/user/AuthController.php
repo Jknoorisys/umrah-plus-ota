@@ -18,19 +18,28 @@ class AuthController extends Controller
 {
     public function register(Request $req)
     {
+        $messages = [
+            'fname.required' => 'First name is required.',
+            'fname.max' => 'First name must not exceed :max characters.',
+            'lname.required' => 'Last name is required.',
+            'lname.max' => 'Last name must not exceed :max characters.',
+            'country_code.required' => 'Country code is required.',
+        ];
+
         $validator = Validator::make($req->all(), [
-            'fname'     => 'required|min:3|string',
-            'lname'     => 'required|min:3|string',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|max:20||min:8',
-            'mobile_no'   => 'required|numeric|unique:users',
-        ]);
+            'fname'     => ['required', 'string', 'max:255'],
+            'lname'     => ['required', 'string', 'max:255'],
+            'iso_code'  => ['required'],
+            'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
+            'country_code' => ['required'],
+            'phone'     => ['required', 'numeric', Rule::unique('users')],
+            'password'  => ['required', 'string', 'min:8'],
+        ], $messages);
 
         $errors = [];
         foreach ($validator->errors()->messages() as $key => $value) {
-            // if($key == 'email')
-                $key = 'error_message';
-                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            $key = 'error_message';
+            $errors[$key] = is_array($value) ? implode(',', $value) : $value;
         }
 
         if ($validator->fails()) {
@@ -67,6 +76,7 @@ class AuthController extends Controller
                     'msg'=> trans('msg.email.registerus'), 
                     'otp_msg'=> trans('msg.email.otp_msg')
                 ];
+                
                 $email =  ['to'=> $req->email];
                 // echo json_encode($email['to']);exit;
                 $datamail = Mail::send('otpmail', $data, function ($message) use ($email) {

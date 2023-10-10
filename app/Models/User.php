@@ -25,6 +25,7 @@ class User extends Authenticatable  implements JWTSubject
         'fname',
         'lname',
         'email',
+        'country_code',
         'mobile_no',
         'photo',
         'otp',
@@ -42,7 +43,10 @@ class User extends Authenticatable  implements JWTSubject
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'otp',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**
@@ -62,6 +66,7 @@ class User extends Authenticatable  implements JWTSubject
             $model->id = (string) Str::uuid();
         });
     }
+    
     public function getJWTIdentifier()
     {
         return $this->getKey();

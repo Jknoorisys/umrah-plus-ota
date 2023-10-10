@@ -15,10 +15,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('fname');
             $table->string('lname');
-            $table->string('photo');
-            $table->string('mobile_no')->unique();
             $table->string('email')->unique();
             $table->integer('otp');
+            $table->string('country_code');
+            $table->string('mobile_no')->unique();
+            $table->string('photo');
             $table->string('password');
             $table->text('JWT_token');
             $table->enum('is_verified', ['no', 'yes'])->default('no');
