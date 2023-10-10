@@ -40,6 +40,7 @@ class ProfileController extends Controller
             }
 
             if (!empty($user)) {
+                $user->userAddress;
                 return response()->json([
                     'status'    => 'success',
                     'message'   =>  trans('msg.details.success'),
