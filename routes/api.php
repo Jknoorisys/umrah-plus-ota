@@ -3,9 +3,9 @@
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
+use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\user\AuthController as UserAuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,9 +42,10 @@ Route::middleware(['localization'])->group(function () {
         Route::post('login' , [UserAuthController::class, 'login']);
         Route::post('forgetpassword' , [UserAuthController::class, 'forgetpassword']);
         Route::post('forgotPasswordValidate',[UserAuthController::class,'forgotPasswordValidate']);
+
         Route::group(['middleware' => 'jwt.verify'], function () {
-            Route::post('changepassword', [ProfileController::class, 'changePassword']);
-            Route::post('getProfile', [ProfileController::class, 'getProfile']);
+            Route::post('changepassword', [UserProfileController::class, 'changePassword']);
+            Route::post('getProfile', [UserProfileController::class, 'getProfile']);
         });
     
     });
