@@ -4,10 +4,8 @@ namespace App\Http\Controllers\api\user;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use function App\Helpers\AuthUser;
@@ -43,6 +41,7 @@ class ProfileController extends Controller
             }
 
             if (!empty($user)) {
+                $user->userAddress;
                 return response()->json([
                     'status'    => 'success',
                     'message'   =>  trans('msg.details.success'),
