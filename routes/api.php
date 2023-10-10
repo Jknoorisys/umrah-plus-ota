@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
+use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\api\user\AuthController as UserAuthController;
 
 Route::middleware(['localization'])->group(function () {
     
-    // Admin APIs
+    // Admin APIs by Javeriya
     Route::prefix('admin')->group(function () {
         Route::post('login' , [AuthController::class, 'login']);
         Route::group(['middleware' => 'jwt.verify'], function () {
@@ -27,7 +28,14 @@ Route::middleware(['localization'])->group(function () {
         });
     });
 
+    // User APIs by Aaisha
     Route::prefix('user')->group(function () {
+        Route::post('register' , [UserAuthController::class, 'register']);
+        Route::post('verifyOTP',[UserAuthController::class,'verifyOTP']);
+        Route::post('resendregOTP',[UserAuthController::class,'resendRegOTP']);
+        Route::post('login' , [UserAuthController::class, 'login']);
+        Route::post('forgetpassword' , [UserAuthController::class, 'forgetpassword']);
+        Route::post('forgotPasswordValidate',[UserAuthController::class,'forgotPasswordValidate']);
         Route::post('register' , [UserAuthController::class, 'register']);
         Route::post('verifyOTP',[UserAuthController::class,'verifyOTP']);
         Route::post('resendregOTP',[UserAuthController::class,'resendRegOTP']);
