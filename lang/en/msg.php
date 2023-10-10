@@ -55,10 +55,27 @@ return [
 
     ],
 
+    'registration' => [
+        'success' => 'Registration Successful',
+        'failed'  => 'Registration Failed',
+        'email-verified' => 'Email Already Verified',
+        'mobile-exist' => 'Mobile Number Already Exist',
+        'otp-sent' => 'OTP Sent Successfully',
+        'otp-failed' => 'OTP Sending Failed',
+        'otp-invalid' => 'Invalid OTP',
+        'otp-verified' => 'OTP Verified Successfully',
+        'not-found' => 'User Not Found, Please Register First...',
+        'inactive' => 'Account blocked by Admin',
+    ],
+
     'reset-password' => [
         'success' => 'Password Reset Successfully',
         'failed'  => 'Password Reset Failed',
         'not-found' => 'User Not Found, Please Register First...',
+        'otp-invalid' => 'Invalid OTP',
+        'otp-verified' => 'OTP Verified Successfully',
+        'otp-sent' => 'OTP Sent Successfully',
+        'otp-failed' => 'OTP Sending Failed',
     ],
 
     'list' => [
