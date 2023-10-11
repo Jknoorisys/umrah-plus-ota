@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
+	<link rel="icon" href="{{ asset('assets/images/logo-icon.png') }}" type="image/png" />
 	<!--plugins-->
 	{{-- <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}">
@@ -39,7 +39,7 @@
 					<img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
 				</div>
 				<div>
-					<h4 class="logo-text">Rocker</h4>
+					<h4 class="logo-text">OTA</h4>
 				</div>
 				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 				</div>
