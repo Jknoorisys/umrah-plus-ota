@@ -8,11 +8,12 @@ File: app.css
 
 body {
 	font-size: 14px;
-	color: #4c5258;
+	color: #3a3f43;
 	letter-spacing: .5px;
-	background: #f7f7ff;
+	/* background: #f7f7ff; */
+	background: #efeff7;
 	overflow-x: hidden;
-	font-family: Roboto, sans-serif
+	font-family: Roboto
 }
 
 a {
@@ -50,11 +51,35 @@ a {
 	z-index: 5;
 	background: #fff;
 	background-clip: padding-box;
-	border-bottom: 1px solid #e4e4e4
+	/* border-bottom: 1px solid #e4e4e4 */
 }
 
 .logo-icon {
 	width: 45px
+}
+
+.notification-icon {
+    background: #38424C;
+    border-radius: 12px;
+    width: 35px;
+    color: aliceblue;
+    padding-left: 15%;
+}
+
+.notification-alert-count{
+	position: absolute;
+    top: 5px;
+    left: 35px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    background: #F05A64;
 }
 
 .logo-text {
@@ -77,11 +102,11 @@ a {
 	left: 250px;
 	right: 0;
 	height: 60px;
-	background: #fff;
-	border-bottom: 1px solid rgb(228 228 228 / 0%);
+	background: #efeff7;
+	/* border-bottom: 1px solid rgb(228 228 228 / 0%); */
 	z-index: 10;
-	-webkit-box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%);
-    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%);
+	/* -webkit-box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%); */
+    /* box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 0px 6px 0 rgb(206 206 238 / 54%); */
 }
 
 .topbar .navbar {
@@ -176,13 +201,14 @@ a {
 	align-items: center;
 	justify-content: left;
 	padding: 8px 15px;
-	font-size: 15px;
+	font-size: 14px;
 	color: #5f5f5f;
 	outline-width: 0;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	letter-spacing: .5px;
+	letter-spacing: .8px;
 	border: 1px solid #ffffff00;
+	border-radius: 6px;
 	transition: all .3s ease-out
 }
 
@@ -2098,6 +2124,13 @@ input.search-control-2::placeholder {
 	padding: 0
 }
 
+.user-img-square {
+	width: 42px;
+	height: 42px;
+	border-radius: 20%;
+	padding: 0
+}
+
 .user-info .user-name {
 	font-size: 15px;
 	font-weight: 500;
@@ -2113,7 +2146,7 @@ input.search-control-2::placeholder {
 	display: flex;
 	align-items: center;
 	height: 60px;
-	border-left: 1px solid #f0f0f0;
+	/* border-left: 1px solid #f0f0f0; */
 	margin-left: 1rem
 }
 
