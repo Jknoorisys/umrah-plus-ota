@@ -44,6 +44,7 @@ Route::middleware(['localization'])->group(function () {
             Route::post('changepassword', [UserProfileController::class, 'changePassword']);
             Route::post('updateProfile', [UserProfileController::class, 'updateProfile']);
             Route::post('uploadPhoto', [UserProfileController::class, 'uploadPhoto']);
+            Route::post('address', [UserProfileController::class, 'address']);
         });
     
     });

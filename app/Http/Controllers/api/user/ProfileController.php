@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use function App\Helpers\AuthUser;
-
+use function App\Helpers\GetbillingAddress;
+use App\Models\UserAddress;
 
 class ProfileController extends Controller
 {
@@ -62,7 +63,8 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateProfile(Request $request) {
+    public function updateProfile(Request $request) 
+    {
         $validator = Validator::make($request->all(), [
             'user_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
             'fname'     => ['string', 'max:255'],
@@ -70,6 +72,7 @@ class ProfileController extends Controller
             'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->user_id)],
             'phone'     => ['numeric', Rule::unique('users')->ignore($request->user_id)],
             'country_code' => ['string', 'max:255'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -82,13 +85,19 @@ class ProfileController extends Controller
 
         try {
             $user = AuthUser($request->user_id);
-    
+            if ($request->hasFile('photo')) {
+                $image = $request->file('photo');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('assets/uploads/user-photos'), $imageName);
+                $user->photo = $imageName;
+            }
             $data = [
                 'fname'     => $request->input('fname', $user->fname),
                 'lname'     => $request->input('lname', $user->lname),
                 'email'     => $request->input('email', $user->email),
                 'country_code' => $request->input('country_code', $user->country_code),
                 'phone'     => $request->input('phone', $user->phone),
+                'photo' => $request->photo ? 'assets/uploads/user-logos/'.$user->photo : 'assets/uploads/user-logos/'.$user->photo,
             ];
     
             $update = $user->update($data);
@@ -211,7 +220,7 @@ class ProfileController extends Controller
             
             $old_password = $request->old_password;
             $new_password = $request->new_password;
-            $user  = User::where('id', '=', $request->user_id)->first();
+            $user  = AuthUser($request->user_id);
 
             if(!empty($user)) 
             {
@@ -252,4 +261,105 @@ class ProfileController extends Controller
             ], 500);
         }
     }
+
+    public function address(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'user_id'   => ['required','alpha_dash', Rule::notIn('undefined')],            
+            'address_line' => ['string','max:255'],
+            'pin_code' => ['numeric'],
+            'city' => ['string','max:255'],
+            'state' => ['string','max:255'],
+            'country' => ['string','max:255']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $user  = AuthUser($req->user_id);
+            if(!empty($user)) 
+            {
+                $prevadd = GetbillingAddress($req->user_id);
+                if(!empty($prevadd))
+                {
+                    $data = [
+                        'address' => $req->address_line ? $req->address_line : $prevadd->address,
+                        'pin_code' => $req->pin_code ? $req->pin_code : $prevadd->pin_code,
+                        'city' => $req->city ? $req->city : $prevadd->city,
+                        'state' => $req->state ? $req->state : $prevadd->state,
+                        'country' => $req->country ? $req->country : $prevadd->country,
+                    ];
+                  
+                    $address = $prevadd->update($data);
+                    
+                    if($address)
+                    {
+                        return response()->json([
+                            'status'    => 'success',
+                            'data' => $prevadd,
+                            'message'   => trans('msg.billing-address.success'),
+                        ], 200);
+                    }
+                    else{
+                        return response()->json([
+                            'status'    => 'failed',
+                            'message'   => trans('msg.billing-address.failed'),
+                        ], 400);
+                    }
+
+                }
+                else{
+                    $data = [
+                        'user_id' => $req->user_id,
+                        'address' => $req->address_line,
+                        'pin_code' => $req->pin_code,
+                        'city' => $req->city,
+                        'state' => $req->state,
+                        'country' => $req->country,
+                    ];
+                  
+                    $address = UserAddress::create($data);
+                    if($address)
+                    {
+                        return response()->json([
+                            'status'    => 'success',
+                            'data' => $prevadd,
+                            'message'   => trans('msg.billing-address.added'),
+                        ], 200);
+                    }
+                    else{
+                        return response()->json([
+                            'status'    => 'failed',
+                            'message'   => trans('msg.billing-address.add-failed'),
+                        ], 400);
+                    }
+                }
+                
+            }
+            else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.change-password.not-found'),
+                ], 400);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    
+
+    
 }
