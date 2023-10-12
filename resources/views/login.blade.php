@@ -97,7 +97,7 @@
             .card-smp{
                 position: absolute;
                 width: 380px;
-                height: 440px;
+                height: 490px;
                 left: 60px;
                 top: 120px;
                 background: #d7f1f9bf;
@@ -165,7 +165,6 @@
                 <div class="container-fluid">
                     <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                         <div class="col mx-auto">
-    
                             <div class="card-smp">
                                 <div class="card-body">
                                     <div class="p-4 rounded">
@@ -173,19 +172,45 @@
                                             <h3 class="text-smp" >{{ trans('msg.admin.Login') }}</h3>
                                             <p style="font-size: 15px;color: #008cff; margin-top:10px;" >{{ trans('msg.admin.Welcome Back!') }}</p>
                                         </div>    
+
+                                        @if (session('error'))
+                                            <div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="font-25 text-danger"><i class='bx bxs-message-square-x'></i></div>
+                                                    <div class="ms-2">
+                                                        <!-- <h6 class="mb-0 text-danger">Danger Alerts</h6> -->
+                                                        <div class="text-danger">{{ session('error') }}</div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+
+                                        @if (session('success'))
+                                            <div class="alert border-0 border-start border-5 border-success alert-dismissible fade show py-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="font-25 text-success"><i class='bx bxs-check-circle'></i></div>
+                                                    <div class="ms-2">
+                                                        <!-- <h6 class="mb-0 text-success">Success Alerts</h6> -->
+                                                        <div class="text-success">{{ session('success') }}</div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+
                                         <div class="form-body">
-                                        <form action="{{ route('login') }}" method="POST" class="row g-3" id="form_login">
-                                            @csrf
-                                            <div class="col-md-12">
+                                            <form action="{{ route('login') }}" method="POST" class="row g-3" id="form_login">
+                                                @csrf
+                                                <div class="col-md-12">
                                                     <label for="email" class="form-label font-style">{{ trans('msg.admin.Email') }}</label>
-                                                    <div class="input-group"><input type="email" class="form-control smp-input border-end-0 font-style" name="email" id="email" placeholder="Email Address" required><a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-envelope'></i></a>
-                                                    </div><span class="err_email text-danger"></span>
+                                                    <div class="input-group"><input type="email" class="form-control smp-input border-end-0 font-style" name="email" id="email" placeholder="Email Address" required><a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-envelope'></i></a></div>
+                                                    <span class="err_email text-danger"></span>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="password" class="form-label font-style" >{{ trans('msg.admin.Password') }}</label>
                                                     <div class="input-group" id="show_hide_password">
-                                                        <input type="password" class="form-control smp-input border-end-0 font-style" name="password" id="password" placeholder="Enter Password" required
-                                                        > <a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-hide'></i></a>
+                                                        <input type="password" class="form-control smp-input border-end-0 font-style" name="password" id="password" placeholder="Enter Password" required> <a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-hide'></i></a>
                                                     </div>
                                                     <span class="err_password text-danger"></span>
                                                 </div>
