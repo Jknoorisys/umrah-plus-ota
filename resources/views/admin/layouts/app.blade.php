@@ -11,7 +11,7 @@
 		{{-- <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" /> --}}
 		<link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}">
 
-		<link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+		<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
 		<!-- loader-->
 		<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />

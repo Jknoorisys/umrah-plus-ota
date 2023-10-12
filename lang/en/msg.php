@@ -13,6 +13,19 @@ return [
     |
     */
 
+    'admin' => [
+
+        // Login
+        'Login' => 'Login',
+        'Welcome Back!' => 'Welcome Back!',
+        'Email' => 'Email',
+        'Password' => 'Password',
+        'Forgot Password' => 'Forgot Password',
+        'Invalid Password'  => 'Invalid Password',
+        'Admin Not Found'  => 'Admin Not Found',
+        
+    ],
+
     'localization' => 'Accept-Language header is required',
     'validation'   => 'Validation Failed!',
     'error'        => 'Something went wrong, please try again...',

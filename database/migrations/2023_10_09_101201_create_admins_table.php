@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('fname');
+            $table->string('lname');
             $table->string('email')->unique();
+            $table->string('country_code');
+            $table->string('phone')->unique();
+            $table->text('photo');
+            $table->enum('type', ['admin', 'super_admin']);
+            $table->enum('status', ['active', 'inactive']);
             $table->text('JWT_token');
             $table->string('password');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

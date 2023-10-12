@@ -1804,7 +1804,7 @@ a {
 .bg-login {
 	background-image: url(../images/login-images/bg-login-img.jpg);
 	background-size: cover;
-	background-position: center;
+	background-position: right;
 	background-repeat: no-repeat;
 	background-attachment: fixed
 }
