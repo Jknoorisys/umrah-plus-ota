@@ -23,6 +23,11 @@ return [
         'Forgot Password' => 'Forgot Password',
         'Invalid Password'  => 'Invalid Password',
         'Admin Not Found'  => 'Admin Not Found',
+        'Invalid credentials'  => 'Invalid credentials',
+        'Logout'  => 'Logout',
+        'Profile' => 'Profile',
+        'Settings' => 'Settings',
+        'Please login first' => 'Please login first',
         
     ],
 

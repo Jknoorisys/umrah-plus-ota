@@ -18,7 +18,7 @@ class AuthController extends Controller
             return redirect()->intended('dashboard');
         }
         
-        return redirect()->route('/')->with(['error' => 'Invalid credentials']);
+        return redirect()->route('/')->with(['error' => trans('msg.admin.Invalid credentials')]);
     }
 
     public function logout()

@@ -174,6 +174,19 @@
                                             <p style="font-size: 15px;color: #008cff; margin-top:10px;" >{{ trans('msg.admin.Welcome Back!') }}</p>
                                         </div>    
 
+                                        @if (isset($error))
+                                            <div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="font-25 text-danger"><i class='bx bxs-message-square-x'></i></div>
+                                                    <div class="ms-2">
+                                                        <div class="text-danger">{{ $error }}</div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+
+
                                         @if (session('error'))
                                             <div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
                                                 <div class="d-flex align-items-center">
