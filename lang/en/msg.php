@@ -157,4 +157,12 @@ return [
         'inactive' => 'Account blocked by Admin',
         'not-verified' => 'Email not Verified, please verify it first...'
     ],
+
+    'billing-address' => 
+        [
+            'success' => 'Billing Address Updated Successfully',
+            'failed'  => 'Unable to update Billing Address, please try again...',
+            'added' => 'Billing Address Added Successfully',
+            'add-failed' => 'Unable to add Billing Address, please try again...',
+        ]
 ];
