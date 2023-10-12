@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 })->name('/');
+
+Route::get('/redirect', [AdminAuthController::class, 'index'])->middleware(['auth', 'verified'])->name('redirect');
+
+Route::post('login' , [AuthController::class , 'login'])->name('login');
+
+
+Route::get('dashboard', function () {
+    return view('admin.layouts.app');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
