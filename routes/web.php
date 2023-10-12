@@ -18,7 +18,6 @@ Route::get('/', function () {
     return view('login');
 })->name('/');
 
-Route::get('/redirect', [AdminAuthController::class, 'index'])->middleware(['auth', 'verified'])->name('redirect');
 
 Route::post('login' , [AuthController::class , 'login'])->name('login');
 
