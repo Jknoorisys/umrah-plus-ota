@@ -97,7 +97,8 @@
             .card-smp{
                 position: absolute;
                 width: 380px;
-                height: 490px;
+                /* height: 490px; */
+                height: auto;
                 left: 60px;
                 top: 120px;
                 background: #d7f1f9bf;
@@ -168,7 +169,7 @@
                             <div class="card-smp">
                                 <div class="card-body">
                                     <div class="p-4 rounded">
-                                        <div class="pb-4 pt-4 text-left">
+                                        <div class="pb-3 pt-4 text-left">
                                             <h3 class="text-smp" >{{ trans('msg.admin.Login') }}</h3>
                                             <p style="font-size: 15px;color: #008cff; margin-top:10px;" >{{ trans('msg.admin.Welcome Back!') }}</p>
                                         </div>    

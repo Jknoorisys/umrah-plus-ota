@@ -14,15 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::any('/', function () {
-    return view('login');
-})->name('/');
+Route::middleware(['guest'])->group(function () {
+    Route::any('/', function () {
+        return view('login');
+    })->name('/');    Route::post('login', 'Auth\LoginController@login');
+
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+
+});
+
+// Route::any('/', function () {
+//     return view('login');
+// })->name('/');
 
 
-Route::post('login', [AuthController::class, 'login'])->name('login');
+// Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('dashboard', function () {
+        return view('admin.layouts.app');
+    })->name('dashboard');
+});
 
-Route::any('dashboard', function () {
-    return view('admin.layouts.app');
-})->name('dashboard')->middleware('auth:admin');
 
