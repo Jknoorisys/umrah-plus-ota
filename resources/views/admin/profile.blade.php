@@ -78,6 +78,14 @@
             background-repeat: no-repeat;
             background-position: center;
         }
+
+        .scrollable-dropdown {
+            cursor: hand;
+            top: 40px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
     </style>
 
     <div class="row">
@@ -107,7 +115,7 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body mt-3 mb-3">
-                    <form id="edit_profile" action="#" method="post" enctype="multipart/form-data">
+                    <form id="edit_profile" action="{{ route('update-profile') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-sm-3">
@@ -140,30 +148,29 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">{{ trans('msg.admin.Country') }}</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <select class="form-select" id="country" name="country">
-                                    <option value="">{{ trans('msg.admin.Country') }}</option>
-                                    <?php if ($country) {
-                                        foreach ($country as $c) { ?>
-                                            <option value="<?= $c->id ?>" ><?= $c->name ?></option>
-                                    <?php }
-                                    } ?>
-                                </select>
-                                <span class="err_country text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-3">
                                 <h6 class="mb-0">{{ trans('msg.admin.Phone') }}</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <div class="input-group"> 
-                                    <span class="input-group-text phoencode" id="phoencode">{{ $admin->country_code ? $admin->country_code : "-" }}</span>
-                                    <input type="text" class="form-control" name="mobile" id="mobile" value="{{ $admin->phone }}" placeholder="{{ trans('msg.admin.Phone') }}">
+                                <div class="input-group">
+                                    <span class="input-group-text phoencode" id="phoencode-dropdown">
+                                        <span id="selected-phone-code">
+                                            @if (!empty($admin->country_code))
+                                                {{ $admin->country_code }}
+                                            @else
+                                                -
+                                            @endif
+                                        </span>
+                                        <i class="fadeIn animated bx bx-caret-down"></i>
+                                    </span>
+                                    <input type="hidden" name="country_code" id="country_code">
+                                    <div class="dropdown-menu scrollable-dropdown" id="country-code-dropdown">
+                                        @foreach($country as $code)
+                                            <a class="dropdown-item" href="#" data-code="{{ $code->phone_code }}">{{ $code->phone_code }}</a>
+                                        @endforeach
+                                    </div>
+                                    <input type="text" class="form-control" name="phone" id="phone" value="{{ $admin->phone ?? '' }}" placeholder="{{ trans('msg.admin.Phone') }}">
                                 </div>
-                                <span class="err_mobile text-danger"></span>
+                                <span class="err_phone text-danger"></span>
                             </div>
                         </div>
                       
@@ -198,7 +205,7 @@
                     formData.append("old_image", old_pic);
                     
                     $.ajax({
-                        url: {{ route('upload-image') }},
+                        url: "{{ route('upload-image') }}",
                         type: 'POST',
                         dataType: 'json',
                         data: formData,
@@ -233,12 +240,12 @@
                 readURL(this);
             });
 
-            $('.single-select').select2({
-                theme: 'bootstrap4',
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: $(this).data('placeholder'),
-                allowClear: Boolean($(this).data('allow-clear')),
-            });
+            // $('.single-select').select2({
+            //     theme: 'bootstrap4',
+            //     width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            //     placeholder: $(this).data('placeholder'),
+            //     allowClear: Boolean($(this).data('allow-clear')),
+            // });
             /**
              * edit-profile-form validation
              * 
@@ -250,21 +257,15 @@
                 let form = $(this).get(0);
                 let emailPattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
                 let email = $("#email").val();
-                let err_email = {{ trans('msg.admin.Enter Valid Email Address') }};
-                let city = $("#city").val();
-                let err_city = {{ trans('msg.admin.Enter Valid City Name') }};
-                let name = $("#fname").val();
-                let err_name = {{ trans('msg.admin.Enter Valid First Name') }};
-                let name = $("#lname").val();
-                let err_name = {{ trans('msg.admin.Enter Valid Last Name') }};
-                let country = $("#country").val();
-                let err_country = {{ trans('msg.admin.Select Country') }};
-                let mobile = $("#mobile").val();
-                let err_mobile = {{ trans('msg.admin.Enter Mobile Number') }};
-                let address = $("#address").val();
-                let err_address = {{ trans('msg.admin.Enter Valid Address') }};
-
-
+                let err_email = "{{ trans('msg.admin.Enter Valid Email Address') }}";
+                let fname = $("#fname").val();
+                let err_fname = "{{ trans('msg.admin.Enter Valid First Name') }}";
+                let lname = $("#lname").val();
+                let err_lname = "{{ trans('msg.admin.Enter Valid Last Name') }}";
+                
+                let phone = $("#phone").val();
+                let err_phone = "{{ trans('msg.admin.Enter Mobile Number') }}";
+               
                 if (fname.length === 0) {
                     $(".err_fname").text(err_fname);
                     $('#fname').addClass('is-invalid');
@@ -296,24 +297,15 @@
 
                 }
 
-                if (country == 0) {
-                    $(".err_country").text(err_country);
-                    $('#country').addClass('is-invalid');
+                
+                if (phone.length === 0) {
+                    $(".err_phone").text(err_phone);
+                    $('#phone').addClass('is-invalid');
                     valid = false;
                 } else {
-                    $(".err_country").text('');
-                    $('#country').addClass('is-valid');
-                    $('#country').removeClass('is-invalid');
-
-                }
-                if (mobile.length === 0) {
-                    $(".err_mobile").text(err_mobile);
-                    $('#mobile').addClass('is-invalid');
-                    valid = false;
-                } else {
-                    $(".err_mobile").text('');
-                    $('#mobile').addClass('is-valid');
-                    $('#mobile').removeClass('is-invalid');
+                    $(".err_phone").text('');
+                    $('#phone').addClass('is-valid');
+                    $('#phone').removeClass('is-invalid');
 
                 }
                
@@ -321,28 +313,27 @@
                     form.submit();
                 }
             });
-            // End :: edit-profile validation
 
-            $('#country').on('change', function() {
-                var country_id = $('#country').val();
-                if (country_id != '') {
+        });
+        
+    </script>
 
-                    $.ajax({
+    <script>
+        $(document).ready(function() {
+            $('#phoencode-dropdown').on('click', function() {
+                $('#country-code-dropdown').toggle();
+            });
 
-                        url: {{ route('get-phone-code') }},
-                        method: "POST",
+            $('#country-code-dropdown a').click(function (e) {
+                e.preventDefault();
+                var selectedCode = $(this).data('code');
+                $('#selected-phone-code').text(selectedCode);
+                $('#country_code').val(selectedCode);
+            });
 
-                        data: {
-                            id: country_id
-                        },
-
-                        success: function(data) {
-                            // console.log(data);
-                            $(".phoencode").html(data);
-                        }
-                    });
-                } else {
-                    $('.phoencode').html('');
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#phoencode-dropdown').length) {
+                    $('#country-code-dropdown').hide();
                 }
             });
         });

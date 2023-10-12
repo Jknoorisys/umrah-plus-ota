@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -24,6 +25,33 @@ class ProfileController extends Controller
         $data['country']             = DB::table('country')->get();
         
         return view('admin.profile', $data);
+    }
+
+    public function updateProfile(Request $request) {
+        $admin = auth('admin')->user();
+
+        $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => ['email', 'max:255', Rule::unique('admins')->ignore($admin->id)],
+            'phone' => ['required'],            
+            'country_code' => 'required',
+        ]);
+
+        $update = Admin::where('id', '=', $admin->id)->update([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'email' => $request->email,
+            'country_code' => $request->country_code,
+            'phone' => $request->phone,
+        ]);
+
+        if ($update) {
+            return redirect()->route('profile')->with('success', trans('msg.admin.Profile Updated Successfully'));
+        } else {
+            return redirect()->route('profile')->with('error', trans('msg.admin.Unable to Update, Please try again...'));
+        }
+        
     }
 
     public function getPhoneCode(Request $request)

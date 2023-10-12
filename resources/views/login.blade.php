@@ -186,7 +186,6 @@
                                             </div>
                                         @endif
 
-
                                         @if (session('error'))
                                             <div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
                                                 <div class="d-flex align-items-center">

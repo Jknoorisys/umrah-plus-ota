@@ -57,6 +57,32 @@
 						</div>
 					@endif
 
+					@if (session('error'))
+						<div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
+							<div class="d-flex align-items-center">
+								<div class="font-25 text-danger"><i class='bx bxs-message-square-x'></i></div>
+								<div class="ms-2">
+									<!-- <h6 class="mb-0 text-danger">Danger Alerts</h6> -->
+									<div class="text-danger">{{ session('error') }}</div>
+								</div>
+							</div>
+							<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					@endif
+
+					@if (session('success'))
+						<div class="alert border-0 border-start border-5 border-success alert-dismissible fade show py-2">
+							<div class="d-flex align-items-center">
+								<div class="font-25 text-success"><i class='bx bxs-check-circle'></i></div>
+								<div class="ms-2">
+									<!-- <h6 class="mb-0 text-success">Success Alerts</h6> -->
+									<div class="text-success">{{ session('success') }}</div>
+								</div>
+							</div>
+							<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					@endif
+					
 					@yield('content')
 				</div>
 			</div>

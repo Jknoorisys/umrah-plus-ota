@@ -35,7 +35,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth:admin'])->group(function () {
     Route::any('dashboard' , [ProfileController::class, 'dashboard'])->name('dashboard');
     Route::any('profile' , [ProfileController::class, 'profile'])->name('profile');
-    Route::any('update-profile' , [ProfileController::class, 'updateProfile'])->name('update-profile');
+    Route::post('update-profile' , [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::post('upload-image' , [ProfileController::class, 'uploadImage'])->name('upload-image');
     Route::post('get-phone-code' , [ProfileController::class, 'getPhoneCode'])->name('get-phone-code');
 });

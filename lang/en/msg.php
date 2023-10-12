@@ -42,6 +42,13 @@ return [
         'Country' => 'Country',
         'Phone' => 'Phone',
         'Profile Image' => 'Profile Image',
+        'Enter Valid First Name' => 'Enter Valid First Name',
+        'Enter Valid Last Name' => 'Enter Valid Last Name',
+        'Enter Valid Email Address' => 'Enter Valid Email Address',
+        'Select Country Code' => 'Select Country Code',
+        'Enter Mobile Number' => 'Enter Mobile Number',
+        'Profile Updated Successfully.' => 'Profile Updated Successfully.',
+        'Unable to Update, Please try again...' => 'Unable to Update, Please try again...',
         'Save Changes' => 'Save Changes',
         'Cancel' => 'Cancel',
         
