@@ -18,16 +18,32 @@ return [
         // Login
         'Login' => 'Login',
         'Welcome Back!' => 'Welcome Back!',
+        'hello' => 'Hello :fname :lname !',
+        'Please login first' => 'Please login first',        
         'Email' => 'Email',
         'Password' => 'Password',
         'Forgot Password' => 'Forgot Password',
         'Invalid Password'  => 'Invalid Password',
         'Admin Not Found'  => 'Admin Not Found',
         'Invalid credentials'  => 'Invalid credentials',
+
+        // Header
         'Logout'  => 'Logout',
         'Profile' => 'Profile',
         'Settings' => 'Settings',
-        'Please login first' => 'Please login first',
+
+        // Sidebar
+        'Dashboard' => 'Dashboard',
+
+        // Profile
+        'First Name' => 'First Name',
+        'Last Name' => 'Last Name',
+        'Email' => 'Email',
+        'Country' => 'Country',
+        'Phone' => 'Phone',
+        'Profile Image' => 'Profile Image',
+        'Save Changes' => 'Save Changes',
+        'Cancel' => 'Cancel',
         
     ],
 

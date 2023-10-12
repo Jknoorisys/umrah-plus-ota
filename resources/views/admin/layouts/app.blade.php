@@ -21,6 +21,7 @@
 		<link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
 		{{-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> --}}
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
 		<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
 		<!-- Theme Style CSS -->
@@ -45,6 +46,17 @@
 			<!--start page wrapper -->
 			<div class="page-wrapper">
 				<div class="page-content">
+					@if (isset($title) && $title != 'no_breadcrumb')
+						<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0 p-2">
+									<li class="breadcrumb-item" style="font-size: 14px;"><a href="{{ isset($url) && !empty($url) ? $url : route('home') }}">{{ isset($previous_title) && !empty($previous_title) ? $previous_title : '' }}</a></li>
+									<li class="breadcrumb-item active" aria-current="page" style="font-size: 14px;">{{ isset($title) && !empty($title) ? $title : '' }}</li>
+								</ol>
+							</nav>							
+						</div>
+					@endif
+
 					@yield('content')
 				</div>
 			</div>

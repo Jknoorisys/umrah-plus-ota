@@ -250,7 +250,7 @@ a {
 .sidebar-wrapper .metismenu a:hover {
 	color: #008cff;
 	text-decoration: none;
-	background: rgb(13 110 253 / .12)
+	background: rgba(13, 109, 253, 0.082)
 }
 
 .menu-label {

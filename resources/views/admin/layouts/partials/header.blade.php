@@ -4,7 +4,12 @@
 
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
 
-            {{-- <h4 style="margin-left:10px;margin-top:20px;">Hello Karim Jillab !</h4> --}}
+            <h4 style="margin-left:10px;margin-top:20px;">
+                {{ trans('msg.admin.hello', [
+                    'fname' => Auth::guard('admin')->user()->fname,
+                    'lname' => Auth::guard('admin')->user()->lname,
+                ]) }}
+            </h4>
 
             <div class="search-bar flex-grow-1 d-none">
                 <div class="position-relative search-bar-box">
@@ -331,12 +336,12 @@
                     <img src="{{ Auth::guard('admin')->user()->photo ? Auth::guard('admin')->user()->photo : asset('assets/images/avatars/no-image.png')}}" class="user-img-square" alt="user avatar">
                     <div class="user-info ps-3">
                         <p class="user-name mb-0">{{ Auth::guard('admin')->user()->fname . ' ' . Auth::guard('admin')->user()->lname }}</p>
-                        <p class="designattion mb-0">{{ str_replace('_', ' ', Str::upper(Auth::guard('admin')->user()->type))}}</p>
+                        <p class="designattion mb-0">{{ str_replace('_', ' ', Str::upper(Auth::guard('admin')->user()->type)) }}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="javascript:;"><i class="bx bx-user"></i><span>{{ trans('msg.admin.Profile') }}</span></a>
+                        <a class="dropdown-item" href="{{ route('profile') }}"><i class="bx bx-user"></i><span>{{ trans('msg.admin.Profile') }}</span></a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>{{ trans('msg.admin.Settings') }}</span></a>

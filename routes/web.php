@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +33,11 @@ Route::middleware(['guest'])->group(function () {
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('dashboard', function () {
-        return view('admin.layouts.app');
-    })->name('dashboard');
+    Route::any('dashboard' , [ProfileController::class, 'dashboard'])->name('dashboard');
+    Route::any('profile' , [ProfileController::class, 'profile'])->name('profile');
+    Route::any('update-profile' , [ProfileController::class, 'updateProfile'])->name('update-profile');
+    Route::post('upload-image' , [ProfileController::class, 'uploadImage'])->name('upload-image');
+    Route::post('get-phone-code' , [ProfileController::class, 'getPhoneCode'])->name('get-phone-code');
 });
 
 

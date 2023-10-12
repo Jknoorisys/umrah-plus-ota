@@ -14,16 +14,15 @@
     
     <ul class="metismenu" id="menu">
         <li>
-            <a href="widgets.html">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Dashboard</div>
+            <a href="{{ route('dashboard') }}">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
+                <div class="menu-title">{{ trans('msg.admin.Dashboard') }}</div>
             </a>
         </li>
 
         <li class="menu-label">Manage Users</li>
         <li>
-            <a href="widgets.html">
+            <a href="{{ route('/') }}">
                 <div class="parent-icon"><i class='bx bx-user'></i>
                 </div>
                 <div class="menu-title">Users</div>
