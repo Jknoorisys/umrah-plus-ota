@@ -118,39 +118,39 @@
                     <form id="edit_profile" action="{{ route('update-profile') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <h6 class="mb-0">{{ trans('msg.admin.First Name') }}</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-10 text-secondary">
                                 <input type="text" class="form-control" name="fname" id="fname" value="{{ $admin->fname }}" placeholder="{{ trans('msg.admin.First Name') }}">
                                 <span class="err_fname text-danger"></span>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <h6 class="mb-0">{{ trans('msg.admin.Last Name') }}</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-10 text-secondary">
                                 <input type="text" class="form-control" name="lname" id="lname" value="{{ $admin->lname }}" placeholder="{{ trans('msg.admin.Last Name') }}">
                                 <span class="err_lname text-danger"></span>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <h6 class="mb-0">{{ trans('msg.admin.Email') }}</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-10 text-secondary">
                                 <input type="email" class="form-control" name="email" id="email" value="{{ $admin->email }}" placeholder="{{ trans('msg.admin.Email') }}" readonly>
                                 <span class="err_email text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <h6 class="mb-0">{{ trans('msg.admin.Phone') }}</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-10 text-secondary">
                                 <div class="input-group">
                                     <span class="input-group-text phoencode" id="phoencode-dropdown">
                                         <span id="selected-phone-code">
@@ -175,9 +175,9 @@
                         </div>
                       
                         <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6">
-                                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary px-5">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-4">
+                                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
                                 <button type="submit" class="btn btn-primary">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
                             </div>
                         </div>
@@ -240,17 +240,6 @@
                 readURL(this);
             });
 
-            // $('.single-select').select2({
-            //     theme: 'bootstrap4',
-            //     width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            //     placeholder: $(this).data('placeholder'),
-            //     allowClear: Boolean($(this).data('allow-clear')),
-            // });
-            /**
-             * edit-profile-form validation
-             * 
-             * 
-             */
             $("#edit_profile").on('submit', function(e) {
                 e.preventDefault();
                 let valid = true;

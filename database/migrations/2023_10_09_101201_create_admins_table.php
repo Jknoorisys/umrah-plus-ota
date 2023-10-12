@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('photo');
             $table->enum('type', ['admin', 'super_admin']);
             $table->enum('status', ['active', 'inactive']);
-            $table->text('JWT_token');
             $table->string('password');
             $table->softDeletes();
             $table->timestamps();

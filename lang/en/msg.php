@@ -18,7 +18,7 @@ return [
         // Login
         'Login' => 'Login',
         'Welcome Back!' => 'Welcome Back!',
-        'hello' => 'Hello :fname :lname !',
+        'hello' => 'Hello :fname :lname!',
         'Please login first' => 'Please login first',        
         'Email' => 'Email',
         'Password' => 'Password',
@@ -47,7 +47,7 @@ return [
         'Enter Valid Email Address' => 'Enter Valid Email Address',
         'Select Country Code' => 'Select Country Code',
         'Enter Mobile Number' => 'Enter Mobile Number',
-        'Profile Updated Successfully.' => 'Profile Updated Successfully.',
+        'Profile Updated Successfully' => 'Profile Updated Successfully',
         'Unable to Update, Please try again...' => 'Unable to Update, Please try again...',
         'Save Changes' => 'Save Changes',
         'Cancel' => 'Cancel',

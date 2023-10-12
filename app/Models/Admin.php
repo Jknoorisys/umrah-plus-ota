@@ -30,7 +30,6 @@ class Admin extends Authenticatable implements JWTSubject
         'photo',
         'type',
         'password',
-        'JWT_token',
     ];
 
     /**

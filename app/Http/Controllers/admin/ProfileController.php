@@ -54,17 +54,36 @@ class ProfileController extends Controller
         
     }
 
-    public function getPhoneCode(Request $request)
+    public function uploadImage(Request $request)
     {
-        $id = $request->id;
+        $admin = auth('admin')->user();
 
-        if (!empty($id)) {
-            $country = DB::table('country')->where('id', '=', $id)->first(); 
-            $data = $country->phone_code;
-            return response()->json($data);
-        } else {
-            $data = '-';
-            return response()->json($data);
+        $request->validate([
+            'profile_pic' => 'image|mimes:jpg,jpeg,gif,png|max:4096',
+        ]);
+
+        $file = $request->file('profile_pic');
+        if ($file) {
+            if ($admin->photo) {
+                $oldPhotoPath = public_path($admin->photo);
+    
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath); 
+                }
+            }
+    
+            $extension = $file->getClientOriginalExtension();
+            $image_name = time().'.'.$extension;
+            $file->move('assets/uploads/admin-photos/', $image_name);
+            $image_url = 'assets/uploads/admin-photos/'. $image_name;
+
+            Admin::where('id', '=', $admin->id)->update([
+                'photo' => $image_url
+            ]);
+
+            return response()->json('success');
         }
+
+        return response()->json('failed');
     }
 }
