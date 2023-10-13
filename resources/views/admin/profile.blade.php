@@ -79,11 +79,13 @@
             background-position: center;
         }
 
-        .scrollable-dropdown {
-            cursor: hand;
-            top: 40px;
-            max-height: 200px;
-            overflow-y: auto;
+        .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+            max-width: 60px;
+        }
+
+        .select2-container--bootstrap4 .select2-selection {
+            color: black;
+            background: #e9ecef;
         }
 
     </style>
@@ -151,27 +153,16 @@
                                 <h6 class="mb-0">{{ trans('msg.admin.Phone') }}</h6>
                             </div>
                             <div class="col-sm-10 text-secondary">
-                                <div class="input-group">
-                                    <span class="input-group-text phoencode" id="phoencode-dropdown">
-                                        <span id="selected-phone-code">
-                                            @if (!empty($admin->country_code))
-                                                {{ $admin->country_code }}
-                                            @else
-                                                -
-                                            @endif
-                                        </span>
-                                        <i class="fadeIn animated bx bx-caret-down"></i>
-                                    </span>
-                                    <input type="hidden" name="country_code" id="country_code">
-                                    <div class="dropdown-menu scrollable-dropdown" id="country-code-dropdown">
+                                <div class="input-group phonecode">
+                                    <select class="single-select" id="country-select" name="country_code">
                                         @foreach($country as $code)
-                                            <a class="dropdown-item" href="#" data-code="{{ $code->phone_code }}">{{ $code->phone_code }}</a>
+                                            <option value="{{ $code->phone_code }}" @if($admin->country_code == $code->phone_code) selected @endif>{{ $code->phone_code }}</option>
                                         @endforeach
-                                    </div>
+                                    </select>
                                     <input type="text" class="form-control" name="phone" id="phone" value="{{ $admin->phone ?? '' }}" placeholder="{{ trans('msg.admin.Phone') }}">
                                 </div>
                                 <span class="err_phone text-danger"></span>
-                            </div>
+                            </div>                            
                         </div>
                       
                         <div class="row">
@@ -305,26 +296,5 @@
 
         });
         
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#phoencode-dropdown').on('click', function() {
-                $('#country-code-dropdown').toggle();
-            });
-
-            $('#country-code-dropdown a').click(function (e) {
-                e.preventDefault();
-                var selectedCode = $(this).data('code');
-                $('#selected-phone-code').text(selectedCode);
-                $('#country_code').val(selectedCode);
-            });
-
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('#phoencode-dropdown').length) {
-                    $('#country-code-dropdown').hide();
-                }
-            });
-        });
     </script>
 @endsection
