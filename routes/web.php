@@ -24,12 +24,6 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-// Route::any('/', function () {
-//     return view('login');
-// })->name('/');
-
-
-// Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -37,6 +31,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::any('profile' , [ProfileController::class, 'profile'])->name('profile');
     Route::post('update-profile' , [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::post('upload-image' , [ProfileController::class, 'uploadImage'])->name('upload-image');
+    Route::any('settings' , [ProfileController::class, 'changePassword'])->name('settings');
+    Route::any('settings', function () {
+        return view('admin.change_password');
+    })->name('settings');
+    Route::post('change-password' , [ProfileController::class, 'changePassword'])->name('change-password');
+
 });
 
 

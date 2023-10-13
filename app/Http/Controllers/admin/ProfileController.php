@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -50,8 +51,7 @@ class ProfileController extends Controller
             return redirect()->route('profile')->with('success', trans('msg.admin.Profile Updated Successfully'));
         } else {
             return redirect()->route('profile')->with('error', trans('msg.admin.Unable to Update, Please try again...'));
-        }
-        
+        }   
     }
 
     public function uploadImage(Request $request)
@@ -85,5 +85,37 @@ class ProfileController extends Controller
         }
 
         return response()->json('failed');
+    }
+
+    public function changePassword(Request $request) {
+        $admin = auth('admin')->user();
+
+        $messages = [
+            'old_password.required' => 'Old Password is required.',
+            'new_password.required' => 'New Password is required.',
+            'cnfm_password.required' => 'Confirm Password is required.',
+            'new_password.min' => 'New Password must be more than :min characters.',
+            'cnfm_password.same' => 'Confirm Password should be Same as New Password.',
+        ];
+
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
+            'cnfm_password' => 'required|same:new_password',
+        ]);
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return redirect()->route('settings')->with('error', trans('msg.admin.Current password is Incorrect'));
+        }
+
+        $update = Admin::where('id', $admin->id)->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        if ($update) {
+            return redirect()->route('settings')->with('success', trans('msg.admin.Password Changed Successfully'));
+        } else {
+            return redirect()->route('settings')->with('error', trans('msg.admin.Unable to change password. Please try again')).'...';
+        }
     }
 }

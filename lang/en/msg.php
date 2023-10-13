@@ -54,7 +54,16 @@ return [
         'Unable to Update, Please try again...' => 'Unable to Update, Please try again...',
         'Save Changes' => 'Save Changes',
         'Cancel' => 'Cancel',
-        
+
+        // Change Password
+        'Current Password' => 'Current Password',
+        'New Password' => 'New Password',
+        'Confirm Password' => 'Confirm Password',
+        'Enter Current Password' => 'Enter Current Password',
+        'Enter New Password' => 'Enter New Password',
+        'Current password is Incorrect' => 'Current password is Incorrect',     
+        'Password Changed Successfully' => 'Password Changed Successfully',
+        'Unable to change password. Please try again' => 'Unable to change password. Please try again'   
     ],
 
     'localization' => 'Accept-Language header is required',

@@ -344,7 +344,7 @@
                         <a class="dropdown-item" href="{{ route('profile') }}"><i class="bx bx-user"></i><span>{{ trans('msg.admin.Profile') }}</span></a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>{{ trans('msg.admin.Settings') }}</span></a>
+                        <a class="dropdown-item" href="{{ route('settings') }}"><i class="bx bx-cog"></i><span>{{ trans('msg.admin.Settings') }}</span></a>
                     </li>
                     <li>
                         <div class="dropdown-divider mb-0"></div>
