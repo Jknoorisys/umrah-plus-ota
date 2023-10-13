@@ -32,7 +32,6 @@
         }
     </style>
 
-    <?php $admin = Auth::guard('admin')->user() ?>
     <div class="row">
         <div class="col-lg-4">
             <div class="card">

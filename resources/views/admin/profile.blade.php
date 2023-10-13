@@ -80,7 +80,7 @@
         }
 
         .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
-            max-width: 60px;
+            max-width: 70px;
         }
 
         .select2-container--bootstrap4 .select2-selection {

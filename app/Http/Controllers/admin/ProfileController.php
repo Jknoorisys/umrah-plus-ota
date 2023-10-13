@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class ProfileController extends Controller
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Profile');
         $data['admin']               = $admin;
-        $data['country']             = DB::table('country')->get();
+        $data['country']             = Country::all();
         
         return view('admin.profile', $data);
     }
@@ -85,6 +86,18 @@ class ProfileController extends Controller
         }
 
         return response()->json('failed');
+    }
+
+    public function settings() {
+        $admin = Admin::find(Auth::guard('admin')->user()->id);
+
+        $data['previous_title']      = trans('msg.admin.Dashboard');
+        $data['url']                 = route('dashboard');
+        $data['title']               = trans('msg.admin.Change Password');
+        $data['admin']               = $admin;
+        $data['country']             = Country::all();
+        
+        return view('admin.change_password', $data);
     }
 
     public function changePassword(Request $request) {
