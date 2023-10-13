@@ -217,13 +217,13 @@
                                                 @csrf
                                                 <div class="col-md-12">
                                                     <label for="email" class="form-label font-style">{{ trans('msg.admin.Email') }}</label>
-                                                    <div class="input-group"><input type="email" class="form-control smp-input border-end-0 font-style" name="email" id="email" placeholder="Email Address" required><a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-envelope'></i></a></div>
+                                                    <div class="input-group"><input type="email" class="form-control smp-input border-end-0 font-style" name="email" id="email" placeholder="{{ trans('msg.admin.Email Address') }}"><a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-envelope'></i></a></div>
                                                     <span class="err_email text-danger"></span>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="password" class="form-label font-style" >{{ trans('msg.admin.Password') }}</label>
                                                     <div class="input-group" id="show_hide_password">
-                                                        <input type="password" class="form-control smp-input border-end-0 font-style" name="password" id="password" placeholder="Enter Password" required> <a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-hide'></i></a>
+                                                        <input type="password" class="form-control smp-input border-end-0 font-style" name="password" id="password" placeholder="{{ trans('msg.admin.Enter Password') }}"> <a href="javascript:;" class="input-group-text bg-transparent icon-style"><i class='bx bx-hide'></i></a>
                                                     </div>
                                                     <span class="err_password text-danger"></span>
                                                 </div>
@@ -267,8 +267,42 @@
                         $('#show_hide_password i').addClass("bx-show");
                     }
                 });
+
+                $("#form_login").on('input', function(e) {
+                    e.preventDefault();
+                    let valid = true;
+                    let form = $(this).get(0);
+                    let emailPattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+                    let email = $("#email").val();
+                    let err_email = "{{ trans('msg.admin.Enter Valid Email Address') }}";
+
+                    let password = $("#password").val();
+                    let err_password = "{{ trans('msg.admin.Enter Valid Password') }}";
+                
+                    if (password.length === 0) {
+                        $(".err_password").text(err_password);
+                        $('#password').addClass('is-invalid');
+                        valid = false;
+                    } else {
+                        $(".err_password").text('');
+                        $('#password').addClass('is-valid');
+                        $('#password').removeClass('is-invalid');
+                    }
+
+                    if (email.length === 0 || !emailPattern.test(email)) {
+                        $(".err_email").text(err_email);
+                        $('#email').addClass('is-invalid');
+                        valid = false;
+                    } else {
+                        $(".err_email").text('');
+                        $('#email').addClass('is-valid');
+                        $('#email').removeClass('is-invalid');
+
+                    }
+                });
             });
         </script>
+
         <!--app JS-->
         <script src="{{ asset('assets/js/app.js') }}"></script>
     </body>
