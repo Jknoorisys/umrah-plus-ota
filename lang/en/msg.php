@@ -64,7 +64,20 @@ return [
         'Enter New Password' => 'Enter New Password',
         'Current password is Incorrect' => 'Current password is Incorrect',     
         'Password Changed Successfully' => 'Password Changed Successfully',
-        'Unable to change password. Please try again' => 'Unable to change password. Please try again'   
+        'Unable to change password. Please try again' => 'Unable to change password. Please try again', 
+        
+        // Forgot Password
+        'Forgot Password' => 'Forgot Password',
+        'Back to Login' => 'Back to Login',
+        'Enter your registered Email ID to reset the password' => 'Enter your registered Email ID to reset the password',
+        'Send' => 'Send',
+
+        // Reset Password
+        'Genrate New Password' => 'Genrate New Password',
+        'We received your reset password request, Please enter your new password' => 'We received your reset password request, Please enter your new password',
+        'New Password' => 'New Password',
+        'Enter new password' => 'Enter new password',
+        'Enter confirm password' => 'Enter confirm password',
     ],
 
     'localization' => 'Accept-Language header is required',

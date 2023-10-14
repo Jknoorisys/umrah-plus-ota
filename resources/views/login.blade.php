@@ -227,7 +227,7 @@
                                                     </div>
                                                     <span class="err_password text-danger"></span>
                                                 </div>
-                                                <a class="text-end" href="#" style="color: #008cff; " >{{ trans('msg.admin.Forgot Password') }}?</a>
+                                                <a class="text-end" href="{{ route('forget-password') }}" style="color: #008cff; " >{{ trans('msg.admin.Forgot Password') }}?</a>
                                                 <div class="pb-4 pt-4 col-md-12">
                                                     <div class="d-grid">
                                                         <button type="submit" class="btn btn-login-smp">{{ Str::upper(trans('msg.admin.Login')) }} <i class="lni lni-arrow-right"></i></button>
