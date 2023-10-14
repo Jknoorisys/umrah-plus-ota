@@ -3,7 +3,9 @@
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\hotels\BookingController;
+use App\Http\Controllers\api\transfer\BookingController as TransferBookingController;
 use App\Http\Controllers\api\hotels\ContentController;
+use App\Http\Controllers\api\transfer\ContentController as TransferContentController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use Illuminate\Http\Request;
@@ -47,6 +49,35 @@ Route::middleware(['localization'])->group(function () {
             Route::post('address', [UserProfileController::class, 'address']);
         });
     
+    });
+
+    // Transfer APIs by Aaisha
+    Route::prefix('transfer-api')->group(function () {
+        // AVAILABILITY
+        Route::post('countries' , [TransferContentController::class, 'countries']);
+        Route::post('terminals' , [TransferContentController::class, 'terminals']);
+        Route::post('destinations' , [TransferContentController::class, 'destinations']);
+        Route::post('categories' , [TransferContentController::class, 'categories']);
+        Route::post('vehicals' , [TransferContentController::class, 'vehicals']);
+        Route::post('transferTypes' , [TransferContentController::class, 'transferTypes']);
+        Route::post('currencies' , [TransferContentController::class, 'currencies']);
+        Route::post('routes' , [TransferContentController::class, 'routes']);
+        Route::post('hotels' , [TransferContentController::class, 'hotels']);
+        Route::post('pickup' , [TransferContentController::class, 'pickup']);
+
+        // Availability
+        Route::post('availability' , [TransferBookingController::class, 'availability']);
+        Route::post('AvailableRoutes' , [TransferBookingController::class, 'AvailableRoutes']);
+
+        // BOOKING
+        Route::post('bookings' , [BookingController::class, 'bookings']);
+
+        // POST BOOKING
+        Route::get('booking-list' , [BookingController::class, 'bookingList']);
+        Route::get('booking-details' , [BookingController::class, 'bookingDetails']);
+        Route::post('booking-change' , [BookingController::class, 'bookingChange']);
+        Route::delete('booking-cancel' , [BookingController::class, 'bookingCancel']);
+        Route::post('reconfirmations' , [BookingController::class, 'bookingReconfirmation']);
     });
   
     // Hotels APIs by Javeriya
