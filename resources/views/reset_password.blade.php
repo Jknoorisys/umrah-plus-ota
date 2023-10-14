@@ -161,7 +161,7 @@
                                         <span class="err_password_confirmation text-danger"></span>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary">{{ trans('msg.admin.Change Password') }}</button> <a href="authentication-login.html" class="btn btn-light"><i class='bx bx-arrow-back mr-1'></i>{{ trans('msg.admin.Back to Login') }}</a>
+                                        <button type="submit" class="btn btn-primary">{{ trans('msg.admin.Change Password') }}</button> <a href="{{ route('/') }}" class="btn btn-light"><i class='bx bx-arrow-back mr-1'></i>{{ trans('msg.admin.Back to Login') }}</a>
                                     </div>
                                 </form>
                             </div>
