@@ -40,9 +40,9 @@ class AuthController extends Controller
         );
 
         return $status == Password::RESET_LINK_SENT
-        ? back()->with('success', __($status))
+        ? back()->with('success', trans($status))
         : back()->withInput($request->only('email'))
-                ->with(['error' => __($status)]);
+                ->with(['error' => trans($status)]);
     }
     
     public function resetPassword(Request $request)
@@ -65,9 +65,9 @@ class AuthController extends Controller
         );
 
         return $response == Password::PASSWORD_RESET
-                    ? redirect()->route('/')->with('success', __($response))
+                    ? redirect()->route('/')->with('success', trans($response))
                     : back()->withInput($request->only('email'))
-                            ->with(['error' => __($response)]);
+                            ->with(['error' => trans($response)]);
     }
 }
 

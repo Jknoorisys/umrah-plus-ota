@@ -115,7 +115,7 @@ class ProfileController extends Controller
             'old_password' => 'required',
             'new_password' => 'required|min:6',
             'cnfm_password' => 'required|same:new_password',
-        ]);
+        ], $messages);
 
         if (!Hash::check($request->old_password, $admin->password)) {
             return redirect()->route('settings')->with('error', trans('msg.admin.Current password is Incorrect'));
