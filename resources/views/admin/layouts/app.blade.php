@@ -8,7 +8,7 @@
 		<!--favicon-->
 		<link rel="icon" href="{{ asset('assets/images/logo-icon.png') }}" type="image/png" />
 		<!--plugins-->
-		{{-- <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" /> --}}
+		<link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}">
 		<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
@@ -58,7 +58,7 @@
 						</div>
 					@endif
 
-					@if (session('error'))
+					{{-- @if (session('error'))
 						<div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
 							<div class="d-flex align-items-center">
 								<div class="font-25 text-danger"><i class='bx bxs-message-square-x'></i></div>
@@ -82,8 +82,20 @@
 							</div>
 							<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
-					@endif
+					@endif --}}
 					
+					@if(session('success'))
+						<div id="successMessage" data-success="{{ session('success') }}"></div>
+					@endif
+
+					@if(session('warning'))
+						<div id="warningMessage" data-warning="{{ session('warning') }}"></div>
+					@endif
+
+					@if(session('error'))
+						<div id="errorMessage" data-error="{{ session('error') }}"></div>
+					@endif
+
 					@yield('content')
 				</div>
 			</div>
@@ -116,6 +128,10 @@
 		<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
 		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+		<!--notification js -->
+		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
 		<!--app JS-->
 		<script src="{{ asset('assets/js/app.js') }}"></script>
 
@@ -132,6 +148,22 @@
 				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
 				placeholder: $(this).data('placeholder'),
 				allowClear: Boolean($(this).data('allow-clear')),
+			});
+
+			document.addEventListener('DOMContentLoaded', function() {
+				var successMessageElement = document.getElementById('successMessage');
+            	var warningMessageElement = document.getElementById('warningMessage');
+            	var errorMessageElement = document.getElementById('errorMessage');
+				if (successMessageElement) {
+					var successMessage = successMessageElement.dataset.success;
+					pos5_success_noti(successMessage);
+				} else if (warningMessageElement) {
+					var warningMessage = warningMessageElement.dataset.warning;
+					pos3_warning_noti(warningMessage);
+				} else if (errorMessageElement) {
+					var errorMessage = errorMessageElement.dataset.error;
+					pos4_error_noti(errorMessage);
+				}
 			});
 		</script>
 		@yield('customJs')
