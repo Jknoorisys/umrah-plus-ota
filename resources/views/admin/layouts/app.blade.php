@@ -32,11 +32,13 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
 		<title>OTA</title>
 
-		{{-- <style>
-			.table-striped > tbody > tr:nth-of-type(odd){
-				--bs-table-accent-bg: rgba(13, 109, 253, 0.082);
-			}			
-		</style> --}}
+		<style>
+			.btn-group-sm>.btn, .btn-sm {
+				padding: 0.1rem 0.3rem;
+				font-size: .8rem;
+				border-radius: 0.2rem;
+			}		
+		</style>
 	</head>
 
 	<body>
