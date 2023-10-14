@@ -14,6 +14,7 @@
 		<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
+		<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
 		<!-- loader-->
 		<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
 		<script src="{{ asset('assets/js/pace.min.js') }}"></script>
@@ -30,6 +31,12 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
 		<title>OTA</title>
+
+		{{-- <style>
+			.table-striped > tbody > tr:nth-of-type(odd){
+				--bs-table-accent-bg: rgba(13, 109, 253, 0.082);
+			}			
+		</style> --}}
 	</head>
 
 	<body>
@@ -128,6 +135,8 @@
 		<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
 		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
 		<!--notification js -->
 		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
@@ -165,6 +174,16 @@
 					pos4_error_noti(errorMessage);
 				}
 			});
+
+			$(document).ready(function() {
+				var table = $('#otaDataTable').DataTable( {
+					lengthChange: false,
+					buttons: [ 'excel', 'pdf', 'print']
+				} );
+			
+				table.buttons().container()
+					.appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
+			} );
 		</script>
 		@yield('customJs')
 		<!--end javascript-->

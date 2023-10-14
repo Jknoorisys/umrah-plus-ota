@@ -22,7 +22,7 @@
 
         <li class="menu-label">Manage Users</li>
         <li>
-            <a href="{{ route('/') }}">
+            <a href="{{ route('user.list') }}">
                 <div class="parent-icon"><i class='bx bx-user'></i>
                 </div>
                 <div class="menu-title">Users</div>

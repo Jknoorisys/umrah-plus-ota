@@ -78,6 +78,9 @@ return [
         'New Password' => 'New Password',
         'Enter new password' => 'Enter new password',
         'Enter confirm password' => 'Enter confirm password',
+
+        // Manage Users
+        'Manage Users' => 'Manage Users',
     ],
 
     'localization' => 'Accept-Language header is required',
