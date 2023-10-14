@@ -47,47 +47,28 @@ class AuthController extends Controller
     
     public function resetPassword(Request $request)
     {
+        // return $request->all();
         $request->validate([
-            'token' => ['required'],
-            'password' => ['required', 'confirmed'],
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        $status = Password::broker('admins')->reset(
-            $request->only('password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                ])->save();
+        $response = Password::broker('admins')->reset(
+            $request->only(
+                'email', 'password', 'password_confirmation', 'token'
+            ),
 
-                event(new PasswordReset($user));
+            function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
             }
         );
 
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('/')->with('success', __($status))
+        return $response == Password::PASSWORD_RESET
+                    ? redirect()->route('/')->with('success', __($response))
                     : back()->withInput($request->only('email'))
-                            ->with(['error' => __($status)]);
-
-        // $request->validate([
-        //     'token' => 'required',
-        //     'password' => 'required|confirmed|min:8',
-        // ]);
-
-        // $response = Password::reset(
-        //     $request->only('email', 'password', 'password_confirmation', 'token'),
-        //     function ($user, $password) {
-        //         $user->password = Hash::make($password);
-        //         $user->save();
-        //     }
-        // );
-
-        // if ($response == Password::PASSWORD_RESET) {
-        //     return redirect()->route('login')->with('success', trans($response));
-        // } else {
-        //     return back()
-        //         ->withInput($request->only('email'))
-        //         ->with(['error' => trans($response)]);
-        // }
+                            ->with(['error' => __($response)]);
     }
 }
 

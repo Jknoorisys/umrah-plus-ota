@@ -143,6 +143,7 @@
                                 <form action="{{ route('reset-password.post') }}" method="post" id="form_reset">
                                     @csrf
                                     <input type="hidden" name="token" value="{{ $token }}">
+                                    <input type="hidden" name="email" value="{{ request('email') }}">
                                     <div class="mb-3 mt-5">
                                         <label class="form-label">{{ trans('msg.admin.New Password') }}</label>
                                         {{-- <input type="text" class="form-control" name="new_password" placeholder="{{ trans('msg.admin.Enter new password') }}" /> --}}
