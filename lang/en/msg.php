@@ -81,6 +81,11 @@ return [
 
         // Manage Users
         'Manage Users' => 'Manage Users',
+        'Name' => 'Name',
+        'Email' => 'Email',
+        'Phone' => 'Phone',
+        'Status' => 'Status',
+        'Action' => 'Action',
     ],
 
     'localization' => 'Accept-Language header is required',
