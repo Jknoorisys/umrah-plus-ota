@@ -81,11 +81,24 @@ return [
 
         // Manage Users
         'Manage Users' => 'Manage Users',
+        'No' => 'No',
         'Name' => 'Name',
         'Email' => 'Email',
         'Phone' => 'Phone',
         'Status' => 'Status',
         'Action' => 'Action',
+        'User Not Found' => 'User Not Found',
+        'User :status Successfully' => 'User :status Successfully',
+        'Please try again...' => 'Please try again...',
+        'Cancelled' => 'Cancelled',
+        'User deleted successfully' => 'User deleted successfully',
+    ],
+
+    'alert' => [
+        'Confirmation' => 'Confirmation',
+        'Are you sure you want to :action the user status' => 'Are you sure you want to :action the user status',
+        'Yes' => 'Yes',
+        'No' => 'No',
     ],
 
     'localization' => 'Accept-Language header is required',
