@@ -121,6 +121,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
+                confirmButtonColor: '#008cff',
                 cancelButtonText: "{{ trans('msg.alert.No') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
