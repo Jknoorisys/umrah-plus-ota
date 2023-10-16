@@ -70,11 +70,12 @@
         function confirmUpdateUserStatus(userId, isActive, dataId) {
             Swal.fire({
                 title: "{{ trans('msg.alert.Confirmation') }}",
-                text: "{{ trans('msg.alert.Are you sure you want to :action the user status', ['action' => 'update']) }}?",
+                text: "{{ trans('msg.alert.Are you sure you want to :action this user', ['action' => 'update']) }}?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
-                cancelButtonText: "{{ trans('msg.alert.No') }}"
+                cancelButtonText: "{{ trans('msg.alert.No') }}",
+                confirmButtonColor: '#008cff',
             }).then((result) => {
                 if (result.isConfirmed) {
                     updateUserStatus(userId, isActive, dataId);
@@ -116,7 +117,7 @@
         function confirmDeleteUser(userId) {
             Swal.fire({
                 title: "{{ trans('msg.alert.Confirmation') }}",
-                text: "{{ trans('msg.alert.Are you sure you want to :action the user', ['action' => 'delete']) }}?",
+                text: "{{ trans('msg.alert.Are you sure you want to :action this user', ['action' => 'delete']) }}?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
