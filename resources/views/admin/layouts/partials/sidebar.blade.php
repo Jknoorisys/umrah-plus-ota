@@ -20,13 +20,29 @@
             </a>
         </li>
 
-        <li class="menu-label">Manage Users</li>
+        {{-- <li class="menu-label">Manage Users</li>
         <li>
             <a href="{{ route('user.list') }}">
                 <div class="parent-icon"><i class='bx bx-user'></i>
                 </div>
                 <div class="menu-title">Users</div>
             </a>
+        </li> --}}
+
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-group'></i>
+                </div>
+                <div class="menu-title">{{ trans('msg.admin.Users') }}</div>
+            </a>
+            <ul>
+                <li> 
+                    <a href="{{ route('user.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Users') }}</a>
+                </li>
+                <li> 
+                    <a href="{{ route('user.send-notification-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Send Notification') }}</a>
+                </li>
+            </ul>
         </li>
 
     </ul>

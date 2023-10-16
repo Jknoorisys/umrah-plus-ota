@@ -66,4 +66,13 @@ class ManageUsers extends Controller
             return response()->json(['error' => trans('msg.admin.Please try again...')]);
         }
     }
+
+    public function sendNotificationForm() {
+        
+        $data['previous_title']      = trans('msg.admin.Dashboard');
+        $data['url']                 = route('dashboard');
+        $data['title']               = trans('msg.admin.Send Notification');
+        return view('admin.user.send_notification', $data);
+       
+    }
 }

@@ -81,6 +81,7 @@ return [
 
         // Manage Users
         'Manage Users' => 'Manage Users',
+        'Users' => 'Users',
         'No' => 'No',
         'Name' => 'Name',
         'Email' => 'Email',
@@ -93,6 +94,7 @@ return [
         'Cancelled' => 'Cancelled',
         'User deleted successfully' => 'User deleted successfully',
         'User Details' => 'User Details',
+        'Send Notification' => 'Send Notification',
     ],
 
     'alert' => [
