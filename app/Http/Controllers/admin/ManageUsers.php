@@ -17,6 +17,21 @@ class ManageUsers extends Controller
         return view('admin.user.list', $data);
     }
 
+    public function view($id) {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->userAddress;
+            $data['previous_title']  = trans('msg.admin.Manage Users');
+            $data['url']             = route('user.list');
+            $data['title']           = trans('msg.admin.User Details');
+            $data['user']            = $user;
+            return view('admin.user.details', $data);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
     public function changeStatus(Request $request) {
         $user = User::find($request->user_id);
 

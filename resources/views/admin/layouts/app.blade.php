@@ -35,7 +35,7 @@
 		<style>
 			.btn-group-sm>.btn, .btn-sm {
 				padding: 0.1rem 0.3rem;
-				font-size: .8rem;
+				font-size: .9rem;
 				border-radius: 0.2rem;
 			}		
 		</style>

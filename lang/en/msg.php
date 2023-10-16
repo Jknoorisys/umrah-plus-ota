@@ -92,6 +92,7 @@ return [
         'Please try again...' => 'Please try again...',
         'Cancelled' => 'Cancelled',
         'User deleted successfully' => 'User deleted successfully',
+        'User Details' => 'User Details',
     ],
 
     'alert' => [

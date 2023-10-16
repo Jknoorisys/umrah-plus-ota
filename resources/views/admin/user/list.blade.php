@@ -32,9 +32,9 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <button type="button" class="btn btn-outline-primary btn-sm">
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('user.view', ['id' => $user->id]) }}">
                                                 <i class="bx bx-show-alt me-0"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                         <div class="col-2">
                                             <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleteUser('{{ $user->id }}', {{ $loop->iteration }})">

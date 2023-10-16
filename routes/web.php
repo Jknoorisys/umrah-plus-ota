@@ -50,6 +50,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('list' , [ManageUsers::class, 'list'])->name('user.list');
         Route::post('change-status' , [ManageUsers::class, 'changeStatus'])->name('user.change-status');
         Route::post('delete' , [ManageUsers::class, 'delete'])->name('user.delete');
+        Route::get('view/{id}' , [ManageUsers::class, 'view'])->name('user.view');
     });
 
 });
