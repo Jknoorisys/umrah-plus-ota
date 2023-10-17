@@ -94,7 +94,20 @@ return [
         'Cancelled' => 'Cancelled',
         'User deleted successfully' => 'User deleted successfully',
         'User Details' => 'User Details',
+
+        // Send Notification to all Users
         'Send Notification' => 'Send Notification',
+        'Title' => 'Title',
+        'Message' => 'Message',
+        'Enter Valid Title' => 'Enter Valid Title',
+        'Enter Valid Message' => 'Enter Valid Message',
+        'Notification Title' => 'Notification Title',
+        'Select User' => 'Select User',
+        'Choose' => 'Choose',
+        'Sub Admins' => 'Sub Admins',
+        'Please Select Valid User Type' => 'Please Select Valid User Type',
+        'Notification Message' => 'Notification Message',
+        'Image' => 'Image',
     ],
 
     'alert' => [

@@ -52,6 +52,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('delete' , [ManageUsers::class, 'delete'])->name('user.delete');
         Route::get('view/{id}' , [ManageUsers::class, 'view'])->name('user.view');
         Route::get('send-notification' , [ManageUsers::class, 'sendNotificationForm'])->name('user.send-notification-form');
+        Route::post('send-notification' , [ManageUsers::class, 'sendNotification'])->name('user.send-notification');
     });
 
 });

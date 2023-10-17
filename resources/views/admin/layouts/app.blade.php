@@ -15,6 +15,7 @@
 		<link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+		<link rel="stylesheet" href="{{ asset('assets/css/file-upload.css') }}">
 		<!-- loader-->
 		<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
 		<script src="{{ asset('assets/js/pace.min.js') }}"></script>
@@ -139,6 +140,7 @@
 		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+		<script src="{{ asset('assets/js/file-upload.js') }}"></script>
 		<!--notification js -->
 		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
@@ -187,6 +189,19 @@
 				table.buttons().container()
 					.appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
 			} );
+		</script>
+		<script>
+			$('#fancy-file-upload').FancyFileUpload({
+				params: {
+					action: 'fileuploader'
+				},
+				maxfilesize: 1000000
+			});
+		</script>
+		<script>
+			$(document).ready(function () {
+				$('#image-uploadify').imageuploadify();
+			})
 		</script>
 		@yield('customJs')
 		<!--end javascript-->

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
+use App\Notifications\SendNotification;
 use Illuminate\Http\Request;
 
 class ManageUsers extends Controller
@@ -73,6 +75,40 @@ class ManageUsers extends Controller
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Send Notification');
         return view('admin.user.send_notification', $data);
-       
+    }
+
+    public function sendNotification(Request $request) {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:admin,user',
+            'message' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('assets/uploads/notification-photos/'), $imageName);
+            $image_url = 'assets/uploads/notification-photos/'. $imageName;
+        }
+
+        $data = [
+            'title' => $request->title,
+            'message' => $request->message,
+            'image' => $image_url ?? null,
+        ];
+
+        $users = [];
+        if ($validatedData['type'] === 'admin') {
+            $users = Admin::where([['type', 'admin'], ['status', '=', 'active']])->get();
+        } elseif ($validatedData['type'] === 'user') {
+            $users = User::where('status', 'active')->get();
+        }
+
+        foreach ($users as $user) {
+            $user->notify(new SendNotification($data));
+        }
+
+        return redirect()->back()->with('success', 'Notification sent successfully!');
     }
 }
