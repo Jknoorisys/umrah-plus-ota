@@ -108,6 +108,8 @@ return [
         'Please Select Valid User Type' => 'Please Select Valid User Type',
         'Notification Message' => 'Notification Message',
         'Image' => 'Image',
+        'Notification sent successfully' => 'Notification sent successfully',
+        'Unable to send notification, Please try again...' => 'Unable to send notification, Please try again...',
     ],
 
     'alert' => [

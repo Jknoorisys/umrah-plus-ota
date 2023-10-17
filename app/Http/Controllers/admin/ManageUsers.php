@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\NotificationHistory;
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Http\Request;
@@ -96,6 +97,7 @@ class ManageUsers extends Controller
             'title' => $request->title,
             'message' => $request->message,
             'image' => $image_url ?? null,
+            'type' => $request->type,
         ];
 
         $users = [];
@@ -109,6 +111,13 @@ class ManageUsers extends Controller
             $user->notify(new SendNotification($data));
         }
 
-        return redirect()->back()->with('success', 'Notification sent successfully!');
+        $insert = NotificationHistory::create($data);
+
+        if ($insert) {
+            return redirect()->back()->with('success', trans('msg.admin.Notification sent successfully'));
+        } else {
+            return redirect()->back()->with('error', trans('msg.admin.Unable to send notification, Please try again...'));
+        }
+        
     }
 }
