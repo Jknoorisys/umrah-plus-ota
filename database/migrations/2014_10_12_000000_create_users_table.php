@@ -21,8 +21,10 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('photo');
             $table->string('password');
+            $table->string('Social_login_type');
             $table->text('JWT_token');
             $table->enum('is_verified', ['no', 'yes'])->default('no');
+            $table->enum('is_mobile_verified', ['no', 'yes'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();

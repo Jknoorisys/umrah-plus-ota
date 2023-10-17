@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+
 class BookingController extends Controller
 {
     public function calculateSignature()
@@ -157,87 +158,133 @@ class BookingController extends Controller
         }
     }
 
-    
-
     public function AvailableRoutes(Request $request)
-    {
-        // Define validation rules for the request body
-        $validator = Validator::make($request->all(), [
-            'language' => ['required', 'string'],
-            'allowPartialResults' => ['boolean'],
-            'adults' => ['required', 'numeric'],
-            'children' => ['required', 'numeric'],
-            'infants' => ['required', 'numeric'],
-            'routes' => ['required', 'array'], // Ensure that 'routes' is an array
-            'routes.*.id' => ['required', 'string'],
-            'routes.*.dateTime' => ['required', 'date'],
-        ]);
+{
+    // Define validation rules for the request body
+    $validator = Validator::make($request->all(), [
+        'language' => ['required', 'string'],
+        'allowPartialResults' => ['boolean'],
+        'adults' => ['required', 'numeric'],
+        'children' => ['required', 'numeric'],
+        'infants' => ['required', 'numeric'],
+        'routes' => ['required', 'array'],
+        'routes.*.id' => ['required', 'string'],
+        'routes.*.dateTime' => ['required', 'date'],
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failed',
-                'errors' => $validator->errors(),
-                'message' => trans('msg.validation'),
-            ], 400);
-        }
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'failed',
+            'errors' => $validator->errors(),
+            'message' => trans('msg.validation'),
+        ], 400);
+    }
 
-        try {
-            
-            $data = $request->only(['vehicle', 'type', 'category']);
-            $language = $request->language;
-            $adults = $request->adults;
-            $infants = $request->infants;
-            $children = $request->children;
-            $routes = $request->input('routes');
-            $Signature = self::calculateSignature();
-            $queryString = http_build_query($data);
-            // echo json_encode($request->routes[0]);exit;
+    try {
+        $data = $request->only(['vehicle', 'type', 'category']);
+        $language = $request->language;
+        $adults = $request->adults;
+        $infants = $request->infants;
+        $children = $request->children;
+        $routes = $request->input('routes');
+        $allowPartialResults = $request->allowPartialResults;
+        $Signature = self::calculateSignature();
+        $queryString = http_build_query($data);
+        // echo json_encode($allowPartialResults);exit;
 
+        if(!empty($allowPartialResults))
+        {
+            // echo "Hiii";exit;
             $response = Http::withHeaders([
                 'Api-key' => config('constants.transfer.Api-key'),
                 'X-Signature' => $Signature,
                 'Accept' => 'application/json',
                 'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
-            ])->post(config('constants.end-point') . '/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?'.$queryString);
-                // echo json_encode(config('constants.end-point') . '/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?'.$queryString);exit;
-           
-
+            ])->post(config('constants.end-point').'/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?allowPartialResults='.'true&'.$queryString);
+            // echo json_encode(config('constants.end-point').'/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?allowPartialResults='.'true&'.$queryString);exit;
             $responseData = $response->json();
-            echo json_encode($responseData);exit;
-
+            // echo json_encode($response);
+            // exit;
             $status = $response->status();
-
-        // PARSE RESPONSE (integrate the parsing logic)
-        $rateKey = data_get($responseData, 'routes.0.services.0.rateKey');
-
-        $rateKey2 = data_get($responseData, 'routes.2.services.0.rateKey');
-
-        // PREPARE NEXT STEPS VARIABLES
-        Config::set('app.test_transfer_ratekey', $rateKey);
-        Config::set('app.test_transfer_ratekey2', $rateKey2);
-
-        // Check if the status code is 200
-        if ($status === 200) {
-            return response()->json([
-                'status' => 'success',
-                'message' => trans('msg.list.success'),
-                'data' => $responseData,
-            ], $status);
-        } else {
-            return response()->json([
-                'status' => 'failed',
-                'message' => trans('msg.list.failed'),
-                'data' => $responseData,
-            ], $status);
+            // echo json_encode("Hello");exit;
+    
+            // Parse and set global variables from the response
+            if (isset($responseData['routes'][0]['services'][0]['rateKey'])) {
+                Config::set('app.test_transfer_ratekey', $responseData['routes'][0]['services'][0]['rateKey']);
+            }
+    
+            if (isset($responseData['routes'][2]['services'][0]['rateKey'])) {
+                Config::set('app.test_transfer_ratekey2', $responseData['routes'][2]['services'][0]['rateKey']);
+            }
+    
+            // Check if the status code is 200
+            if ($status === 200) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
         }
-        } catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => trans('msg.error'),
-                'error' => $e->getMessage(),
-            ], 500);
+        else
+        {
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.transfer.Api-key'),
+                'X-Signature' => $Signature,
+                'Accept' => 'application/json',
+                // 'Accept-Encoding' => 'gzip',
+                'Content-Type' => 'application/json',
+            ])->post(config('constants.end-point').'/transfer-api/1.0/availability/routes/en/2/0/0');
+            // echo json_encode(config('constants.end-point').'/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?'.$queryString);exit;
+            $responseData = $response->json();
+            echo json_encode($response);
+            exit;
+            $status = $response->status();
+            // echo json_encode("Hello");exit;
+
+            // Parse and set global variables from the response
+            if (isset($responseData['routes'][0]['services'][0]['rateKey'])) {
+                Config::set('app.test_transfer_ratekey', $responseData['routes'][0]['services'][0]['rateKey']);
+            }
+
+            if (isset($responseData['routes'][2]['services'][0]['rateKey'])) {
+                Config::set('app.test_transfer_ratekey2', $responseData['routes'][2]['services'][0]['rateKey']);
+            }
+
+            // Check if the status code is 200
+            if ($status === 200) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
         }
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => 'failed',
+            'message' => trans('msg.error'),
+            'error' => $e->getMessage(),
+        ], 500);
     }
+}
 
+
+    public function confirmGPS(Request $request)
+    {
+
+    }
 }

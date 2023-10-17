@@ -4,8 +4,10 @@ use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\hotels\BookingController;
 use App\Http\Controllers\api\transfer\BookingController as TransferBookingController;
+use App\Http\Controllers\api\activity\BookingController as ActivityBookingController;
 use App\Http\Controllers\api\hotels\ContentController;
 use App\Http\Controllers\api\transfer\ContentController as TransferContentController;
+use App\Http\Controllers\api\activity\ContentController as ActivityContentController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use Illuminate\Http\Request;
@@ -78,6 +80,27 @@ Route::middleware(['localization'])->group(function () {
         Route::post('booking-change' , [BookingController::class, 'bookingChange']);
         Route::delete('booking-cancel' , [BookingController::class, 'bookingCancel']);
         Route::post('reconfirmations' , [BookingController::class, 'bookingReconfirmation']);
+    });
+
+    // Activities APIs by Aaisha
+    Route::prefix('activity-api')->group(function() {
+        Route::post('languages' , [ActivityContentController::class, 'languages']);
+        Route::post('currencies' , [ActivityContentController::class, 'currencies']);
+        Route::post('segments' , [ActivityContentController::class, 'segments']);
+        Route::post('countries' , [ActivityContentController::class, 'countries']);
+        Route::post('destinations' , [ActivityContentController::class, 'destinations']);
+        Route::post('content_single' , [ActivityContentController::class, 'content_single']);
+        Route::post('content_multi' , [ActivityContentController::class, 'content_multi']);
+        Route::post('hotels' , [ActivityContentController::class, 'hotels']);
+        Route::post('filterByDestination' , [ActivityBookingController::class, 'filterByDestination']);
+        Route::post('filterCalender' , [ActivityBookingController::class, 'filterCalender']);
+        Route::post('filterByFactsheet' , [ActivityBookingController::class, 'filterByFactsheet']);
+        Route::post('filterByActivity' , [ActivityBookingController::class, 'filterByActivity']);
+        Route::post('filterByHotel' , [ActivityBookingController::class, 'filterByHotel']);
+        Route::post('filterBySegment' , [ActivityBookingController::class, 'filterBySegment']);
+        Route::post('filterActivityModality' , [ActivityBookingController::class, 'filterActivityModality']);
+        Route::post('filterByPrices' , [ActivityBookingController::class, 'filterByPrices']);
+        
     });
   
     // Hotels APIs by Javeriya
