@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('promo_codes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('service', ['hotel', 'flight', 'transfer', 'activity', 'cruise', 'umrah', 'ziyarat', 'visa'])->default('hotel');
-            $table->string('code')->unique();
+            $table->string('code');
             $table->enum('type', ['flat', 'percentage'])->default('percentage');
             $table->integer('max_usage_per_user')->default(1);
             $table->date('start_date');

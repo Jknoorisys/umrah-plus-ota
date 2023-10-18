@@ -4,51 +4,71 @@
     <div class="card">
         <div class="card-body">
             <div class="p-4 border rounded">
-                <form class="row g-3">
+                <form class="row g-3 needs-validation" action="{{ route('promo-code.add') }}" method="POST" novalidate>
+                    @csrf
                     <div class="col-md-4">
-                        <label for="validationServer01" class="form-label">First name</label>
-                        <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
-                        <div class="valid-feedback">Looks good!</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="validationServer02" class="form-label">Last name</label>
-                        <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-                        <div class="valid-feedback">Looks good!</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="validationServerUsername" class="form-label">Username</label>
-                        <div class="input-group has-validation"> <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                            <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-                            <div id="validationServerUsernameFeedback" class="invalid-feedback">Please choose a username.</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="validationServer03" class="form-label">City</label>
-                        <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-                        <div id="validationServer03Feedback" class="invalid-feedback">Please provide a valid city.</div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="validationServer04" class="form-label">State</label>
-                        <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>...</option>
+                        <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
+                        <select class="form-select" name="service" id="service" required>
+                            <option disabled {{ old('service') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
+                            <option value="hotel">{{ trans('msg.admin.Hotel') }}</option>
+                            <option value="flight">{{ trans('msg.admin.Flight') }}</option>
+                            <option value="transfer">{{ trans('msg.admin.Transfer') }}</option>
+                            <option value="activity">{{ trans('msg.admin.Activities') }}</option>
+                            <option value="umrah">{{ trans('msg.admin.Umrah') }}</option>
+                            <option value="ziyarat">{{ trans('msg.admin.Ziyarat') }}</option>
+                            <option value="visa">{{ trans('msg.admin.Visa') }}</option>
                         </select>
-                        <div id="validationServer04Feedback" class="invalid-feedback">Please select a valid state.</div>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
                     </div>
-                    <div class="col-md-3">
-                        <label for="validationServer05" class="form-label">Zip</label>
-                        <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-                        <div id="validationServer05Feedback" class="invalid-feedback">Please provide a valid zip.</div>
+                    <div class="col-md-4">
+                        <label for="start_date" class="form-label">{{ trans('msg.admin.Start Date') }}</label>
+                        <input type="text" name="start_date" id="start_date" placeholder="{{ trans('msg.admin.Start Date') }}" value="{{ old('start_date') }}" class="form-control datepicker" required />
+                        <span class="text-danger">@error('start_date') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Start Date') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="expire_date" class="form-label">{{ trans('msg.admin.Expire Date') }}</label>
+                        <input type="text" name="expire_date" id="expire_date" placeholder="{{ trans('msg.admin.Expire Date') }}" value="{{ old('expire_date') }}" class="form-control datepicker" required />
+                        <span class="text-danger">@error('expire_date') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Expire Date') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="code" class="form-label">{{ trans('msg.admin.Code') }}</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="{{ trans('msg.admin.Ex FIRST50') }}" value="{{ old('code') }}" oninput="toUppercase()" required>
+                        <span class="text-danger">@error('code') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Promo Code') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="type" class="form-label">{{ trans('msg.admin.Discount Type') }}</label>
+                        <select class="form-select" name="type" id="type" required>
+                            <option {{ old('type') == '' ? 'selected' : '' }} disabled>{{ trans('msg.admin.Choose') }}...</option>
+                            <option value="flat">{{ trans('msg.admin.Flat') }}</option>
+                            <option value="percentage">{{ trans('msg.admin.Percentage') }}</option>
+                        </select>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid discount type') }}.</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="discount" class="form-label">{{ trans('msg.admin.Discount') }}</label>
+                        <input type="number" class="form-control" step="0.5" min="0" name="discount" id="discount" value="{{ old('discount') }}" placeholder="{{ trans('msg.admin.Discount') }}" required>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Discount') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="max_discount" class="form-label">{{ trans('msg.admin.Max Discount') }}</label>
+                        <input type="number" class="form-control" step="0.5" min="0" name="max_discount" value="{{ old('max_discount') }}" id="max_discount" placeholder="{{ trans('msg.admin.Max Discount') }}" required>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Max Discount') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="min_purchase" class="form-label">{{ trans('msg.admin.Min Purchase') }}</label>
+                        <input type="number" class="form-control" step="0.5" min="0" name="min_purchase" value="{{ old('min_purchase') }}" id="min_purchase" placeholder="{{ trans('msg.admin.Min Purchase') }}" required>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Min Purchase') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="max_usage_per_user" class="form-label">{{ trans('msg.admin.Max Usage Per User') }}</label>
+                        <input type="number" class="form-control" min="0" name="max_usage_per_user" id="max_usage_per_user" value="{{ old('max_usage_per_user') }}" placeholder="{{ trans('msg.admin.Max Usage Per User') }}" required>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Max Usage Per User') }}</div>
                     </div>
                     <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-                            <label class="form-check-label" for="invalidCheck3">Agree to terms and conditions</label>
-                            <div id="invalidCheck3Feedback" class="invalid-feedback">You must agree before submitting.</div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <button class="btn btn-primary" type="submit">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
                     </div>
                 </form>
             </div>
@@ -58,6 +78,11 @@
 
 @section('customJs')
     <script>
+        function toUppercase() {
+            var input = document.getElementById('code');
+            input.value = input.value.toUpperCase();
+        }
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
             (function () {
             'use strict'

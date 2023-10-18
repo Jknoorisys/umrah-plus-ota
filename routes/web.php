@@ -60,6 +60,10 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('list' , [ManagePromoCodes::class, 'list'])->name('promo-code.list');
         Route::get('add' , [ManagePromoCodes::class, 'addForm'])->name('promo-code.add-form');
         Route::post('add' , [ManagePromoCodes::class, 'add'])->name('promo-code.add');
+        Route::get('edit/{id}' , [ManagePromoCodes::class, 'editForm'])->name('promo-code.edit-form');
+        Route::post('edit/{id}' , [ManagePromoCodes::class, 'edit'])->name('promo-code.edit');
+        Route::post('delete' , [ManagePromoCodes::class, 'delete'])->name('promo-code.delete');
+        Route::post('change-status' , [ManageUsers::class, 'changeStatus'])->name('promo-code.change-status');
     });
 
 });

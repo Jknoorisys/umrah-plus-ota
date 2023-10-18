@@ -16,6 +16,9 @@
 		<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{ asset('assets/css/file-upload.css') }}">
+		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.css') }}" rel="stylesheet" />
+		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.time.css') }}" rel="stylesheet" />
+		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.date.css') }}" rel="stylesheet" />
 		<!-- loader-->
 		<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
 		<script src="{{ asset('assets/js/pace.min.js') }}"></script>
@@ -140,6 +143,10 @@
 		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datetimepicker/js/legacy.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.time.js') }}"></script>
+		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.date.js') }}"></script>
 		<!--notification js -->
 		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
@@ -155,6 +162,15 @@
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
 			});
+
+			$('.datepicker').pickadate({
+				selectMonths: true,
+				selectYears: true,
+				format: 'yyyy-mm-dd',
+				min: new Date(),
+			})
+
+			$('.timepicker').pickatime()
 
 			$('.single-select').select2({
 				theme: 'bootstrap4',
