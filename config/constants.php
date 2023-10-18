@@ -1,6 +1,7 @@
 <?php
 
     return [
+        'theme' => 'light-theme',
         'end-point' => env('ENDPOINT'),
         'secure-end-point' => env('SECURE_ENDPOINT'),
 

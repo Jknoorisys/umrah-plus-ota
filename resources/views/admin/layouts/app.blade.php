@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="{{config('constants.theme')}}">
 
 	<head>
 		<!-- Required meta tags -->
@@ -140,7 +140,6 @@
 		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-		<script src="{{ asset('assets/js/file-upload.js') }}"></script>
 		<!--notification js -->
 		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
@@ -163,6 +162,28 @@
 				placeholder: $(this).data('placeholder'),
 				allowClear: Boolean($(this).data('allow-clear')),
 			});
+
+			function toggleTheme() {
+				const htmlElement = document.getElementsByTagName('html')[0];
+				const sunIcon = document.getElementById('sun-icon');
+
+				let newTheme;
+				if (htmlElement.classList.contains('light-theme')) {
+					htmlElement.classList.remove('light-theme');
+					htmlElement.classList.add('dark-theme');
+					sunIcon.classList.remove('bxs-moon');
+					sunIcon.classList.add('bxs-sun');
+					newTheme = 'dark-theme';
+				} else {
+					htmlElement.classList.remove('dark-theme');
+					htmlElement.classList.add('light-theme');
+					sunIcon.classList.remove('bxs-sun');
+					sunIcon.classList.add('bxs-moon');
+					newTheme = 'light-theme';
+				}
+
+				document.cookie = `theme=${newTheme};path=/`;
+			}
 
 			document.addEventListener('DOMContentLoaded', function() {
 				var successMessageElement = document.getElementById('successMessage');
@@ -189,19 +210,6 @@
 				table.buttons().container()
 					.appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
 			} );
-		</script>
-		<script>
-			$('#fancy-file-upload').FancyFileUpload({
-				params: {
-					action: 'fileuploader'
-				},
-				maxfilesize: 1000000
-			});
-		</script>
-		<script>
-			$(document).ready(function () {
-				$('#image-uploadify').imageuploadify();
-			})
 		</script>
 		@yield('customJs')
 		<!--end javascript-->

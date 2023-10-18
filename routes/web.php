@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\ManagePromoCodes;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,12 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('view/{id}' , [ManageUsers::class, 'view'])->name('user.view');
         Route::get('send-notification' , [ManageUsers::class, 'sendNotificationForm'])->name('user.send-notification-form');
         Route::post('send-notification' , [ManageUsers::class, 'sendNotification'])->name('user.send-notification');
+    });
+
+    Route::prefix('promo-code')->group(function () {
+        Route::get('list' , [ManagePromoCodes::class, 'list'])->name('promo-code.list');
+        Route::get('add' , [ManagePromoCodes::class, 'addForm'])->name('promo-code.add-form');
+        Route::post('add' , [ManagePromoCodes::class, 'add'])->name('promo-code.add');
     });
 
 });

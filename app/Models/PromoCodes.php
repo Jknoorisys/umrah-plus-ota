@@ -24,7 +24,12 @@ class PromoCodes extends Model
         'service',
         'code',
         'type',
-        'value',
+        'max_usage_per_user',
+        'start_date',
+        'expire_date',
+        'discount',
+        'max_discount',
+        'min_purchase',
         'status',
     ];
 

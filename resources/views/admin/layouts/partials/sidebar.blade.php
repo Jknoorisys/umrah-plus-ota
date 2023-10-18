@@ -45,6 +45,22 @@
             </ul>
         </li>
 
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bxs-discount' ></i>
+                </div>
+                <div class="menu-title">{{ trans('msg.admin.Promo Codes') }}</div>
+            </a>
+            <ul>
+                <li> 
+                    <a href="{{ route('promo-code.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Promo Codes') }}</a>
+                </li>
+                <li> 
+                    <a href="{{ route('promo-code.add-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Add Promo Code') }}</a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
     <!--end navigation-->
 </div>

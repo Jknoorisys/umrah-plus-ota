@@ -32,8 +32,8 @@ body {
 .upload-area {
   width: 100%;
   max-width: 25rem;
-  background-color: var(--clr-white);
-  box-shadow: 0 10px 15px rgb(218, 229, 255);
+  background-color: transparent;
+  box-shadow: 0 10px 15px rgb(218 229 255 / 37%);
   border: 2px solid var(--clr-light-blue);
   border-radius: 24px;
   padding: 1.5rem 1.875rem 2rem 1.875rem;

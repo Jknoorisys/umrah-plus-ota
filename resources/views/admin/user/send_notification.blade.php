@@ -88,9 +88,10 @@
 @endsection
 
 @section('customJs')
+<script src="{{ asset('assets/js/file-upload.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $("#send_notification").on('input', function(e) {
+            $("#send_notification").on('change', function(e) {
                 e.preventDefault();
                 let valid = true;
                 let form = $(this).get(0);
