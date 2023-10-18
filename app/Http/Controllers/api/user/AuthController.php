@@ -85,6 +85,13 @@ class AuthController extends Controller
                     ], 400);
                 }
             }
+            else
+            {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => __('msg.registration.email-exist'),
+                ], 400);
+            }
         } catch (\Throwable $e) {
             return response()->json([
                 'status'  => 'failed',
@@ -343,6 +350,7 @@ class AuthController extends Controller
         $validator = Validator::make($req->all(), [
             'email' => 'required|email',
             'password'   => 'required',
+            
         ]);
 
         if ($validator->fails()) {
@@ -407,4 +415,177 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function socialRegister(Request $request)
+    {
+        $messages = [
+            'fname.required' => 'First name is required.',
+            'fname.max' => 'First name must not exceed :max characters.',
+            'lname.required' => 'Last name is required.',
+            'lname.max' => 'Last name must not exceed :max characters.',
+            'country_code.required' => 'Country code is required.',
+            
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'fname'     => ['required', 'string', 'max:255'],
+            'lname'     => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
+            'country_code' => ['required'],
+            'phone'     => ['required', 'numeric', Rule::unique('users')],
+            'password'  => ['required', 'string', 'min:8'],
+            'is_social'     => ['required', Rule::in(['0','1'])],
+            'social_type'   => [
+                'required',
+                Rule::in(['google','facebook']),
+            ],
+            'social_id'     => 'required',
+        ], $messages);
+
+        $errors = [];
+        foreach ($validator->errors()->messages() as $key => $value) {
+            $key = 'error_message';
+            $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+        }
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => $errors['error_message'] ? $errors['error_message'] : trans('msg.validation'),
+                'errors'    => $validator->errors()
+            ], 400);
+        }
+
+        try {
+            $user = User::where('email', $request->input('email'))->get();
+            // echo json_encode($request->all());exit;
+            if (!empty($user)) {
+                $otp = rand(100000, 999999);
+
+                $data = [
+                    'fname' => $request->fname, 
+                    'lname' => $request->lname,
+                    'password' => Hash::make($request->password),
+                    'email' => $request->email, 
+                    'country_code' => $request->country_code,
+                    'phone' => $request->phone, 
+                    'otp' => $otp,
+                    'is_social' => $request->is_social,
+                    'Social_type' => $request->social_type,
+                    'social_id' => $request->social_id,
+                ];
+
+                $insert = User::create($data);
+
+                if ($insert) {
+
+                    $name = $request->fname.' '.$request->lname;
+                    $insert->notify(New RegistrationEmail($name, $request->email, $otp));
+
+                    return response()->json([
+                        'status'    => 'success',
+                        'message'   => __('msg.registration.otp-sent'),
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status'    => 'failed',
+                        'message'   => __('msg.registration.otp-failed'),
+                    ], 400);
+                }
+            }
+            else
+            {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => __('msg.registration.email-exist'),
+                ], 400);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => __('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function socialLogin(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'email' => 'required|email',
+            'password'   => 'required',
+            'is_social'     => ['required', Rule::in(['0','1'])],
+            'social_type'   => [
+                'required',
+                Rule::in(['google','facebook']),
+            ],
+            'social_id'     => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status'    => 'failed',
+                    'errors'    =>  $validator->errors(),
+                    'message'   =>  trans('msg.validation'),
+                ], 400
+            );
+        } 
+
+        try {
+            $service = new Services();
+            $email = $req->email;
+            $password = $req->password;
+            $user  = User::where([['email','=',$req->email],['social_type','=',$req->social_type],['is_social','=',$req->is_social]])->first();
+
+            if(!empty($user)) 
+            {
+                if (Hash::check($password,$user->password)) {
+                    if ($user->status == 'active') {
+                        $claims = array(
+                            'exp'   => Carbon::now()->addDays(1)->timestamp,
+                            'uuid'  => $user->id
+                        );
+
+                        $token = $service->getSignedAccessTokenForUser($user, $claims);
+
+                        $user->JWT_token = $token;
+                        $user->is_verified = 'yes';
+                        $user->save();
+                        // $user = User::where('email','=',$req->email)->update(['is_verified'=>'yes']);
+                        return response()->json(
+                            [
+                                'status'    => 'success',
+                                'message'   =>   trans('msg.login.success'),
+                                'data'      => $user,
+                            ],200);
+                    } else {
+                        return response()->json(
+                            [
+                                'status'    => 'failed',
+                                'message'   =>  trans('msg.login.inactive'),
+                            ],400);
+                    }
+                }else {
+                    return response()->json([
+                            'status'    => 'failed',
+                            'message'   =>  trans('msg.login.invalid'),
+                    ], 400);
+                }
+            } else {
+                return response()->json([
+                        'status'    => 'failed',
+                        'message'   =>  trans('msg.login.not-found'),
+                ], 400);
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' =>  trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

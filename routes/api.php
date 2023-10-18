@@ -37,9 +37,11 @@ Route::middleware(['localization'])->group(function () {
     // User APIs by Aaisha
     Route::prefix('user')->group(function () {
         Route::post('register' , [UserAuthController::class, 'register']);
+        Route::post('socialRegister' , [UserAuthController::class, 'socialRegister']);
         Route::post('verifyOTP',[UserAuthController::class,'verifyOTP']);
         Route::post('resendregOTP',[UserAuthController::class,'resendRegOTP']);
         Route::post('login' , [UserAuthController::class, 'login']);
+        Route::post('socialLogin' , [UserAuthController::class, 'socialLogin']);
         Route::post('forgetpassword' , [UserAuthController::class, 'forgetpassword']);
         Route::post('forgotPasswordValidate',[UserAuthController::class,'forgotPasswordValidate']);
 
@@ -92,14 +94,8 @@ Route::middleware(['localization'])->group(function () {
         Route::post('content_single' , [ActivityContentController::class, 'content_single']);
         Route::post('content_multi' , [ActivityContentController::class, 'content_multi']);
         Route::post('hotels' , [ActivityContentController::class, 'hotels']);
-        Route::post('filterByDestination' , [ActivityBookingController::class, 'filterByDestination']);
-        Route::post('filterCalender' , [ActivityBookingController::class, 'filterCalender']);
-        Route::post('filterByFactsheet' , [ActivityBookingController::class, 'filterByFactsheet']);
-        Route::post('filterByActivity' , [ActivityBookingController::class, 'filterByActivity']);
-        Route::post('filterByHotel' , [ActivityBookingController::class, 'filterByHotel']);
-        Route::post('filterBySegment' , [ActivityBookingController::class, 'filterBySegment']);
-        Route::post('filterActivityModality' , [ActivityBookingController::class, 'filterActivityModality']);
-        Route::post('filterByPrices' , [ActivityBookingController::class, 'filterByPrices']);
+        Route::post('filterActivities' , [ActivityBookingController::class, 'filterActivities']);
+        
         
     });
   

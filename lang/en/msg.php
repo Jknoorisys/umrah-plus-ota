@@ -215,6 +215,7 @@ return [
         'otp-verified' => 'OTP Verified Successfully',
         'not-found' => 'User Not Found, Please Register First...',
         'inactive' => 'Account blocked by Admin',
+        'email-exist' => 'Email Already Exist',
     ],
 
     'reset-password' => [
