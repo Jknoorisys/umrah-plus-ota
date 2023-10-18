@@ -157,7 +157,7 @@ return [
 
     'alert' => [
         'Confirmation' => 'Confirmation',
-        'Are you sure you want to :action this user' => 'Are you sure you want to :action this user',
+        'Are you sure you want to :action this :type' => 'Are you sure you want to :action this :type',
         'Yes' => 'Yes',
         'No' => 'No',
     ],

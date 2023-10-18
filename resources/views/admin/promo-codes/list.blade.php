@@ -8,20 +8,22 @@
                     <thead>
                         <tr>
                             <th>{{ trans('msg.admin.No') }}.</th>
-                            <th>{{ trans('msg.admin.Name') }}</th>
-                            <th>{{ trans('msg.admin.Email') }}</th>
-                            <th>{{ trans('msg.admin.Phone') }}</th>
+                            <th>{{ trans('msg.admin.Service Type') }}</th>
+                            <th>{{ trans('msg.admin.Code') }}</th>
+                            <th>{{ trans('msg.admin.Discount Type') }}</th>
+                            <th>{{ trans('msg.admin.Discount') }}</th>
                             <th>{{ trans('msg.admin.Status') }}</th>
                             <th>{{ trans('msg.admin.Action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($codes as $code)
-                            {{-- <tr id="delete{{ $code->id }}">
+                            <tr id="delete{{ $code->id }}">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $code->fname. ' ' .$code->lname }}</td>
-                                <td>{{ $code->email }}</td>
-                                <td>{{ $code->country_code. '-'. $code->phone }}</td>
+                                <td>{{ Str::ucfirst($code->service) }}</td>
+                                <td>{{ $code->code }}</td>
+                                <td>{{ Str::ucfirst($code->type) }}</td>
+                                <td>{{ $code->discount }}</td>
                                 <td><span class="badge bg-{{ $code->status == 'active' ? 'primary' : 'warning' }}" id="status{{ $loop->iteration }}">{{ $code->status }}</span></td>
                                 <td>
                                     <div class="row">
@@ -32,7 +34,7 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('code.view', ['id' => $code->id]) }}">
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
                                                 <i class="bx bx-show-alt me-0"></i>
                                             </a>
                                         </div>
@@ -43,7 +45,7 @@
                                         </div>
                                     </div>                                   
                                 </td>
-                            </tr> --}}
+                            </tr>
                         @empty
                         @endforelse
                     </tbody>
@@ -70,7 +72,7 @@
         function confirmUpdatecodestatus(codeId, isActive, dataId) {
             Swal.fire({
                 title: "{{ trans('msg.alert.Confirmation') }}",
-                text: "{{ trans('msg.alert.Are you sure you want to :action this code', ['action' => 'update']) }}?",
+                text: "{{ trans('msg.alert.Are you sure you want to :action this :type', ['action' => 'update', 'type' => 'code']) }}?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
@@ -117,7 +119,7 @@
         function confirmDeletecode(codeId) {
             Swal.fire({
                 title: "{{ trans('msg.alert.Confirmation') }}",
-                text: "{{ trans('msg.alert.Are you sure you want to :action this code', ['action' => 'delete']) }}?",
+                text: "{{ trans('msg.alert.Are you sure you want to :action this :type', ['action' => 'delete', 'type' => 'code']) }}?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
