@@ -31,7 +31,7 @@ class ManageUsers extends Controller
             $data['user']            = $user;
             return view('admin.user.details', $data);
         } else {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => trans('msg.admin.User Not Found')]);
         }
     }
 

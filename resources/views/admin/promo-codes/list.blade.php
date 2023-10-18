@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="col-2">
                                             <a class="btn btn-outline-primary btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
-                                                <i class="bx bx-show-alt me-0"></i>
+                                                <i class="bx bx-pencil me-0"></i>
                                             </a>
                                         </div>
                                         <div class="col-2">

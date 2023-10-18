@@ -154,7 +154,9 @@ return [
         'Failed to add promo code. Please try again' => 'Failed to add promo code. Please try again',
         'Promo Code Not Found' => 'Promo Code Not Found',
         'Promo Code :status Successfully' => 'Promo Code :status Successfully',
-        
+        'Edit Promo Code' => 'Edit Promo Code',
+        'Promo code updated successfully' => 'Promo code updated successfully',
+        'Failed to update promo code. Please try again' => 'Failed to update promo code. Please try again',
     ],
 
     'alert' => [
