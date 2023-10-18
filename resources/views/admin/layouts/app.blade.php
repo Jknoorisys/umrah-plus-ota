@@ -219,6 +219,7 @@
 
 			$(document).ready(function() {
 				var table = $('#otaDataTable').DataTable( {
+					ordering: false,
 					lengthChange: false,
 					buttons: [ 'excel', 'pdf', 'print']
 				} );

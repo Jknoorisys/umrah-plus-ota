@@ -152,6 +152,8 @@ return [
         'Select Valid Promo Code Type' => 'Select Valid Promo Code Type',
         'Promo code added successfully' => 'Promo code added successfully',
         'Failed to add promo code. Please try again' => 'Failed to add promo code. Please try again',
+        'Promo Code Not Found' => 'Promo Code Not Found',
+        'Promo Code :status Successfully' => 'Promo Code :status Successfully',
         
     ],
 

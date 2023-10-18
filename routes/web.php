@@ -63,7 +63,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('edit/{id}' , [ManagePromoCodes::class, 'editForm'])->name('promo-code.edit-form');
         Route::post('edit/{id}' , [ManagePromoCodes::class, 'edit'])->name('promo-code.edit');
         Route::post('delete' , [ManagePromoCodes::class, 'delete'])->name('promo-code.delete');
-        Route::post('change-status' , [ManageUsers::class, 'changeStatus'])->name('promo-code.change-status');
+        Route::post('change-status' , [ManagePromoCodes::class, 'changeStatus'])->name('promo-code.change-status');
     });
 
 });

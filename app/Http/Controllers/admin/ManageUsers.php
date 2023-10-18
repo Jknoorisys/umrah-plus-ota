@@ -15,7 +15,7 @@ class ManageUsers extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Users');
-        $data['users']               = User::all();
+        $data['users']               = User::orderBy('created_at', 'desc')->get();
         
         return view('admin.user.list', $data);
     }
