@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('photo');
             $table->string('password');
-            $table->string('Social_login_type');
+            $table->enum('is_social', [0, 1])->default(0);
+            $table->string('social_id');
+            $table->enum('Social_type', ['facebook', 'google','simple'])->default('simple');
             $table->text('JWT_token');
             $table->enum('is_verified', ['no', 'yes'])->default('no');
             $table->enum('is_mobile_verified', ['no', 'yes'])->default('no');
