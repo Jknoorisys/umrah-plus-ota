@@ -102,7 +102,7 @@ class ManageUsers extends Controller
 
         $users = [];
         if ($validatedData['type'] === 'admin') {
-            $users = Admin::where([['type', 'admin'], ['status', '=', 'active']])->get();
+            $users = Admin::where([['role', 'admin'], ['status', '=', 'active']])->get();
         } elseif ($validatedData['type'] === 'user') {
             $users = User::where('status', 'active')->get();
         }
