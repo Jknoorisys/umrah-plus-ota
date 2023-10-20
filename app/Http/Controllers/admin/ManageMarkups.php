@@ -12,7 +12,7 @@ class ManageMarkups extends Controller
     public function list() {
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
-        $data['title']               = trans('msg.admin.Manage Promo Codes');
+        $data['title']               = trans('msg.admin.Manage Markups');
         $data['markups']               = Markup::orderBy('created_at', 'desc')->get();
         
         return view('admin.markups.list', $data);
@@ -35,12 +35,6 @@ class ManageMarkups extends Controller
     
         $markup->markup = $markupValue;
         $update = $markup->save();
-
-        // if ($update) {
-        //     return redirect()->route('markup.list')->with('success', trans('msg.admin.Markup updated successfully').'.');
-        // } else {
-        //     return redirect()->back()->with('error', trans('msg.admin.Failed to update Markup. Please try again').'...');
-        // }
 
         if ($update) {
             return response()->json(['message' => trans('msg.admin.Markup updated successfully').'.']);

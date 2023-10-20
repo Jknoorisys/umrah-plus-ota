@@ -159,6 +159,7 @@ return [
         'Failed to update promo code. Please try again' => 'Failed to update promo code. Please try again',
 
         // Manage Markups
+        'Manage Markups' => 'Manage Markups',
         'Markups' => 'Markups',
         'Markup' => 'Markup',
         'Markup not found' => 'Markup not found',
