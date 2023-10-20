@@ -157,6 +157,13 @@ return [
         'Edit Promo Code' => 'Edit Promo Code',
         'Promo code updated successfully' => 'Promo code updated successfully',
         'Failed to update promo code. Please try again' => 'Failed to update promo code. Please try again',
+
+        // Manage Markups
+        'Markups' => 'Markups',
+        'Markup' => 'Markup',
+        'Markup not found' => 'Markup not found',
+        'Markup updated successfully' => 'Markup updated successfully',
+        'Failed to update Markup. Please try again' => 'Failed to update Markup. Please try again',
     ],
 
     'alert' => [

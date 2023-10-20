@@ -96,7 +96,6 @@ class ManagePromoCodes extends Controller
         }
             
     }
-    
 
     public function changeStatus(Request $request) {
         $code = PromoCodes::find($request->code_id);
@@ -114,7 +113,6 @@ class ManagePromoCodes extends Controller
         } else {
             return response()->json(['error' => trans('msg.admin.Please try again...')]);
         }
-        
     }
 
     public function delete(Request $request)

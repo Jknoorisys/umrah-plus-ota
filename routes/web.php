@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\ManageMarkups;
 use App\Http\Controllers\admin\ManagePromoCodes;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ProfileController;
@@ -64,6 +65,12 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('edit' , [ManagePromoCodes::class, 'edit'])->name('promo-code.edit');
         Route::post('delete' , [ManagePromoCodes::class, 'delete'])->name('promo-code.delete');
         Route::post('change-status' , [ManagePromoCodes::class, 'changeStatus'])->name('promo-code.change-status');
+    });
+
+    Route::prefix('markup')->group(function () {
+        Route::get('list' , [ManageMarkups::class, 'list'])->name('markup.list');
+        // Route::get('edit/{id}' , [ManageMarkups::class, 'editForm'])->name('markup.edit-form');
+        Route::post('edit' , [ManageMarkups::class, 'edit'])->name('markup.edit');
     });
 
 });

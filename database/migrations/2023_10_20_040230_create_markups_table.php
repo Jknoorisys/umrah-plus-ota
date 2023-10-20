@@ -11,17 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('promo_codes', function (Blueprint $table) {
+        Schema::create('markups', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('service', ['hotel', 'flight', 'transfer', 'activity', 'umrah', 'ziyarat', 'visa'])->default('hotel');
-            $table->string('code');
-            $table->enum('type', ['flat', 'percentage'])->default('percentage');
-            $table->integer('max_usage_per_user')->default(1);
-            $table->date('start_date');
-            $table->date('expire_date');
-            $table->float('discount');
-            $table->float('max_discount');
-            $table->float('min_purchase');
+            $table->string('markup');
             $table->enum('status', ['active', 'inactive']);
             $table->softDeletes();            
             $table->timestamps();
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('promo_codes');
+        Schema::dropIfExists('markups');
     }
 };
