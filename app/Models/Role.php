@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
-class Admin extends Authenticatable implements JWTSubject
+class Role extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
+    use HasApiTokens, HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -24,13 +21,8 @@ class Admin extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'country_code',
-        'phone',
-        'photo',
         'role',
-        'password',
+        'status',
     ];
 
     /**
@@ -41,7 +33,7 @@ class Admin extends Authenticatable implements JWTSubject
     protected $hidden = [
         'created_at',
         'updated_at',
-        'password',
+        'deleted_at',
     ];
 
     /**
@@ -51,7 +43,6 @@ class Admin extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'id' => 'string', // Cast the UUID as a string
-        'password' => 'hashed',
     ];
 
     protected static function boot()
@@ -61,15 +52,5 @@ class Admin extends Authenticatable implements JWTSubject
         static::creating(function ($model) {
             $model->id = (string) Str::uuid();
         });
-    }
-    
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 }

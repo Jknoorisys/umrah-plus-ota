@@ -339,10 +339,10 @@
 
             <div class="user-box dropdown">
                 <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset(Auth::guard('admin')->user()->photo) ? asset(Auth::guard('admin')->user()->photo) : asset('assets/images/avatars/no-image.png')}}" class="user-img-square" alt="user avatar">
+                    <img src="{{ Auth::guard('admin')->user()->photo ? asset(Auth::guard('admin')->user()->photo) : asset('assets/images/avatars/no-image.png')}}" class="user-img-square" alt="user avatar">
                     <div class="user-info ps-3">
                         <p class="user-name mb-0">{{ Auth::guard('admin')->user()->fname . ' ' . Auth::guard('admin')->user()->lname }}</p>
-                        <p class="designattion mb-0">{{ str_replace('_', ' ', Str::upper(Auth::guard('admin')->user()->type)) }}</p>
+                        <p class="designattion mb-0">{{ str_replace('_', ' ', Str::upper(Auth::guard('admin')->user()->role)) }}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">

@@ -39,13 +39,13 @@
                     <div class="d-flex flex-column align-items-center text-center">
                         <div class="avatar-upload">
                             <div class="avatar-preview">
-                                <div id="imagePreview" style="background-image: url({{ $admin->photo ? $admin->photo : asset('assets/images/avatars/no-image.png')}});">
+                                <div id="imagePreview" style="background-image: url({{ $admin->photo ? asset($admin->photo) : asset('assets/images/avatars/no-image.png')}});">
                                 </div>
                             </div>
                         </div>
                         <div class="mt-1 mb-5">
                             <h4>{{ $admin->fname. ' '. $admin->lname }}</h4>
-                            <p class="text-secondary mb-1">{{ str_replace('_', ' ', Str::upper($admin->type)) }}</p>
+                            <p class="text-secondary mb-1">{{ str_replace('_', ' ', Str::upper($admin->role)) }}</p>
                         </div>
                     </div>
                 </div>
