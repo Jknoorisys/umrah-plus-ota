@@ -96,7 +96,7 @@ class ManageUsers extends Controller
         $data = [
             'title' => $request->title,
             'message' => $request->message,
-            'image' => $image_url ?? null,
+            'image' => $image_url ?? '',
             'type' => $request->type,
         ];
 
