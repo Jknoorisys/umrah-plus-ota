@@ -95,6 +95,9 @@ Route::middleware(['localization'])->group(function () {
         Route::post('content_multi' , [ActivityContentController::class, 'content_multi']);
         Route::post('hotels' , [ActivityContentController::class, 'hotels']);
         Route::post('filterActivities' , [ActivityBookingController::class, 'filterActivities']);
+        Route::post('Booking_Detail' , [ActivityBookingController::class, 'Booking_Detail']);
+        Route::post('Detail_full' , [ActivityBookingController::class, 'Detail_full']);
+        Route::post('retrivePickup' , [ActivityBookingController::class, 'retrivePickup']);
         
         
     });
