@@ -25,7 +25,7 @@ class ManageSubAdmins extends Controller
         $data['previous_title']      = trans('msg.admin.Manage Sub Admins');
         $data['url']                 = route('sub-admin.list');
         $data['title']               = trans('msg.admin.Add Sub Admin');
-        $data['roles']               = Role::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
+        $data['roles']               = Role::where([['status', '=', 'active'], ['role', '!=', 'super_admin']])->orderBy('created_at', 'desc')->get();
         $data['country']             = Country::all();
         
         return view('admin.sub-admins.add', $data);

@@ -13,22 +13,6 @@
   --clr-light-blue: rgb(171, 202, 255);
 }
 
-/* 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--clr-light);
-  color: var(--clr-black);
-  font-family: "Poppins", sans-serif;
-  font-size: 1.125rem;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* End General Styles */
-
 /* Upload Area */
 .upload-area {
   width: 100%;
@@ -62,13 +46,13 @@ body {
 }
 
 .upload-area__title {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 500;
-  margin-bottom: 0.3125rem;
+  margin-bottom: 0.125rem;
 }
 
 .upload-area__paragraph {
-  font-size: 0.9375rem;
+  font-size: 0.8rem;
   color: var(--clr-light-gray);
   margin-top: 0;
 }
@@ -116,7 +100,7 @@ body {
   flex-direction: column;
   border: 2px dashed var(--clr-light-blue);
   border-radius: 15px;
-  margin-top: 2.1875rem;
+  /* margin-top: 2.1875rem; */
   cursor: pointer;
   transition: border-color 300ms ease-in-out;
 }
@@ -127,13 +111,13 @@ body {
 
 .drop-zoon__icon {
   display: flex;
-  font-size: 3.75rem;
+  font-size: 3.1rem;
   color: var(--clr-blue);
   transition: opacity 300ms ease-in-out;
 }
 
 .drop-zoon__paragraph {
-  font-size: 0.9375rem;
+  font-size: 0.8rem;
   color: var(--clr-light-gray);
   margin: 0;
   margin-top: 0.625rem;

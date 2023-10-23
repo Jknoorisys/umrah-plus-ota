@@ -29,7 +29,7 @@
                                 <span class="err_message text-danger">@error('message') {{$message}} @enderror</span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mt-4">
                             <div class="col-md-12">
                                 <div id="uploadArea" class="upload-area">
                                     <!-- Header -->
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-12 mt-4">
                             <button class="btn btn-primary" type="submit">{{ trans('msg.admin.Send Notification') }}</button>
                         </div>
                     </div>

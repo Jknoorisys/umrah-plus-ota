@@ -77,7 +77,7 @@
                                     File should be an image
                                     <strong class="upload-area__tooltip">
                                       Like
-                                      <span class="upload-area__tooltip-data"></span> <!-- Data Will be Comes From Js -->
+                                      <span class="upload-area__tooltip-data"></span> 
                                     </strong>
                                   </p>
                                 </div>
