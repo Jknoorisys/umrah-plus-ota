@@ -95,6 +95,28 @@ return [
         'User deleted successfully' => 'User deleted successfully',
         'User Details' => 'User Details',
 
+        // Manage Sub Admins
+        'Manage Sub Admins' => 'Manage Sub Admins',
+        'Sub Admins' => 'Sub Admins',
+        'Add Sub Admin' => 'Add Sub Admin',
+        'Enter Valid Name' => 'Enter Valid Name',
+        'Enter Valid Email Address' => 'Enter Valid Email Address',
+        'Enter Valid Phone Number' => 'Enter Valid Phone Number',
+        'Enter Valid Password' => 'Enter Valid Password',
+        'Enter Valid Confirm Password' => 'Enter Valid Confirm Password',
+        'Sub Admin Added Successfully' => 'Sub Admin Added Successfully',
+        'Unable to add Sub Admin, Please try again' => 'Unable to add Sub Admin, Please try again',
+        'Sub Admin Not Found' => 'Sub Admin Not Found',
+        'Sub Admin :status Successfully' => 'Sub Admin :status Successfully',
+        'Edit Sub Admin' => 'Edit Sub Admin',
+        'Sub Admin updated successfully' => 'Sub Admin updated successfully',
+        'Unable to update Sub Admin, Please try again' => 'Unable to update Sub Admin, Please try again',
+        'Sub Admin Details' => 'Sub Admin Details',
+        'Role' => 'Role',
+        'Select Role' => 'Select Role',
+        'Please Select Valid Role' => 'Please Select Valid Role',
+        'Select Valid Profile Photo' => 'Select Valid Profile Photo',
+
         // Send Notification to all Users
         'Send Notification' => 'Send Notification',
         'Title' => 'Title',

@@ -38,6 +38,24 @@
             </ul>
         </li>
 
+        {{-- Manage Sub Admins --}}
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon">
+                    <i class='bx bxs-user-detail'></i>
+                </div>
+                <div class="menu-title">{{ trans('msg.admin.Sub Admins') }}</div>
+            </a>
+            <ul>
+                <li> 
+                    <a href="{{ route('sub-admin.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Sub Admins') }}</a>
+                </li>
+                <li> 
+                    <a href="{{ route('sub-admin.add-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Add Sub Admin') }}</a>
+                </li>
+            </ul>
+        </li>
+
         {{-- Manage Promo Codes --}}
         <li>
             <a href="javascript:;" class="has-arrow">

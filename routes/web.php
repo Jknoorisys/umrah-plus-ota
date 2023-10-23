@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ManageMarkups;
 use App\Http\Controllers\admin\ManagePromoCodes;
+use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,17 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('send-notification' , [ManageUsers::class, 'sendNotification'])->name('user.send-notification');
     });
 
+    Route::prefix('sub-admin')->group(function () {
+        Route::get('list' , [ManageSubAdmins::class, 'list'])->name('sub-admin.list');
+        Route::get('add' , [ManageSubAdmins::class, 'addForm'])->name('sub-admin.add-form');
+        Route::post('add' , [ManageSubAdmins::class, 'add'])->name('sub-admin.add');
+        Route::get('edit/{id}' , [ManageSubAdmins::class, 'editForm'])->name('sub-admin.edit-form');
+        Route::post('edit' , [ManageSubAdmins::class, 'edit'])->name('sub-admin.edit');
+        Route::post('delete' , [ManageSubAdmins::class, 'delete'])->name('sub-admin.delete');
+        Route::post('change-status' , [ManageSubAdmins::class, 'changeStatus'])->name('sub-admin.change-status');
+
+    });
+
     Route::prefix('promo-code')->group(function () {
         Route::get('list' , [ManagePromoCodes::class, 'list'])->name('promo-code.list');
         Route::get('add' , [ManagePromoCodes::class, 'addForm'])->name('promo-code.add-form');
@@ -69,7 +81,6 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::prefix('markup')->group(function () {
         Route::get('list' , [ManageMarkups::class, 'list'])->name('markup.list');
-        // Route::get('edit/{id}' , [ManageMarkups::class, 'editForm'])->name('markup.edit-form');
         Route::post('edit' , [ManageMarkups::class, 'edit'])->name('markup.edit');
     });
 

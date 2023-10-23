@@ -80,6 +80,7 @@
                         <div class="col-md-12 mt-2">
                             <button class="btn btn-primary" type="submit">{{ trans('msg.admin.Send Notification') }}</button>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -88,7 +89,7 @@
 @endsection
 
 @section('customJs')
-<script src="{{ asset('assets/js/file-upload.js') }}"></script>
+    <script src="{{ asset('assets/js/file-upload.js') }}"></script>
     <script>
         $(document).ready(function() {
             $("#send_notification").on('change', function(e) {

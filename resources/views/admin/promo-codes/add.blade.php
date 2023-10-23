@@ -18,6 +18,7 @@
                             <option value="ziyarat">{{ trans('msg.admin.Ziyarat') }}</option>
                             <option value="visa">{{ trans('msg.admin.Visa') }}</option>
                         </select>
+                        <span class="text-danger">@error('service') {{$message}} @enderror</span>
                         <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
                     </div>
                     <div class="col-md-4">
@@ -45,6 +46,7 @@
                             <option value="flat">{{ trans('msg.admin.Flat') }}</option>
                             <option value="percentage">{{ trans('msg.admin.Percentage') }}</option>
                         </select>
+                        <span class="text-danger">@error('type') {{$message}} @enderror</span>
                         <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid discount type') }}.</div>
                     </div>
                     <div class="col-md-4">
