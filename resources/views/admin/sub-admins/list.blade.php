@@ -33,11 +33,11 @@
                                                 <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $admin->status == 'active' ? 'checked' : '' }} data-admin-id="{{ $admin->id }}"  data-id="{{ $loop->iteration }}">
                                             </div>
                                         </div>
-                                        <div class="col-2">
+                                        {{-- <div class="col-2">
                                             <a class="btn btn-outline-primary btn-sm" href="{{ route('sub-admin.edit-form', ['id' => $admin->id]) }}">
                                                 <i class="bx bx-pencil me-0"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-2">
                                             <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleteadmin('{{ $admin->id }}', {{ $loop->iteration }})">
                                                 <i class="bx bx-trash-alt me-0"></i>
