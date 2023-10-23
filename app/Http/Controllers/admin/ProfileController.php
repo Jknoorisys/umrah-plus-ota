@@ -131,4 +131,10 @@ class ProfileController extends Controller
             return redirect()->route('settings')->with('error', trans('msg.admin.Unable to change password. Please try again')).'...';
         }
     }
+
+    public function markAllRead() {
+        $admin = Admin::find(Auth::guard('admin')->user()->id);
+        $admin->unreadNotifications->markAsRead();
+        return redirect()->back()->with('success', trans('msg.admin.Notifications Marked as Read Successfully'));
+    }
 }

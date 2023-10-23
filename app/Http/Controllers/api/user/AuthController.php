@@ -135,7 +135,7 @@ class AuthController extends Controller
                             'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
                         ];
         
-                        $admin = Admin::first();
+                        $admin = Admin::where('role', '=', 'super_admin')->first();
                         $admin->notify(new AdminNotification($message));
     
                         return response()->json([

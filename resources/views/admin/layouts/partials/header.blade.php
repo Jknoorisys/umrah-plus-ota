@@ -221,8 +221,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown dropdown-large">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="notification-alert-count">7</span>
+                    <li class="nav-item dropdown dropdown-large d-none">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="notification-alert-count">{{ Auth::guard('admin')->user()->unreadNotifications->count() }}</span>
                             <i class='bx bx-bell notification-icon'></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
@@ -334,6 +334,39 @@
                             </a>
                         </div>
                     </li>
+
+                    @if(Auth::guard('admin')->check())
+                        <li class="nav-item dropdown dropdown-large">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="notification-alert-count">{{ Auth::guard('admin')->user()->unreadNotifications->count() }}</span>
+                                <i class='bx bx-bell notification-icon'></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="{{ route('mark-all-read') }}">
+                                    <div class="msg-header">
+                                        <p class="msg-header-title">{{ trans('msg.admin.Notifications') }}</p>
+                                        <p class="msg-header-clear ms-auto">{{ trans('msg.admin.Mark all as Read') }}</p>
+                                    </div>
+                                </a>
+                                <div class="header-notifications-list">
+                                    @foreach(Auth::guard('admin')->user()->unreadNotifications as $notification)
+                                        <a class="dropdown-item" href="javascript:;">
+                                            <div class="d-flex align-items-center">
+                                                <div class="notify bg-light-primary text-primary"><i class="bx bx-group"></i></div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="msg-name">{{ $notification->data['title'] }}<span class="msg-time float-end">{{ $notification->created_at->diffForHumans() }}</span></h6>
+                                                    <p class="msg-info">{{ $notification->data['message'] }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @endforeach
+                                </div>
+                                <a href="#">
+                                    <div class="text-center msg-footer">{{ trans('msg.admin.View All Notifications') }}</div>
+                                </a>
+                            </div>
+                        </li>
+                    @endif
                 </ul>
             </div>
 

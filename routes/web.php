@@ -48,6 +48,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('upload-image' , [ProfileController::class, 'uploadImage'])->name('upload-image');
     Route::any('settings' , [ProfileController::class, 'settings'])->name('settings');
     Route::post('change-password' , [ProfileController::class, 'changePassword'])->name('change-password');
+    Route::get('mark-all-read', [ProfileController::class, 'markAllRead'])->name('mark-all-read');
+
 
     Route::prefix('user')->group(function () {
         Route::get('list' , [ManageUsers::class, 'list'])->name('user.list');

@@ -34,6 +34,10 @@ return [
         'Logout'  => 'Logout',
         'Profile' => 'Profile',
         'Settings' => 'Settings',
+        'View All Notifications' => 'View All Notifications',
+        'Mark all as Read' => 'Mark all as Read',
+        'Notifications' => 'Notifications',
+        'Notifications Marked as Read Successfully' => 'Notifications Marked as Read Successfully',
 
         // Sidebar
         'Dashboard' => 'Dashboard',
