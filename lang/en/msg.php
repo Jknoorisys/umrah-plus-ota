@@ -158,6 +158,7 @@ return [
         'Ziyarat' => 'Ziyarat',
         'Visa' => 'Visa',
         'Promo Code Not Found' => 'Promo Code Not Found',
+        'Discount can not be greater than 5%. Please try again' => 'Discount can not be greater than 5%. Please try again',
         'Promo Code :status Successfully' => 'Promo Code :status Successfully',
         'Promo Code Details' => 'Promo Code Details',
         'Promo Code' => 'Promo Code',
@@ -173,12 +174,12 @@ return [
         'Enter Valid Max Usage Per User' => 'Enter Valid Max Usage Per User',
         'Select Valid Promo Code Type' => 'Select Valid Promo Code Type',
         'Promo code added successfully' => 'Promo code added successfully',
-        'Failed to add promo code. Please try again' => 'Failed to add promo code. Please try again',
+        'Failed to add promo code' => 'Failed to add promo code',
         'Promo Code Not Found' => 'Promo Code Not Found',
         'Promo Code :status Successfully' => 'Promo Code :status Successfully',
         'Edit Promo Code' => 'Edit Promo Code',
         'Promo code updated successfully' => 'Promo code updated successfully',
-        'Failed to update promo code. Please try again' => 'Failed to update promo code. Please try again',
+        'Failed to update promo code' => 'Failed to update promo code',
 
         // Manage Markups
         'Manage Markups' => 'Manage Markups',

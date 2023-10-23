@@ -119,37 +119,37 @@ class ManageSubAdmins extends Controller
             
     // }
 
-    // public function changeStatus(Request $request) {
-    //     $code = Admin::find($request->code_id);
+    public function changeStatus(Request $request) {
+        $admin = Admin::find($request->admin_id);
 
-    //     if (!$code) {
-    //         return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
-    //     }
+        if (!$admin) {
+            return response()->json(['error' => trans('msg.admin.Sub Admin Not Found')]);
+        }
 
-    //     $code->status = $request->status;
-    //     $update = $code->save();
+        $admin->status = $request->status;
+        $update = $admin->save();
 
-    //     if ($update) {
-    //         $status = $request->status == 'active' ? 'Activated' : 'Deactivated';
-    //         return response()->json(['message' => trans('msg.admin.Promo Code :status Successfully', ['status' => $status])]);
-    //     } else {
-    //         return response()->json(['error' => trans('msg.admin.Please try again...')]);
-    //     }
-    // }
+        if ($update) {
+            $status = $request->status == 'active' ? 'Activated' : 'Deactivated';
+            return response()->json(['message' => trans('msg.admin.Sub Admin :status Successfully', ['status' => $status])]);
+        } else {
+            return response()->json(['error' => trans('msg.admin.Please try again...')]);
+        }
+    }
 
-    // public function delete(Request $request)
-    // {
-    //     $code = Admin::find($request->code_id);
-    //     if (!$code) {
-    //         return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
-    //     }
+    public function delete(Request $request)
+    {
+        $admin = Admin::find($request->admin_id);
+        if (!$admin) {
+            return response()->json(['error' => trans('msg.admin.Sub Admin Not Found')]);
+        }
 
-    //     $delete = $code->delete();
+        $delete = $admin->delete();
 
-    //     if ($delete) {
-    //         return response()->json(['message' => trans('msg.admin.Promo Code :status Successfully', ['status' => 'Deleted'])]);
-    //     } else {
-    //         return response()->json(['error' => trans('msg.admin.Please try again...')]);
-    //     }
-    // }
+        if ($delete) {
+            return response()->json(['message' => trans('msg.admin.Sub Admin :status Successfully', ['status' => 'Deleted'])]);
+        } else {
+            return response()->json(['error' => trans('msg.admin.Please try again...')]);
+        }
+    }
 }

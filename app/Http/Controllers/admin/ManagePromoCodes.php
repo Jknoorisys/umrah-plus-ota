@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Markup;
 use App\Models\PromoCodes;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,8 @@ class ManagePromoCodes extends Controller
     }
 
     public function add(Request $request) {
+        $markup = Markup::where('service', $request->service)->first()->value('markup');
+
         $validatedData = $request->validate([
             'service' => 'required',
             'start_date' => 'required|date',
@@ -35,18 +38,22 @@ class ManagePromoCodes extends Controller
                 return $query->where('service', $request->service);
             })],
             'type' => 'required',
-            'discount' => 'required|numeric|min:0',
             'max_discount' => 'required|numeric|min:0',
             'min_purchase' => 'required|numeric|min:0',
             'max_usage_per_user' => 'required|numeric|min:0',
+            'discount' => ['required', 'numeric', 'min:0'],
         ]);
+    
+        if ($request->type == 'percentage' && $request->discount >= $markup && $request->discount > 5 ) {
+            return redirect()->back()->with('error', trans('msg.admin.Discount can not be greater than 5%').'.')->withInput();
+        }
 
         $insert = PromoCodes::create($validatedData);
 
         if ($insert) {
             return redirect()->back()->with('success', trans('msg.admin.Promo code added successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to add promo code. Please try again').'...')->withInput();
+            return redirect()->back()->with('error', trans('msg.admin.Failed to add promo code'))->withInput();
         }
     }
 
@@ -92,7 +99,7 @@ class ManagePromoCodes extends Controller
         if ($update) {
             return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code updated successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to update promo code. Please try again').'...');
+            return redirect()->back()->with('error', trans('msg.admin.Failed to update promo code').'.');
         }
             
     }
