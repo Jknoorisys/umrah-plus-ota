@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Country;
 use App\Models\Role;
+use App\Notifications\SubAdminRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -66,6 +67,8 @@ class ManageSubAdmins extends Controller
         $insert = Admin::create($adminData);
 
         if ($insert) {
+            $name = $request->fname.' '.$request->lname;
+            $insert->notify(new SubAdminRegistration($name, $request->email, $request->password));
             return redirect()->back()->with('success', trans('msg.admin.Sub Admin Added Successfully').'.');
         } else {
             return redirect()->back()->with('error', trans('msg.admin.Unable to add Sub Admin, Please try again').'...')->withInput();
