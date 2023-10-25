@@ -8,6 +8,8 @@ use App\Http\Controllers\api\activity\BookingController as ActivityBookingContro
 use App\Http\Controllers\api\hotels\ContentController;
 use App\Http\Controllers\api\transfer\ContentController as TransferContentController;
 use App\Http\Controllers\api\activity\ContentController as ActivityContentController;
+use App\Http\Controllers\api\umrah\UmrahController;
+use App\Http\Controllers\api\umrah\ZiyaratController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use Illuminate\Http\Request;
@@ -149,6 +151,17 @@ Route::middleware(['localization'])->group(function () {
         Route::get('groupcategories' , [ContentController::class, 'groupcategories']);
         Route::get('ratecomments' , [ContentController::class, 'ratecomments']);
         Route::get('ratecommentdetails' , [ContentController::class, 'ratecommentdetails']);
+    });
+
+    // Umrah Packages API
+    Route::prefix('umrah')->group(function () {
+        Route::post('list' , [UmrahController::class, 'list']);
+        Route::post('view' , [UmrahController::class, 'view']);
+    });
+
+    // Ziyarat Packages API
+    Route::prefix('ziyarat')->group(function () {
+        Route::post('list' , [ZiyaratController::class, 'list']);
     });
 });
 
