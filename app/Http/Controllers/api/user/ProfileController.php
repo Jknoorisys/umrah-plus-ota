@@ -97,7 +97,7 @@ class ProfileController extends Controller
                 'email'     => $request->input('email', $user->email),
                 'country_code' => $request->input('country_code', $user->country_code),
                 'phone'     => $request->input('phone', $user->phone),
-                'photo' => $request->photo ? 'assets/uploads/user-logos/'.$user->photo : 'assets/uploads/user-logos/'.$user->photo,
+                'photo' => $request->photo ? 'assets/uploads/user-photos/'.$user->photo : 'assets/uploads/user-photos/'.$user->photo,
             ];
     
             $update = $user->update($data);

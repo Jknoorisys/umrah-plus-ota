@@ -320,7 +320,7 @@ class ContentController extends Controller
                 'Accept' => 'application/json',
                 'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
-            ])->get(config('constants.end-point').'/transfer-cache-api/1.0/locations/categories?'. $queryString);
+            ])->get(config('constants.end-point').'/transfer-cache-api/1.0/masters/categories?'. $queryString);
         
             $responseData = $response->json();
 

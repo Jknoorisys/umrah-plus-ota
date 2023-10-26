@@ -8,6 +8,8 @@ use App\Http\Controllers\api\activity\BookingController as ActivityBookingContro
 use App\Http\Controllers\api\hotels\ContentController;
 use App\Http\Controllers\api\transfer\ContentController as TransferContentController;
 use App\Http\Controllers\api\activity\ContentController as ActivityContentController;
+use App\Http\Controllers\api\umrah\UmrahController;
+use App\Http\Controllers\api\umrah\ZiyaratController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use Illuminate\Http\Request;
@@ -74,7 +76,8 @@ Route::middleware(['localization'])->group(function () {
         Route::post('AvailableRoutes' , [TransferBookingController::class, 'AvailableRoutes']);
 
         // BOOKING
-        Route::post('bookings' , [BookingController::class, 'bookings']);
+        Route::post('confirmGPS' , [TransferBookingController::class, 'confirmGPS']);
+        Route::post('TransferPromoCode' , [TransferBookingController::class, 'TransferPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -98,6 +101,9 @@ Route::middleware(['localization'])->group(function () {
         Route::post('Booking_Detail' , [ActivityBookingController::class, 'Booking_Detail']);
         Route::post('Detail_full' , [ActivityBookingController::class, 'Detail_full']);
         Route::post('retrivePickup' , [ActivityBookingController::class, 'retrivePickup']);
+        Route::post('Availability' , [ActivityBookingController::class, 'Availability']);
+        Route::post('ActivityPromoCode' , [ActivityBookingController::class, 'ActivityPromoCode']);
+        Route::post('BookingConfirm' , [ActivityBookingController::class, 'BookingConfirm']);
         
         
     });
@@ -112,6 +118,7 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('bookings' , [BookingController::class, 'bookings']);
+        Route::post('HotelPromoCode' , [BookingController::class, 'HotelPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -149,6 +156,17 @@ Route::middleware(['localization'])->group(function () {
         Route::get('groupcategories' , [ContentController::class, 'groupcategories']);
         Route::get('ratecomments' , [ContentController::class, 'ratecomments']);
         Route::get('ratecommentdetails' , [ContentController::class, 'ratecommentdetails']);
+    });
+
+    // Umrah Packages API
+    Route::prefix('umrah')->group(function () {
+        Route::post('list' , [UmrahController::class, 'list']);
+        Route::post('view' , [UmrahController::class, 'view']);
+    });
+
+    // Ziyarat Packages API
+    Route::prefix('ziyarat')->group(function () {
+        Route::post('list' , [ZiyaratController::class, 'list']);
     });
 });
 
