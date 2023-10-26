@@ -97,7 +97,7 @@ class HotelMasterController extends Controller
             $search = $request->search ? $request->search : '';
 
             $destinations = MasterDestination::where('destination', 'like', '%'.$search.'%')->get();
-            $total = MasterDestination::count();
+            $total = $destinations->count();
 
             if (!empty($destinations)) {
                 return response()->json([
