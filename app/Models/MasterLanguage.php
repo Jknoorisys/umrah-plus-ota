@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class MasterCountry extends Model
+class MasterLanguage extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
@@ -18,9 +18,8 @@ class MasterCountry extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'isoCode',
         'code',
-        'country',
+        'language',
     ];
 
     /**

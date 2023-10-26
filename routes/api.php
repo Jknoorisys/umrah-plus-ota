@@ -162,6 +162,7 @@ Route::middleware(['localization'])->group(function () {
     // Master APIs by Javeriya
     Route::prefix('master')->group(function () {
         Route::get('countries' , [HotelMasterController::class, 'countries']);
+        Route::get('languages' , [HotelMasterController::class, 'languages']);
     });
 
     // Umrah Packages API by Javeriya

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterCountry;
+use App\Models\MasterHotel;
+use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -105,6 +107,16 @@ class ContentController extends Controller
             $responseData = $response->json();
             
             $status = $response->status();
+            // Create Master Hotels Data
+            $hotels = $responseData['hotels'];
+            // return $hotels;
+            foreach ($hotels as $hotel) {
+                $hotelData = [
+                    'code' => $hotel['code'],
+                    'hotel' => $hotel['name']['content'],
+                ];
+                $hotel = MasterHotel::create($hotelData);
+            }exit;
 
             if ($status == "200") {
                 return response()->json([
@@ -1140,6 +1152,16 @@ class ContentController extends Controller
             $responseData = $response->json();
             
             $status = $response->status();
+
+            // Create Master Language Data
+            // $languages = $responseData['languages'];
+            // foreach ($languages as $language) {
+            //     $languageData = [
+            //         'code' => $language['code'],
+            //         'language' => $language['description']['content'],
+            //     ];
+            //     $language = MasterLanguage::create($languageData);
+            // }
 
             if ($status == "200") {
                 return response()->json([
