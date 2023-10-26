@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class MasterHotel extends Model
+class MasterDestination extends Model
 {
+    use HasFactory;
     use HasFactory;
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -19,7 +20,7 @@ class MasterHotel extends Model
      */
     protected $fillable = [
         'code',
-        'hotel',
+        'destination',
     ];
 
     /**

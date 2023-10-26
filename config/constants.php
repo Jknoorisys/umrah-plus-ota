@@ -2,6 +2,8 @@
 
     return [
         'theme' => 'light-theme',
+        'from'  => 1,
+        'to'    => 500,
         'end-point' => env('ENDPOINT'),
         'secure-end-point' => env('SECURE_ENDPOINT'),
 

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterCountry;
+use App\Models\MasterDestination;
 use App\Models\MasterHotel;
 use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 
 class ContentController extends Controller
 {
@@ -35,7 +37,7 @@ class ContentController extends Controller
     public function hotels(Request $request) {
 
         try {
-            $data = [];        
+            $data = [];       
     
             $destinationCode = $request->destinationCode ? $request->destinationCode : "";
             if (!empty($destinationCode) && isset($destinationCode)) {
@@ -92,37 +94,51 @@ class ContentController extends Controller
                 $data['PMSRoomCode']= $request->PMSRoomCode;
             }
 
-            $queryString = http_build_query($data);
-
-            $Signature = self::calculateSignature();
-
-            $response = Http::withHeaders([
-                'Api-key' => config('constants.hotel.Api-key'),
-                'X-Signature' => $Signature,
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-                'Content-Type' => 'application/json',
-            ])->get(config('constants.end-point').'/hotel-content-api/1.0/hotels?'. $queryString);
+            // $from = 175133;
+            // $to = 175633;
             
-            $responseData = $response->json();
+            // while ($to <= 163896) {
+            //     $data['from'] = $from;
+            //     $data['to'] = $to;
             
-            $status = $response->status();
-            // Create Master Hotels Data
-            $hotels = $responseData['hotels'];
-            // return $hotels;
-            foreach ($hotels as $hotel) {
-                $hotelData = [
-                    'code' => $hotel['code'],
-                    'hotel' => $hotel['name']['content'],
-                ];
-                $hotel = MasterHotel::create($hotelData);
-            }exit;
+                $queryString = http_build_query($data);
+            
+                $Signature = self::calculateSignature();
+            
+                $response = Http::withHeaders([
+                    'Api-key' => config('constants.hotel.Api-key'),
+                    'X-Signature' => $Signature,
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                    'Content-Type' => 'application/json',
+                ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
+            
+                $responseData = $response->json();
+            
+                $status = $response->status();
+                // Create Master Hotels Data
+                // $hotels = $responseData['hotels'];
+                // return $hotels;
+                // foreach ($hotels as $hotel) {
+                //     $hotelData = [
+                //         'code' => $hotel['code'],
+                //         'hotel' => $hotel['name']['content'],
+                //     ];
+                //     $hotel = MasterHotel::create($hotelData);
+                // }
+            
+            //     $from = $to + 1;
+            //     $to = $to + 500;
+            // }
+            
+
+            // exit;
 
             if ($status == "200") {
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData
+                    // 'data'      => $responseData
                 ],$status);
             } else {
                 return response()->json([
@@ -362,6 +378,16 @@ class ContentController extends Controller
             $responseData = $response->json();
             
             $status = $response->status();
+
+            // Create Master Country Data
+            $destinations = $responseData['destinations'];
+            foreach ($destinations as $destination) {
+                $destinationData = [
+                    'code' => $destination['code'],
+                    'destination' => $destination['name']['content'],
+                ];
+                $destination = MasterDestination::create($destinationData);
+            }
 
             if ($status == "200") {
                 return response()->json([
