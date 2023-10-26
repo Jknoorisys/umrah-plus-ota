@@ -61,4 +61,13 @@ class PromoCodes extends Model
             $model->id = (string) Str::uuid();
         });
     }
+
+    public function isExpired() {
+        return now()->greaterThan($this->expire_date);
+    }
+
+    public function hasUserReachedMaxUsage(User $user) {
+        $userUsageCount = $user->promoCodeUsages()->where('promo_code_id', $this->id)->count();
+        return $userUsageCount >= $this->max_usage_per_user;
+    }
 }
