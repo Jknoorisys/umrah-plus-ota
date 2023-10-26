@@ -17,12 +17,12 @@ class Localization
     public function handle(Request $request, Closure $next): Response
     {
         // Check if 'language' header is present
-        if (!$request->hasHeader('Accept-Language')) {
-            return response()->json([
-                'status' => 'failed',
-                'message' =>trans('msg.localization'),
-            ], 400);
-        }
+        // if (!$request->hasHeader('Accept-Language')) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'message' =>trans('msg.localization'),
+        //     ], 400);
+        // }
 
         // Check header request and determine localization
         $local = ($request->hasHeader('Accept-Language')) ? ($request->header('Accept-Language') ?: 'en') : 'en';

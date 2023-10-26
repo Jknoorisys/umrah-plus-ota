@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -251,6 +252,17 @@ class ContentController extends Controller
             ])->get(config('constants.end-point').'/hotel-content-api/1.0/locations/countries?'. $queryString);
             
             $responseData = $response->json();
+
+            // Create Master Country Data
+            // $countries = $responseData['countries'];
+            // foreach ($countries as $country) {
+            //     $countryData = [
+            //         'code' => $country['code'],
+            //         'isoCode' => $country['isoCode'],
+            //         'country' => $country['description']['content'],
+            //     ];
+            //     $country = MasterCountry::create($countryData);
+            // }
             
             $status = $response->status();
 
