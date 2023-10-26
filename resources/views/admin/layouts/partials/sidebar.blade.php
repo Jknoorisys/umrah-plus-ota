@@ -1,88 +1,123 @@
-<div class="sidebar-wrapper" data-simplebar="true">
-
-    <div class="sidebar-header">
-        <div>
-            <img src="{{ asset('assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
-        </div>
-        <div>
-            <h4 class="logo-text">OTA</h4>
-        </div>
-        <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-        </div>
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href="{{ route('dashboard') }}">
+        <img src="{{ asset('assets/img/logo-ct.png') }}" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold text-white" style="font-size: 20px;">O T A</span>
+      </a>
     </div>
-    <!--navigation-->
-    
-    <ul class="metismenu" id="menu">
+    <hr class="horizontal light mt-0 mb-2">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
         {{-- Dashboard --}}
-        <li>
-            <a href="{{ route('dashboard') }}">
-                <div class="parent-icon"><i class='bx bxs-dashboard'></i></div>
-                <div class="menu-title">{{ trans('msg.admin.Dashboard') }}</div>
-            </a>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('dashboard*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('dashboard') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Dashboard') }}</span>
+          </a>
         </li>
 
         {{-- Manage Users --}}
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bxs-group'></i>
-                </div>
-                <div class="menu-title">{{ trans('msg.admin.Users') }}</div>
-            </a>
-            <ul>
-                <li> 
-                    <a href="{{ route('user.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Users') }}</a>
-                </li>
-                <li> 
-                    <a href="{{ route('user.send-notification-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Send Notification') }}</a>
-                </li>
-            </ul>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('user/list')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">group</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Users') }}</span>
+          </a>
         </li>
 
         {{-- Manage Sub Admins --}}
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon">
-                    <i class='bx bxs-user-detail'></i>
-                </div>
-                <div class="menu-title">{{ trans('msg.admin.Sub Admins') }}</div>
-            </a>
-            <ul>
-                <li> 
-                    <a href="{{ route('sub-admin.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Sub Admins') }}</a>
-                </li>
-                <li> 
-                    <a href="{{ route('sub-admin.add-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Add Sub Admin') }}</a>
-                </li>
-            </ul>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('sub-admin.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">supervisor_account</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Sub Admins') }}</span>
+          </a>
         </li>
 
         {{-- Manage Promo Codes --}}
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bxs-discount' ></i>
-                </div>
-                <div class="menu-title">{{ trans('msg.admin.Promo Codes') }}</div>
-            </a>
-            <ul>
-                <li> 
-                    <a href="{{ route('promo-code.list') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Manage Promo Codes') }}</a>
-                </li>
-                <li> 
-                    <a href="{{ route('promo-code.add-form') }}"><i class="bx bx-right-arrow-alt"></i>{{ trans('msg.admin.Add Promo Code') }}</a>
-                </li>
-            </ul>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('promo-code*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('promo-code.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">price_change</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Promo Codes') }}</span>
+          </a>
         </li>
 
         {{-- Manage Markups --}}
-        <li>
-            <a href="{{ route('markup.list') }}">
-                <div class="parent-icon">
-                    <i class='bx bx-money'></i>
-                </div>
-                <div class="menu-title">{{ trans('msg.admin.Markups') }}</div>
-            </a>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('markup*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('markup.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">account_balance_wallet</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Markups') }}</span>
+          </a>
         </li>
 
-    </ul>
-    <!--end navigation-->
-</div>
+        {{-- Send Norification To All Users --}}
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('user/send-notification')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.send-notification-form') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">send</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Send Notification') }}</span>
+          </a>
+        </li>
+
+        {{-- <li class="nav-item">
+          <a class="nav-link text-white " href="pages/rtl.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+            </div>
+            <span class="nav-link-text ms-1">RTL</span>
+          </a>
+        </li> --}}
+
+        {{-- <li class="nav-item">
+          <a class="nav-link text-white " href="pages/notifications.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Notifications</span>
+          </a>
+        </li> --}}
+
+        {{-- <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+        </li> --}}
+
+        {{-- <li class="nav-item">
+          <a class="nav-link text-white " href="pages/profile.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li> --}}
+
+        {{-- <li class="nav-item">
+          <a class="nav-link text-white " href="pages/sign-in.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li> --}}
+
+        {{-- <li class="nav-item">
+          <a class="nav-link text-white " href="pages/sign-up.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li> --}}
+
+      </ul>
+    </div>
+  </aside>

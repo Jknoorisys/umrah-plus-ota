@@ -1,398 +1,140 @@
-<header>
-    <div class="topbar d-flex align-items-center">
-        <nav class="navbar navbar-expand">
-
-            <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
-
-            <h4 style="margin-left:10px;margin-top:20px;">
-                {{ trans('msg.admin.hello', [
-                    'fname' => Auth::guard('admin')->user()->fname,
-                    'lname' => Auth::guard('admin')->user()->lname,
-                ]) }}
-            </h4>
-
-            <div class="search-bar flex-grow-1 d-none">
-                <div class="position-relative search-bar-box">
-                    <input type="text" class="form-control search-control" placeholder="Type to search..."> <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
-                    <span class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></span>
+<nav class="navbar navbar-main navbar-expand-lg navbar-light bg-white position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        @if (isset($title) && $title != 'no_breadcrumb')
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm">
+                    <a class="opacity-3 text-dark" href="{{ route('dashboard') }}">
+                        <svg width="12px" height="12px" class="mb-1" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <title>shop </title>
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g transform="translate(-1716.000000, -439.000000)" fill="#252f40" fill-rule="nonzero">
+                            <g transform="translate(1716.000000, 291.000000)">
+                                <g transform="translate(0.000000, 148.000000)">
+                                <path d="M46.7199583,10.7414583 L40.8449583,0.949791667 C40.4909749,0.360605034 39.8540131,0 39.1666667,0 L7.83333333,0 C7.1459869,0 6.50902508,0.360605034 6.15504167,0.949791667 L0.280041667,10.7414583 C0.0969176761,11.0460037 -1.23209662e-05,11.3946378 -1.23209662e-05,11.75 C-0.00758042603,16.0663731 3.48367543,19.5725301 7.80004167,19.5833333 L7.81570833,19.5833333 C9.75003686,19.5882688 11.6168794,18.8726691 13.0522917,17.5760417 C16.0171492,20.2556967 20.5292675,20.2556967 23.494125,17.5760417 C26.4604562,20.2616016 30.9794188,20.2616016 33.94575,17.5760417 C36.2421905,19.6477597 39.5441143,20.1708521 42.3684437,18.9103691 C45.1927731,17.649886 47.0084685,14.8428276 47.0000295,11.75 C47.0000295,11.3946378 46.9030823,11.0460037 46.7199583,10.7414583 Z"></path>
+                                <path d="M39.198,22.4912623 C37.3776246,22.4928106 35.5817531,22.0149171 33.951625,21.0951667 L33.92225,21.1107282 C31.1430221,22.6838032 27.9255001,22.9318916 24.9844167,21.7998837 C24.4750389,21.605469 23.9777983,21.3722567 23.4960833,21.1018359 L23.4745417,21.1129513 C20.6961809,22.6871153 17.4786145,22.9344611 14.5386667,21.7998837 C14.029926,21.6054643 13.533337,21.3722507 13.0522917,21.1018359 C11.4250962,22.0190609 9.63246555,22.4947009 7.81570833,22.4912623 C7.16510551,22.4842162 6.51607673,22.4173045 5.875,22.2911849 L5.875,44.7220845 C5.875,45.9498589 6.7517757,46.9451667 7.83333333,46.9451667 L19.5833333,46.9451667 L19.5833333,33.6066734 L27.4166667,33.6066734 L27.4166667,46.9451667 L39.1666667,46.9451667 C40.2482243,46.9451667 41.125,45.9498589 41.125,44.7220845 L41.125,22.2822926 C40.4887822,22.4116582 39.8442868,22.4815492 39.198,22.4912623 Z"></path>
+                                </g>
+                            </g>
+                            </g>
+                        </g>
+                        </svg>
+                    </a>
+                    </li>
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ isset($url) && !empty($url) ? $url : route('home') }}">{{ isset($previous_title) && !empty($previous_title) ? $previous_title : '' }}</a></li>
+                    <li class="breadcrumb-item text-sm text-dark font-weight-bolder active" aria-current="page">{{ isset($title) && !empty($title) ? $title : '' }}</li>
+                </ol>
+            </nav>
+		@endif
+      
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                <div class="input-group input-group-outline">
+                  <label class="form-label">Search here</label>
+                  <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
                 </div>
             </div>
-
-            <div class="top-menu ms-auto">
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item mobile-search-icon d-none">
-                        <a class="nav-link" href="#">	<i class='bx bx-search'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown dropdown-large d-none">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">	<i class='bx bx-category'></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <div class="row row-cols-3 g-3 p-3">
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-cosmic text-white"><i class='bx bx-group'></i>
-                                    </div>
-                                    <div class="app-title">Teams</div>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item d-xl-none px-3 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                      <div class="sidenav-toggler-inner">
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                      </div>
+                    </a>
+                </li>
+                <li class="nav-item dropdown pe-2">
+                    <a href="javascript:;" class="nav-link text-body p-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="material-icons cursor-pointer">account_circle</i>
+                        {{-- <div class="my-auto">
+                            <img src="{{ Auth::guard('admin')->user()->photo ? asset(Auth::guard('admin')->user()->photo) : asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm  me-3 ">
+                        </div> --}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('profile') }}">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="my-auto">
+                                    <span class="material-icons">
+                                        person
+                                    </span>
                                 </div>
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-burning text-white"><i class='bx bx-atom'></i>
-                                    </div>
-                                    <div class="app-title">Projects</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-lush text-white"><i class='bx bx-shield'></i>
-                                    </div>
-                                    <div class="app-title">Tasks</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-kyoto text-dark"><i class='bx bx-notification'></i>
-                                    </div>
-                                    <div class="app-title">Feeds</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-blues text-dark"><i class='bx bx-file'></i>
-                                    </div>
-                                    <div class="app-title">Files</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="app-box mx-auto bg-gradient-moonlit text-white"><i class='bx bx-filter-alt'></i>
-                                    </div>
-                                    <div class="app-title">Alerts</div>
+                                <div class="ms-2">
+                                    <h6 class="text-sm font-weight-normal mb-0">
+                                        {{ trans('msg.admin.Profile') }}
+                                    </h6>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown dropdown-large d-none">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">8</span>
-                            <i class='bx bx-comment'></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="javascript:;">
-                                <div class="msg-header">
-                                    <p class="msg-header-title">Messages</p>
-                                    <p class="msg-header-clear ms-auto">Marks all as read</p>
-                                </div>
                             </a>
-                            <div class="header-message-list">
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-1.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Daisy Anderson <span class="msg-time float-end">5 sec
-                                        ago</span></h6>
-                                            <p class="msg-info">The standard chunk of lorem</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-2.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Althea Cabardo <span class="msg-time float-end">14
-                                        sec ago</span></h6>
-                                            <p class="msg-info">Many desktop publishing packages</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-3.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Oscar Garner <span class="msg-time float-end">8 min
-                                        ago</span></h6>
-                                            <p class="msg-info">Various versions have evolved over</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-4.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Katherine Pechon <span class="msg-time float-end">15
-                                        min ago</span></h6>
-                                            <p class="msg-info">Making this the first true generator</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-5.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Amelia Doe <span class="msg-time float-end">22 min
-                                        ago</span></h6>
-                                            <p class="msg-info">Duis aute irure dolor in reprehenderit</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-6.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Cristina Jhons <span class="msg-time float-end">2 hrs
-                                        ago</span></h6>
-                                            <p class="msg-info">The passage is attributed to an unknown</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-7.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">James Caviness <span class="msg-time float-end">4 hrs
-                                        ago</span></h6>
-                                            <p class="msg-info">The point of using Lorem</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-8.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Peter Costanzo <span class="msg-time float-end">6 hrs
-                                        ago</span></h6>
-                                            <p class="msg-info">It was popularised in the 1960s</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-9.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">David Buckley <span class="msg-time float-end">2 hrs
-                                        ago</span></h6>
-                                            <p class="msg-info">Various versions have evolved over</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-10.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Thomas Wheeler <span class="msg-time float-end">2 days
-                                        ago</span></h6>
-                                            <p class="msg-info">If you are going to use a passage</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-online">
-                                            <img src="{{ asset('assets/images/avatars/avatar-11.png') }}" class="msg-avatar" alt="user avatar">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Johnny Seitz <span class="msg-time float-end">5 days
-                                        ago</span></h6>
-                                            <p class="msg-info">All the Lorem Ipsum generators</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <a href="javascript:;">
-                                <div class="text-center msg-footer">View All Messages</div>
-                            </a>
-                        </div>
-                    </li>                    
-
-                    <li class="nav-item" style="cursor: pointer;">
-                        <a class="nav-link" onclick="toggleTheme()">
-                            <i id="sun-icon" class='fadeIn animated bx bxs-moon'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown dropdown-large d-none">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="notification-alert-count">{{ Auth::guard('admin')->user()->unreadNotifications->count() }}</span>
-                            <i class='bx bx-bell notification-icon'></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="javascript:;">
-                                <div class="msg-header">
-                                    <p class="msg-header-title">Notifications</p>
-                                    <p class="msg-header-clear ms-auto">Marks all as read</p>
-                                </div>
-                            </a>
-                            <div class="header-notifications-list">
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-primary text-primary"><i class="bx bx-group"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">New Customers<span class="msg-time float-end">14 Sec
-                                        ago</span></h6>
-                                            <p class="msg-info">5 new user registered</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-danger text-danger"><i class="bx bx-cart-alt"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">New Orders <span class="msg-time float-end">2 min
-                                        ago</span></h6>
-                                            <p class="msg-info">You have recived new orders</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-success text-success"><i class="bx bx-file"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">24 PDF File<span class="msg-time float-end">19 min
-                                        ago</span></h6>
-                                            <p class="msg-info">The pdf files generated</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-warning text-warning"><i class="bx bx-send"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Time Response <span class="msg-time float-end">28 min
-                                        ago</span></h6>
-                                            <p class="msg-info">5.1 min avarage time response</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-info text-info"><i class="bx bx-home-circle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">New Product Approved <span
-                                        class="msg-time float-end">2 hrs ago</span></h6>
-                                            <p class="msg-info">Your new product has approved</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-danger text-danger"><i class="bx bx-message-detail"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">New Comments <span class="msg-time float-end">4 hrs ago</span></h6>
-                                            <p class="msg-info">New customer comments recived</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-success text-success"><i class='bx bx-check-square'></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Your item is shipped <span class="msg-time float-end">5 hrs ago</span></h6>
-                                            <p class="msg-info">Successfully shipped your item</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-primary text-primary"><i class='bx bx-user-pin'></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">New 24 authors<span class="msg-time float-end">1 day ago</span></h6>
-                                            <p class="msg-info">24 new authors joined last week</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item" href="javascript:;">
-                                    <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-warning text-warning"><i class='bx bx-door-open'></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="msg-name">Defense Alerts <span class="msg-time float-end">2 weeks ago</span></h6>
-                                            <p class="msg-info">45% less alerts last 4 weeks</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <a href="javascript:;">
-                                <div class="text-center msg-footer">View All Notifications</div>
-                            </a>
-                        </div>
-                    </li>
-
-                    @if(Auth::guard('admin')->check())
-                        <li class="nav-item dropdown dropdown-large">
-                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="notification-alert-count">{{ Auth::guard('admin')->user()->unreadNotifications->count() }}</span>
-                                <i class='bx bx-bell notification-icon'></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="{{ route('mark-all-read') }}">
-                                    <div class="msg-header">
-                                        <p class="msg-header-title">{{ trans('msg.admin.Notifications') }}</p>
-                                        <p class="msg-header-clear ms-auto">{{ trans('msg.admin.Mark all as Read') }}</p>
-                                    </div>
-                                </a>
-                                <div class="header-notifications-list">
-                                    @foreach(Auth::guard('admin')->user()->unreadNotifications as $notification)
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-primary text-primary"><i class="bx bx-group"></i></div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">{{ $notification->data['title'] }}<span class="msg-time float-end">{{ $notification->created_at->diffForHumans() }}</span></h6>
-                                                    <p class="msg-info">{{ $notification->data['message'] }}</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                </div>
-                                <a href="#">
-                                    <div class="text-center msg-footer">{{ trans('msg.admin.View All Notifications') }}</div>
-                                </a>
-                            </div>
                         </li>
-                    @endif
-                </ul>
-            </div>
-
-            <div class="user-box dropdown">
-                <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ Auth::guard('admin')->user()->photo ? asset(Auth::guard('admin')->user()->photo) : asset('assets/images/avatars/no-image.png')}}" class="user-img-square" alt="user avatar">
-                    <div class="user-info ps-3">
-                        <p class="user-name mb-0">{{ Auth::guard('admin')->user()->fname . ' ' . Auth::guard('admin')->user()->lname }}</p>
-                        <p class="designattion mb-0">{{ str_replace('_', ' ', Str::upper(Auth::guard('admin')->user()->role)) }}</p>
-                    </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="{{ route('profile') }}"><i class="bx bx-user"></i><span>{{ trans('msg.admin.Profile') }}</span></a>
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('settings') }}">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="my-auto">
+                                <span class="material-icons">
+                                    settings
+                                </span>
+                                </div>
+                                <div class="ms-2">
+                                    <h6 class="text-sm font-weight-normal mb-0">
+                                        {{ trans('msg.admin.Settings') }}
+                                    </h6>
+                                </div>
+                            </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item border-radius-md" href="{{ route('logout') }}">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="my-auto">
+                                <span class="material-icons">
+                                    logout
+                                </span>
+                                </div>
+                                <div class="ms-2">
+                                    <h6 class="text-sm font-weight-normal mb-0">
+                                        {{ trans('msg.admin.Logout') }}
+                                    </h6>
+                                </div>
+                            </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @if(Auth::guard('admin')->check())
+                    <li class="nav-item dropdown pe-2">
+                        <a href="javascript:;" class="nav-link text-body p-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="material-icons cursor-pointer">notifications</i>
+                            <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                                <span class="small">{{ Auth::guard('admin')->user()->unreadNotifications->count() }}</span>
+                                <span class="visually-hidden">unread notifications</span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                            @foreach(Auth::guard('admin')->user()->unreadNotifications as $notification)
+                                <li class="mb-2">
+                                    <a class="dropdown-item border-radius-md" href="javascript:;">
+                                      <div class="d-flex py-1">
+                                        <div class="my-auto">
+                                          <img src="{{$notification->data['profile'] ? asset($notification->data['profile']) : asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm  me-3 ">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-1">
+                                                {{ $notification->data['message'] }}
+                                            </h6>
+                                            <p class="text-xs text-secondary mb-0">
+                                                <i class="fa fa-clock me-1"></i>
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </li>
+                            @endforeach
+                        </ul>
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('settings') }}"><i class="bx bx-cog"></i><span>{{ trans('msg.admin.Settings') }}</span></a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider mb-0"></div>
-                    </li>
-                    <li><a class="dropdown-item" href="{{ route('logout') }}"><i class='bx bx-log-out-circle'></i><span>{{ trans('msg.admin.Logout') }}</span></a>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
+                @endif
+            </ul>
+        </div>
     </div>
-</header>
+  </nav>

@@ -51,7 +51,7 @@ class ManagePromoCodes extends Controller
         $insert = PromoCodes::create($validatedData);
 
         if ($insert) {
-            return redirect()->back()->with('success', trans('msg.admin.Promo code added successfully').'.');
+            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code added successfully').'.');
         } else {
             return redirect()->back()->with('error', trans('msg.admin.Failed to add promo code'))->withInput();
         }

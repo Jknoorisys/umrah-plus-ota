@@ -59,21 +59,30 @@
                         <div class="col-md-12">
                             <label for="old_password" class="form-label">{{trans('msg.admin.Current Password')}}</label>
                             <div class="input-group" id="show_hide_new_password">
-                                <input type="password" class="form-control smp-input border-end-0" style="font-weight: 300;font-size: 15px;color: #38424C;" name="old_password" id="old_password" placeholder="{{ trans('msg.admin.Enter Current Password')}}"> <a href="javascript:;" style="font-size:20px;" class="input-group-text bg-transparent"><i class='bx bx-show'></i></a>
+                                <div class="input-group input-group-outline">
+                                    <input type="password" class="form-control smp-input" style="font-weight: 300;font-size: 15px;color: #38424C;" name="old_password" id="old_password" placeholder="{{ trans('msg.admin.Enter Current Password')}}">
+                                     {{-- <a href="javascript:;" class="input-group-text bg-"><span class="material-icons text-md">visibility</span></a> --}}
+                                </div>
                             </div>
                             <span class="err_old_password text-danger">@error('old_password') {{$message}} @enderror</span>
                         </div>
                         <div class="col-md-12 mt-4">
                             <label for="new_password" class="form-label">{{trans('msg.admin.New Password')}}</label>
                             <div class="input-group" id="show_hide_old_password">
-                                <input type="password" class="form-control smp-input border-end-0" style="font-weight: 300;font-size: 15px;color: #38424C;" name="new_password" id="new_password" placeholder="{{ trans('msg.admin.Enter New Password')}}"> <a href="javascript:;" style="font-size:20px;" class="input-group-text bg-transparent"><i class='bx bx-show'></i></a>
+                                <div class="input-group input-group-outline">
+                                    <input type="password" class="form-control smp-input" style="font-weight: 300;font-size: 15px;color: #38424C;" name="new_password" id="new_password" placeholder="{{ trans('msg.admin.Enter New Password')}}"> 
+                                    {{-- <a href="javascript:;" class="input-group-text bg-transparent"><span class="material-icons text-md">visibility</span></a> --}}
+                                </div>
                             </div>
                             <span class="err_new_password text-danger">@error('new_password') {{$message}} @enderror</span>
                         </div>
                         <div class="col-md-12 mt-4">
                             <label for="password" class="form-label">{{trans('msg.admin.Confirm Password')}}</label>
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" class="form-control smp-input border-end-0" style="font-weight: 300;font-size: 15px;color: #38424C;" name="cnfm_password" id="password" placeholder="{{ trans('msg.admin.Confirm Password')}}"> <a href="javascript:;" style="font-size:20px;" class="input-group-text bg-transparent"><i class='bx bx-show'></i></a>
+                                <div class="input-group input-group-outline">
+                                    <input type="password" class="form-control smp-input" style="font-weight: 300;font-size: 15px;color: #38424C;" name="cnfm_password" id="password" placeholder="{{ trans('msg.admin.Confirm Password')}}"> 
+                                    {{-- <a href="javascript:;" class="input-group-text bg-transparent"><span class="material-icons text-md">visibility</span></a> --}}
+                                </div>
                             </div>
                             <span class="err_password text-danger">@error('cnfm_password') {{$message}} @enderror</span>
                         </div>
@@ -81,11 +90,10 @@
                             <div class="col-sm-8"></div>
                             <div class="col-sm-4">
                                 <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
-                                <button type="submit" class="btn btn-primary">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
+                                <button type="submit" class="btn bg-gradient-info">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 

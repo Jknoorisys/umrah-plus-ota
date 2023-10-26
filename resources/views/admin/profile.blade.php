@@ -80,7 +80,7 @@
         }
 
         .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
-            max-width: 70px;
+            /* max-width: 70px; */
         }
 
         .select2-container--bootstrap4 .select2-selection {
@@ -124,7 +124,9 @@
                                 <h6 class="mb-0">{{ trans('msg.admin.First Name') }}</h6>
                             </div>
                             <div class="col-sm-10 text-secondary">
-                                <input type="text" class="form-control" name="fname" id="fname" value="{{ $admin->fname }}" placeholder="{{ trans('msg.admin.First Name') }}">
+                                <div class="input-group input-group-outline">
+                                    <input type="text" class="form-control" name="fname" id="fname" value="{{ $admin->fname }}" placeholder="{{ trans('msg.admin.First Name') }}">
+                                </div>
                                 <span class="err_fname text-danger"></span>
                             </div>
                         </div>
@@ -134,7 +136,9 @@
                                 <h6 class="mb-0">{{ trans('msg.admin.Last Name') }}</h6>
                             </div>
                             <div class="col-sm-10 text-secondary">
-                                <input type="text" class="form-control" name="lname" id="lname" value="{{ $admin->lname }}" placeholder="{{ trans('msg.admin.Last Name') }}">
+                                <div class="input-group input-group-outline">
+                                    <input type="text" class="form-control" name="lname" id="lname" value="{{ $admin->lname }}" placeholder="{{ trans('msg.admin.Last Name') }}">
+                                </div>
                                 <span class="err_lname text-danger"></span>
                             </div>
                         </div>
@@ -144,7 +148,9 @@
                                 <h6 class="mb-0">{{ trans('msg.admin.Email') }}</h6>
                             </div>
                             <div class="col-sm-10 text-secondary">
-                                <input type="email" class="form-control" name="email" id="email" value="{{ $admin->email }}" placeholder="{{ trans('msg.admin.Email') }}" readonly>
+                                <div class="input-group input-group-outline">
+                                    <input type="email" class="form-control" name="email" id="email" value="{{ $admin->email }}" placeholder="{{ trans('msg.admin.Email') }}" readonly>
+                                </div>
                                 <span class="err_email text-danger"></span>
                             </div>
                         </div>
@@ -154,12 +160,18 @@
                             </div>
                             <div class="col-sm-10 text-secondary">
                                 <div class="input-group phonecode">
-                                    <select class="single-select" id="country-select" name="country_code">
-                                        @foreach($country as $code)
-                                            <option value="{{ $code->phone_code }}" @if($admin->country_code == $code->phone_code) selected @endif>{{ $code->phone_code }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="text" class="form-control" name="phone" id="phone" value="{{ $admin->phone ?? '' }}" placeholder="{{ trans('msg.admin.Phone') }}">
+                                    <div class="input-group input-group-outline">
+                                        <div class="col-sm-2">
+                                            <select class="single-select" id="country-select" name="country_code">
+                                                @foreach($country as $code)
+                                                    <option value="{{ $code->phone_code }}" @if($admin->country_code == $code->phone_code) selected @endif>{{ $code->phone_code }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="phone" id="phone" value="{{ $admin->phone ?? '' }}" placeholder="{{ trans('msg.admin.Phone') }}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <span class="err_phone text-danger"></span>
                             </div>                            
@@ -169,7 +181,7 @@
                             <div class="col-sm-8"></div>
                             <div class="col-sm-4">
                                 <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
-                                <button type="submit" class="btn btn-primary">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
+                                <button type="submit" class="btn bg-gradient-info">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
                             </div>
                         </div>
                     </form>

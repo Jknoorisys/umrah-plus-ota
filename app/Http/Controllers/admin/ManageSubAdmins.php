@@ -69,10 +69,14 @@ class ManageSubAdmins extends Controller
         if ($insert) {
             $name = $request->fname.' '.$request->lname;
             $insert->notify(new SubAdminRegistration($name, $request->email, $request->password));
-            return redirect()->back()->with('success', trans('msg.admin.Sub Admin Added Successfully').'.');
+            return redirect()->route('sub-admin.list')->with('success', trans('msg.admin.Sub Admin Added Successfully').'.');
         } else {
             return redirect()->back()->with('error', trans('msg.admin.Unable to add Sub Admin, Please try again').'...')->withInput();
         }
+    }
+
+    public function view($id) {
+        // 
     }
 
     // public function editForm($id) {

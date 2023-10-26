@@ -44,7 +44,7 @@
 								<p>You have reached the edge of the universe.
 									<br>The page you requested could not be found.
 									<br>Dont'worry and return to the previous page.</p>
-								<div class="mt-5"> <a href="{{ route('/') }}" class="btn btn-primary btn-lg px-md-5 radius-30">Go Home</a>
+								<div class="mt-5"> <a href="{{ route('/') }}" class="btn bg-gradient-info btn-lg px-md-5 radius-30">Go Home</a>
 									<a href="{{ route('/') }}" class="btn btn-outline-dark btn-lg ms-3 px-md-5 radius-30">Back</a>
 								</div>
 							</div>

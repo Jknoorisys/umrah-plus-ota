@@ -14,9 +14,12 @@ return [
     */
 
     'admin' => [
+        // General
+        'Success' => 'Success',
 
         // Login
         'Login' => 'Login',
+        'Sign In' => 'Sign In',
         'Welcome Back!' => 'Welcome Back!',
         'hello' => 'Hello :fname :lname!',
         'Please login first' => 'Please login first',        
@@ -86,6 +89,7 @@ return [
         // Manage Users
         'Manage Users' => 'Manage Users',
         'Users' => 'Users',
+        'User' => 'User',
         'No' => 'No',
         'Name' => 'Name',
         'Email' => 'Email',
@@ -102,6 +106,7 @@ return [
         // Manage Sub Admins
         'Manage Sub Admins' => 'Manage Sub Admins',
         'Sub Admins' => 'Sub Admins',
+        'Sub Admin' => 'Sub Admin',
         'Add Sub Admin' => 'Add Sub Admin',
         'Enter Valid Name' => 'Enter Valid Name',
         'Enter Valid Email Address' => 'Enter Valid Email Address',

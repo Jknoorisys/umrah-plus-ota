@@ -11,22 +11,28 @@
                         <div class="col-lg-8">
                             <div class="col-md-12">
                                 <label for="title" class="form-label">{{ trans('msg.admin.Title') }}</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="{{ trans('msg.admin.Notification Title') }}">
-                                <span class="err_title text-danger">@error('title') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="{{ trans('msg.admin.Notification Title') }}">
+                                </div>
+                                <span class="err_title error text-danger">@error('title') {{$message}} @enderror</span>
                             </div>
                             <div class="col-md-12 mt-4">
                                 <label for="type" class="form-label">{{ trans('msg.admin.Select User') }}</label>
-                                <select class="form-select" id="type" name="type">
-                                    <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
-                                    <option value="admin">{{ trans('msg.admin.Sub Admins') }}</option>
-                                    <option value="user">{{ trans('msg.admin.Users') }}</option>
-                                </select>
-                                <span class="err_type text-danger">@error('type') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <select class="single-select" id="type" name="type">
+                                        <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
+                                        <option value="admin">{{ trans('msg.admin.Sub Admins') }}</option>
+                                        <option value="user">{{ trans('msg.admin.Users') }}</option>
+                                    </select>
+                                </div>
+                                <span class="err_type error text-danger">@error('type') {{$message}} @enderror</span>
                             </div>
                             <div class="col-md-12 mt-4">
                                 <label for="message" class="form-label">{{ trans('msg.admin.Message') }}</label>
-                                <textarea rows="5" class="form-control" id="message" name="message" placeholder="{{ trans('msg.admin.Notification Message') }}"></textarea>
-                                <span class="err_message text-danger">@error('message') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <textarea rows="5" class="form-control" id="message" name="message" placeholder="{{ trans('msg.admin.Notification Message') }}"></textarea>
+                                </div>
+                                <span class="err_message error text-danger">@error('message') {{$message}} @enderror</span>
                             </div>
                         </div>
                         <div class="col-lg-4 mt-4">
@@ -78,7 +84,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mt-4">
-                            <button class="btn btn-primary" type="submit">{{ trans('msg.admin.Send Notification') }}</button>
+                            <button class="btn bg-gradient-info" type="submit">{{ trans('msg.admin.Send Notification') }}</button>
                         </div>
                     </div>
                 </form>

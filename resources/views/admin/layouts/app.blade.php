@@ -1,236 +1,224 @@
-<!doctype html>
-<html lang="en" class="light-theme">
 
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!--favicon-->
-		<link rel="icon" href="{{ asset('assets/images/logo-icon.png') }}" type="image/png" />
-		<!--plugins-->
-		<link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" />
-		<link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}">
-		<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-		<link rel="stylesheet" href="{{ asset('assets/css/file-upload.css') }}">
-		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.time.css') }}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/datetimepicker/css/classic.date.css') }}" rel="stylesheet" />
-		<!-- loader-->
-		<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
-		<script src="{{ asset('assets/js/pace.min.js') }}"></script>
-		<!-- Bootstrap CSS -->
-		<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-		<link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-		{{-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> --}}
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
-		<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
-		<!-- Theme Style CSS -->
-		<link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
-		<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
-		<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-		<title>OTA</title>
+<!DOCTYPE html>
+<html lang="en">
 
-		<style>
-			.btn-group-sm>.btn, .btn-sm {
-				padding: 0.1rem 0.3rem;
-				font-size: .9rem;
-				border-radius: 0.2rem;
-			}		
-		</style>
-	</head>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
+    <title>
+        OTA
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.1.0') }}" rel="stylesheet" />
 
-	<body>
-		<!--wrapper-->
-		<div class="wrapper">
+    <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/css/file-upload.css') }}">
+    <link href="{{ asset('assets/plugins/datetimepicker/css/classic.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datetimepicker/css/classic.time.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datetimepicker/css/classic.date.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+    <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+    {{-- <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script> --}}
+    <style>
+        .error {
+            font-size: 12px;
+        }
+    </style>
+</head>
 
-			<!--sidebar wrapper -->
-			@include('admin.layouts.partials.sidebar')
-			<!--end sidebar wrapper -->
+<body class="g-sidenav-show  bg-gray-200">
+    <!-- Sidebar -->
+    @include('admin.layouts.partials.sidebar')
+    <!-- End Sidebar -->
+  
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <!-- Navbar -->
+    @include('admin.layouts.partials.header')
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+        {{-- @if (session('success'))
+            <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="successToast" aria-atomic="true">
+                <div class="toast-header border-0">
+                    <i class="material-icons text-success me-2">
+                    check
+                    </i>
+                    <span class="me-auto font-weight-bold">{{ trans('msg.admin.Success') }}</span>
+                    <small class="text-body">{{ now()->format('Y-m-d H:i:s') }}</small>
+                    <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+                </div>
+                <hr class="horizontal dark m-0">
+                <div class="toast-body">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif --}}
 
-			<!--start header -->
-			@include('admin.layouts.partials.header')
-			<!--end header -->
+        @if(session('success'))
+            <div id="successMessage" data-success="{{ session('success') }}"></div>
+        @endif
 
-			<!--start page wrapper -->
-			<div class="page-wrapper">
-				<div class="page-content">
-					@if (isset($title) && $title != 'no_breadcrumb')
-						<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-							<nav aria-label="breadcrumb">
-								<ol class="breadcrumb mb-0 p-2">
-									<li class="breadcrumb-item" style="font-size: 14px;"><a href="{{ isset($url) && !empty($url) ? $url : route('home') }}">{{ isset($previous_title) && !empty($previous_title) ? $previous_title : '' }}</a></li>
-									<li class="breadcrumb-item active" aria-current="page" style="font-size: 14px;">{{ isset($title) && !empty($title) ? $title : '' }}</li>
-								</ol>
-							</nav>							
-						</div>
-					@endif
+        @if(session('warning'))
+            <div id="warningMessage" data-warning="{{ session('warning') }}"></div>
+        @endif
 
-					{{-- @if (session('error'))
-						<div class="alert border-0 border-start border-5 border-danger alert-dismissible fade show py-2">
-							<div class="d-flex align-items-center">
-								<div class="font-25 text-danger"><i class='bx bxs-message-square-x'></i></div>
-								<div class="ms-2">
-									<!-- <h6 class="mb-0 text-danger">Danger Alerts</h6> -->
-									<div class="text-danger">{{ session('error') }}</div>
-								</div>
-							</div>
-							<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-					@endif
+        @if(session('error'))
+            <div id="errorMessage" data-error="{{ session('error') }}"></div>
+        @endif
 
-					@if (session('success'))
-						<div class="alert border-0 border-start border-5 border-success alert-dismissible fade show py-2">
-							<div class="d-flex align-items-center">
-								<div class="font-25 text-success"><i class='bx bxs-check-circle'></i></div>
-								<div class="ms-2">
-									<!-- <h6 class="mb-0 text-success">Success Alerts</h6> -->
-									<div class="text-success">{{ session('success') }}</div>
-								</div>
-							</div>
-							<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-					@endif --}}
-					
-					@if(session('success'))
-						<div id="successMessage" data-success="{{ session('success') }}"></div>
-					@endif
+        <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="successToast" aria-atomic="true" class="display:none;">
+            <div class="toast-header border-0">
+                <i class="material-icons text-success me-2">
+                check
+                </i>
+                <span class="me-auto font-weight-bold">{{ trans('msg.admin.Success') }}</span>
+                <small class="text-body">{{ now()->format('Y-m-d H:i:s') }}</small>
+                <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+                {{ session('success') }}
+            </div>
+        </div>
 
-					@if(session('warning'))
-						<div id="warningMessage" data-warning="{{ session('warning') }}"></div>
-					@endif
+        @yield('content')
 
-					@if(session('error'))
-						<div id="errorMessage" data-error="{{ session('error') }}"></div>
-					@endif
+        <!-- Footer -->
+        @include('admin.layouts.partials.footer')
+        <!-- End Footer -->
+    </div>
+  </main>
 
-					@yield('content')
-				</div>
-			</div>
-			<!--end page wrapper -->
+  <!-- Switcher -->
+  {{-- @include('admin.layouts.partials.switcher') --}}
+  <!-- End Switcher -->
 
-			<!--start overlay-->
-			<div class="overlay toggle-icon"></div>
-			<!--end overlay-->
+    <!--   Core JS Files   -->
+    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
-			<!--Start Back To Top Button--> 
-			<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-			<!--End Back To Top Button-->
+    {{-- datatable --}}
+    <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/legacy.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/picker.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/picker.time.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/picker.date.js') }}"></script>
 
-			<!--start footer-->
-			@include('admin.layouts.partials.footer')
-			<!--End footer-->
+    <!--notification js -->
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
 
-		</div>
-		<!--end wrapper-->
+  
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
 
-		<!--start switcher-->
-		@include('admin.layouts.partials.switcher')
-		<!--end switcher-->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-		<!-- Bootstrap JS -->
-		<script src="{{ asset('assets/js/bootstrap.bundle.min.j') }}s"></script>
-		<!--plugins-->
-		<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-		<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datetimepicker/js/legacy.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.time.js') }}"></script>
-		<script src="{{ asset('assets/plugins/datetimepicker/js/picker.date.js') }}"></script>
-		<!--notification js -->
-		<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
-		<!--app JS-->
-		<script src="{{ asset('assets/js/app.js') }}"></script>
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		
-		<!--start javascript-->
-		<script type="text/javascript">
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true,
+            format: 'yyyy-mm-dd',
+            min: new Date(),
+        })
 
-			$('.datepicker').pickadate({
-				selectMonths: true,
-				selectYears: true,
-				format: 'yyyy-mm-dd',
-				min: new Date(),
-			})
+        $('.timepicker').pickatime()
 
-			$('.timepicker').pickatime()
+        $('.single-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
 
-			$('.single-select').select2({
-				theme: 'bootstrap4',
-				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-				placeholder: $(this).data('placeholder'),
-				allowClear: Boolean($(this).data('allow-clear')),
-			});
+        function toggleTheme() {
+            const htmlElement = document.getElementsByTagName('html')[0];
+            const sunIcon = document.getElementById('sun-icon');
 
-			function toggleTheme() {
-				const htmlElement = document.getElementsByTagName('html')[0];
-				const sunIcon = document.getElementById('sun-icon');
+            let newTheme;
+            if (htmlElement.classList.contains('light-theme')) {
+                htmlElement.classList.remove('light-theme');
+                htmlElement.classList.add('dark-theme');
+                sunIcon.classList.remove('bxs-moon');
+                sunIcon.classList.add('bxs-sun');
+                newTheme = 'dark-theme';
+            } else {
+                htmlElement.classList.remove('dark-theme');
+                htmlElement.classList.add('light-theme');
+                sunIcon.classList.remove('bxs-sun');
+                sunIcon.classList.add('bxs-moon');
+                newTheme = 'light-theme';
+            }
 
-				let newTheme;
-				if (htmlElement.classList.contains('light-theme')) {
-					htmlElement.classList.remove('light-theme');
-					htmlElement.classList.add('dark-theme');
-					sunIcon.classList.remove('bxs-moon');
-					sunIcon.classList.add('bxs-sun');
-					newTheme = 'dark-theme';
-				} else {
-					htmlElement.classList.remove('dark-theme');
-					htmlElement.classList.add('light-theme');
-					sunIcon.classList.remove('bxs-sun');
-					sunIcon.classList.add('bxs-moon');
-					newTheme = 'light-theme';
-				}
+            document.cookie = `theme=${newTheme};path=/`;
+        }
 
-				document.cookie = `theme=${newTheme};path=/`;
-			}
+        document.addEventListener('DOMContentLoaded', function() {
+            var successMessageElement = document.getElementById('successMessage');
+            var warningMessageElement = document.getElementById('warningMessage');
+            var errorMessageElement = document.getElementById('errorMessage');
+            if (successMessageElement) {
+                var successMessage = successMessageElement.dataset.success;
+                pos5_success_noti(successMessage);
+            } else if (warningMessageElement) {
+                var warningMessage = warningMessageElement.dataset.warning;
+                pos3_warning_noti(warningMessage);
+            } else if (errorMessageElement) {
+                var errorMessage = errorMessageElement.dataset.error;
+                pos4_error_noti(errorMessage);
+            }
+        });
 
-			document.addEventListener('DOMContentLoaded', function() {
-				var successMessageElement = document.getElementById('successMessage');
-            	var warningMessageElement = document.getElementById('warningMessage');
-            	var errorMessageElement = document.getElementById('errorMessage');
-				if (successMessageElement) {
-					var successMessage = successMessageElement.dataset.success;
-					pos5_success_noti(successMessage);
-				} else if (warningMessageElement) {
-					var warningMessage = warningMessageElement.dataset.warning;
-					pos3_warning_noti(warningMessage);
-				} else if (errorMessageElement) {
-					var errorMessage = errorMessageElement.dataset.error;
-					pos4_error_noti(errorMessage);
-				}
-			});
+        $(document).ready(function() {
+            var table = $('#otaDataTable').DataTable( {
+                ordering: false,
+                lengthChange: false,
+                buttons: [ 'excel', 'pdf', 'print']
+            } );
+        
+            table.buttons().container()
+                .appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
+        } );
+    </script>
 
-			$(document).ready(function() {
-				var table = $('#otaDataTable').DataTable( {
-					ordering: false,
-					lengthChange: false,
-					buttons: [ 'excel', 'pdf', 'print']
-				} );
-			
-				table.buttons().container()
-					.appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
-			} );
-		</script>
-		@yield('customJs')
-		<!--end javascript-->
-
-	</body>
+    @yield('customJs')
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ asset('assets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
+</body>
 
 </html>

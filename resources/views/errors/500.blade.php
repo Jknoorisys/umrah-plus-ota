@@ -43,7 +43,7 @@
                                     <h2 class="font-weight-bold display-4">Sorry, unexpected error</h2>
                                     <p>Looks like you are lost!
                                         <br>May be you are not connected to the internet!</p>
-                                    <div class="mt-5">	<a href="{{ route('/') }}" class="btn btn-lg btn-primary px-md-5 radius-30">Go Home</a>
+                                    <div class="mt-5">	<a href="{{ route('/') }}" class="btn btn-lg bg-gradient-info px-md-5 radius-30">Go Home</a>
                                         <a href="{{ route('/') }}" class="btn btn-lg btn-outline-dark ms-3 px-md-5 radius-30">Back</a>
                                     </div>
                                 </div>

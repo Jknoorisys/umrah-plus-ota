@@ -1,26 +1,29 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="otaDataTable" class="table table-hover">
+    <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-info shadow-info border-radius-lg d-flex justify-content-between align-items-center pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Markups') }}</h6>
+            </div>
+        </div>
+        
+        <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-4">
+                <table class="table align-items-center mb-0" id="otaDataTable">
                     <thead>
                         <tr>
-                            <th>{{ trans('msg.admin.No') }}.</th>
-                            <th>{{ trans('msg.admin.Service Type') }}</th>
-                            <th>
-                                {{ trans('msg.admin.Markup') }}
-                                <span style="font-weight: normal"> (editable)</span>
-                            </th>
+                            <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.No') }}.</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Service Type') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Markup') }}<span style="font-weight: normal"> (editable)</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($markups as $markup)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ Str::ucfirst($markup->service) }}</td>
-                                <td class="markup" data-id="{{ $markup->id }}" contenteditable>{{ $markup->markup }}</td>
+                                <td class="markup input-group input-group-outline" data-id="{{ $markup->id }}" contenteditable>{{ $markup->markup }}</td>
                             </tr>
                         @empty
                         @endforelse
@@ -41,7 +44,7 @@
                 currentCell.empty().append($('<input>', {
                     val: originalMarkup,
                     type: 'number',
-                    class: 'form-control editable-input'
+                    class: 'form-control editable-input '
                 }));
 
                 let inputField = currentCell.find('input');
@@ -62,7 +65,7 @@
                         showCancelButton: true,
                         confirmButtonText: "{{ trans('msg.alert.Yes') }}",
                         cancelButtonText: "{{ trans('msg.alert.No') }}",
-                        confirmButtonColor: '#008cff',
+                        confirmButtonColor: '#1A73E8',
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({

@@ -10,59 +10,73 @@
                         <div class="row">
                             <div class="col-md-4 mt-4">
                                 <label for="fname" class="form-label">{{ trans('msg.admin.First Name') }}</label>
-                                <input type="text" class="form-control" id="fname" name="fname" value="{{ old('fname') }}" placeholder="{{ trans('msg.admin.First Name') }}" required>
-                                <span class="text-danger">@error('fname') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="text" class="form-control" id="fname" name="fname" value="{{ old('fname') }}" placeholder="{{ trans('msg.admin.First Name') }}" required>
+                                </div>
+                                <span class="text-danger error">@error('fname') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid First Name') }}</div>
                             </div>
                             <div class="col-md-4 mt-4">
                                 <label for="lname" class="form-label">{{ trans('msg.admin.Last Name') }}</label>
-                                <input type="text" class="form-control" id="lname" name="lname" value="{{ old('lname') }}" placeholder="{{ trans('msg.admin.Last Name') }}" required>
-                                <span class="text-danger">@error('lname') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="text" class="form-control" id="lname" name="lname" value="{{ old('lname') }}" placeholder="{{ trans('msg.admin.Last Name') }}" required>
+                                </div>
+                                <span class="text-danger error">@error('lname') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Last Name') }}</div>
                             </div>
                             <div class="col-md-4 mt-4">
                                 <label for="role" class="form-label">{{ trans('msg.admin.Select Role') }}</label>
-                                <select class="form-select" id="role" name="role" required>
-                                    <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
-                                    @forelse ($roles as $role)
-                                        <option value="{{ $role->role }}">{{ str_replace('_', ' ', Str::ucfirst($role->role)) }}</option>
-                                    @empty
-                                    @endforelse
-                                </select>
-                                <span class="text-danger">@error('role') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <select class="single-select" id="role" name="role" required>
+                                        <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
+                                        @forelse ($roles as $role)
+                                            <option value="{{ $role->role }}">{{ str_replace('_', ' ', Str::ucfirst($role->role)) }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <span class="text-danger error">@error('role') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Please Select Valid Role') }}</div>
                             </div>
                             <div class="col-md-6 mt-4">
                                 <label for="email" class="form-label">{{ trans('msg.admin.Email') }}</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="{{ trans('msg.admin.Email') }}" required>
-                                <span class="text-danger">@error('email') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="{{ trans('msg.admin.Email') }}" required>
+                                </div>
+                                <span class="text-danger error">@error('email') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid email') }}</div>
                             </div>
                             <div class="col-md-6 mt-4">
                                 <label for="phone" class="form-label">{{ trans('msg.admin.Phone') }}</label>
                                 <div class="input-group phonecode">
-                                    <div class="col-sm-3">
-                                        <select class="single-select" value="{{ old('country_code') }}" id="country-select" name="country_code" required>
-                                            @foreach($country as $code)
-                                                <option value="{{ $code->phone_code }}">{{ $code->phone_code }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="input-group input-group-outline">
+                                        <div class="col-sm-3">
+                                            <select class="single-select" value="{{ old('country_code') }}" id="country-select" name="country_code" required>
+                                                @foreach($country as $code)
+                                                    <option value="{{ $code->phone_code }}">{{ $code->phone_code }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" id="phone" placeholder="{{ trans('msg.admin.Phone') }}" required>
                                     </div>
-                                    <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" id="phone" placeholder="{{ trans('msg.admin.Phone') }}" required>
-                                    <span class="text-danger">@error('phone') {{$message}} @enderror</span>
+                                    <span class="text-danger error">@error('phone') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Phone Number') }}</div>  
                                 </div>                          
                             </div>
                             <div class="col-md-6 mt-4">
                                 <label for="password" class="form-label">{{ trans('msg.admin.Password') }}</label>
-                                <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" placeholder="{{ trans('msg.admin.Password') }}" required>
-                                <span class="text-danger">@error('password') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" placeholder="{{ trans('msg.admin.Password') }}" required>
+                                </div>
+                                <span class="text-danger error">@error('password') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Password') }}</div>
                             </div>
                             <div class="col-md-6 mt-4">
                                 <label for="cnfm_password" class="form-label">{{ trans('msg.admin.Confirm Password') }}</label>
-                                <input type="password" class="form-control" id="cnfm_password" name="cnfm_password" placeholder="{{ trans('msg.admin.Confirm Password') }}" required>
-                                <span class="text-danger">@error('cnfm_password') {{$message}} @enderror</span>
+                                <div class="input-group input-group-outline">
+                                    <input type="password" class="form-control" id="cnfm_password" name="cnfm_password" placeholder="{{ trans('msg.admin.Confirm Password') }}" required>
+                                </div>
+                                <span class="text-danger error">@error('cnfm_password') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Confirm Password') }}</div>
                             </div>                            
                         </div>
@@ -92,7 +106,7 @@
                                     <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
                                     <img src="" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
                                     <input type="file" id="fileInput" name="image" class="drop-zoon__file-input" value="{{ old('image') }}" accept="image/*" required>
-                                    <span class="text-danger">@error('image') {{$message}} @enderror</span>
+                                    <span class="text-danger error">@error('image') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Profile Photo') }}</div>
                                 </div>
                                 <!-- End Drop Zoon -->
@@ -118,7 +132,8 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-primary" type="submit">{{ trans('msg.admin.Save Changes') }}</button>
+                        <a href="{{ route('sub-admin.list') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
+                        <button class="btn bg-gradient-info" type="submit">{{ trans('msg.admin.Save Changes') }}</button>
                     </div>
                 </form>
             </div>

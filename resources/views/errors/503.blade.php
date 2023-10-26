@@ -44,7 +44,7 @@
 							<form class="">
 								<div class="input-group input-group-lg">
 									<input type="text" class="form-control" placeholder="Enter Your Email ID">
-									<button class="btn btn-primary" type="button"><i class="bx bx-right-arrow-alt"></i>
+									<button class="btn bg-gradient-info" type="button"><i class="bx bx-right-arrow-alt"></i>
 									</button>
 								</div>
 							</form>

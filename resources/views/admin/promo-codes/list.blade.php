@@ -1,53 +1,66 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="otaDataTable" class="table table-hover">
+    <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-info shadow-info border-radius-lg d-flex justify-content-between align-items-center pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Promo Codes') }}</h6>
+                <a href="{{ route('promo-code.add-form') }}" class="text-white d-flex align-items-center me-3"><span class="material-icons font-weight-bolder me-1">add</span>{{ trans('msg.admin.Add Promo Code') }}</a>
+            </div>
+        </div>
+        
+        <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-4">
+                <table class="table align-items-center mb-0" id="otaDataTable">
                     <thead>
                         <tr>
-                            <th>{{ trans('msg.admin.No') }}.</th>
-                            <th>{{ trans('msg.admin.Service Type') }}</th>
-                            <th>{{ trans('msg.admin.Code') }}</th>
-                            <th>{{ trans('msg.admin.Discount Type') }}</th>
-                            <th>{{ trans('msg.admin.Discount') }}</th>
-                            <th>{{ trans('msg.admin.Status') }}</th>
-                            <th>{{ trans('msg.admin.Action') }}</th>
+                            <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.No') }}.</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Service Type') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Code') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Discount Type') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Discount') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Status') }}</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ trans('msg.admin.Action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($codes as $code)
-                            <tr id="delete{{ $code->id }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ Str::ucfirst($code->service) }}</td>
-                                <td>{{ $code->code }}</td>
-                                <td>{{ Str::ucfirst($code->type) }}</td>
-                                <td>{{ $code->discount }}</td>
-                                <td><span class="badge bg-{{ $code->status == 'active' ? 'primary' : 'warning' }}" id="status{{ $loop->iteration }}">{{ $code->status }}</span></td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-1"></div>
-                                        <div class="col-2">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $code->status == 'active' ? 'checked' : '' }} data-code-id="{{ $code->id }}"  data-id="{{ $loop->iteration }}">
-                                            </div>
+                        <tr id="delete{{ $code->id }}">
+                            <td class="text-sm text-center">{{ $loop->iteration }}</td>
+                            <td>{{ Str::ucfirst($code->service) }}</td>
+                            <td>{{ $code->code }}</td>
+                            <td>{{ Str::ucfirst($code->type) }}</td>
+                            <td>{{ $code->discount }}</td>
+                            <td class="text-sm">
+                                <span class="badge badge-sm bg-gradient-{{ $code->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $code->status }}</span>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-2">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $code->status == 'active' ? 'checked' : '' }} data-code-id="{{ $code->id }}"  data-id="{{ $loop->iteration }}">
                                         </div>
-                                        <div class="col-2">
-                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
-                                                <i class="bx bx-pencil me-0"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeletecode('{{ $code->id }}', {{ $loop->iteration }})">
-                                                <i class="bx bx-trash-alt me-0"></i>
-                                            </button>
-                                        </div>
-                                    </div>                                   
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
+                                    </div>
+                                    <div class="col-2">
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
+                                            <span class="material-icons text-md">
+                                                edit
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeletecode('{{ $code->id }}', {{ $loop->iteration }})">
+                                            <span class="material-icons text-md">
+                                                delete
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>                                   
+                            </td>
+                        </tr>
+                    @empty
+                    @endforelse
                     </tbody>
                 </table>
             </div>
@@ -77,7 +90,7 @@
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
                 cancelButtonText: "{{ trans('msg.alert.No') }}",
-                confirmButtonColor: '#008cff',
+                confirmButtonColor: '#1A73E8',
             }).then((result) => {
                 if (result.isConfirmed) {
                     updatecodestatus(codeId, isActive, dataId);
@@ -102,11 +115,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-warning');
-                            statusElement.classList.add('bg-primary');
+                            statusElement.classList.remove('bg-gradient-warning');
+                            statusElement.classList.add('bg-gradient-primary');
                         } else {
-                            statusElement.classList.remove('bg-primary');
-                            statusElement.classList.add('bg-warning');
+                            statusElement.classList.remove('bg-gradient-primary');
+                            statusElement.classList.add('bg-gradient-warning');
                         }
                     }
                 },
@@ -123,7 +136,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
-                confirmButtonColor: '#008cff',
+                confirmButtonColor: '#1A73E8',
                 cancelButtonText: "{{ trans('msg.alert.No') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
