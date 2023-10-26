@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\api\activity;
 
 use App\Http\Controllers\Controller;
+use App\Models\PromoCodes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
+use function App\Helpers\AuthUser;
 
 class BookingController extends Controller
 {
@@ -29,6 +31,84 @@ class BookingController extends Controller
         // Set the X-Signature in your response headers
         return $hash;
     }
+
+    public function ActivityPromoCode(Request $request)
+    {
+        try{
+
+            $promocode = PromoCodes::where('service','=','activity')->get();
+            if(!empty($promocode))
+            {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $promocode,
+                ], 200);
+            } else {
+                
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $promocode,
+                ], 400); 
+            }
+
+        }catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    
+    // app/Http/Controllers/PromoCodeController.php
+    public function validatePromoCode(Request $request) 
+    {
+        try{
+
+            $validator = Validator::make($request->all(), [
+                'code' => ['required'],
+                'user_id' => ['required'],
+                
+                        ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+
+            $promoCode = PromoCodes::where('code', $request->input('code'))->first();
+
+        if (!$promoCode) {
+            return response()->json(['message' => 'Invalid promo code'], 404);
+        }
+
+        if ($promoCode->isExpired()) {
+            return response()->json(['message' => 'Promo code has expired'], 422);
+        }
+
+        $user = AuthUser($request->user_id); 
+
+        if ($promoCode->hasUserReachedMaxUsage($user)) {
+            return response()->json(['message' => 'User has reached the maximum usage for this promo code'], 422);
+        }
+
+        return response()->json(['message' => 'Promo code is valid']);
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+        
+    }
+
 
     public function filterActivities(Request $request)
     {
@@ -325,6 +405,132 @@ class BookingController extends Controller
             ], 500);
         }
     } 
+    
+    public function Availability(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'destination' => ['required'],
+                'offset' => ['required'],
+                'limit' => ['required'],
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            $data = [];
+            $data['destination'] = $request->input('destination');
+            $data['offset'] = $request->input('offset');
+            $data['limit'] = $request->input('limit');
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Accept' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') . '/activity-cache-api/1.0/avail/'.$queryString);
+                        // echo json_encode(config('constants.end-point') . '/activity-cache-api/1.0/avail/'.$queryString);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($responseData);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function BookingConfirm(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required|json',
+                'holder'  => 'required|json',
+                'activities'   => 'required|json',
+                'clientReference' => 'required|json',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            $data = [
+                "holder" => json_decode($request->holder, TRUE),
+                "activities" => json_decode($request->activities, TRUE),
+                'clientReference' => json_decode($request->clientReference, TRUE),
+                'language' => json_decode($request->language, TRUE),
+            ];
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Accept' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') . '/activity-api/3.0/bookings'.$queryString);
+            echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings/'.$queryString);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($responseData);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     
     
 }

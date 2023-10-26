@@ -76,7 +76,8 @@ Route::middleware(['localization'])->group(function () {
         Route::post('AvailableRoutes' , [TransferBookingController::class, 'AvailableRoutes']);
 
         // BOOKING
-        Route::post('bookings' , [BookingController::class, 'bookings']);
+        Route::post('confirmGPS' , [TransferBookingController::class, 'confirmGPS']);
+        Route::post('TransferPromoCode' , [TransferBookingController::class, 'TransferPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -100,6 +101,9 @@ Route::middleware(['localization'])->group(function () {
         Route::post('Booking_Detail' , [ActivityBookingController::class, 'Booking_Detail']);
         Route::post('Detail_full' , [ActivityBookingController::class, 'Detail_full']);
         Route::post('retrivePickup' , [ActivityBookingController::class, 'retrivePickup']);
+        Route::post('Availability' , [ActivityBookingController::class, 'Availability']);
+        Route::post('ActivityPromoCode' , [ActivityBookingController::class, 'ActivityPromoCode']);
+        Route::post('BookingConfirm' , [ActivityBookingController::class, 'BookingConfirm']);
         
         
     });
@@ -114,6 +118,7 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('bookings' , [BookingController::class, 'bookings']);
+        Route::post('HotelPromoCode' , [BookingController::class, 'HotelPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
