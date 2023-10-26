@@ -163,6 +163,7 @@ Route::middleware(['localization'])->group(function () {
     Route::prefix('master')->group(function () {
         Route::get('countries' , [HotelMasterController::class, 'countries']);
         Route::get('languages' , [HotelMasterController::class, 'languages']);
+        Route::get('hotels' , [HotelMasterController::class, 'hotels']);
     });
 
     // Umrah Packages API by Javeriya
