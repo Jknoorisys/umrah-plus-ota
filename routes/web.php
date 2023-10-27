@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\ManagePromoCodes;
 use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ProfileController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('setlocale/{locale}', function ($locale) {
     session(['locale' => $locale]);
+    App::setLocale($locale);
     return redirect()->back();
 })->name('setlocale');
 

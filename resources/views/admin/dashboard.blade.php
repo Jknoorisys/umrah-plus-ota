@@ -8,7 +8,7 @@
                 <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
                     <i class="material-icons opacity-10">weekend</i>
                 </div>
-                <div class="text-end pt-1">
+                <div class="text-end pt-1" id="dashboard-text">
                     <p class="text-sm mb-0 text-capitalize">Today's Money</p>
                     <h4 class="mb-0">$53k</h4>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
                     <i class="material-icons opacity-10">person</i>
                 </div>
-                <div class="text-end pt-1">
+                <div class="text-end pt-1" id="dashboard-text">
                     <p class="text-sm mb-0 text-capitalize">Today's Users</p>
                     <h4 class="mb-0">2,300</h4>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
                     <i class="material-icons opacity-10">person</i>
                 </div>
-                <div class="text-end pt-1">
+                <div class="text-end pt-1" id="dashboard-text">
                     <p class="text-sm mb-0 text-capitalize">New Clients</p>
                     <h4 class="mb-0">3,462</h4>
                 </div>
@@ -59,7 +59,7 @@
                 <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
                     <i class="material-icons opacity-10">weekend</i>
                 </div>
-                <div class="text-end pt-1">
+                <div class="text-end pt-1" id="dashboard-text">
                     <p class="text-sm mb-0 text-capitalize">Sales</p>
                     <h4 class="mb-0">$103,430</h4>
                 </div>

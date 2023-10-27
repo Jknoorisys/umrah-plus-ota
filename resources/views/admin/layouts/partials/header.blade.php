@@ -34,9 +34,10 @@
                 </div>
             </div>
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item d-xl px-3 d-flex align-items-center">
-                    <i class="material-icons" id="languageToggle" onchange="toggleLanguage()">language</i> العربية
-                </li> 
+                <li class="nav-item d-xl px-3 d-flex align-items-center" onclick="toggleLanguage()" style="cursor: pointer;">
+                    <span class="material-icons" id="languageToggle">translate</span>
+                    <span id="languageName">Eng</span>
+                </li>
 
                 <li class="nav-item d-xl-none px-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -142,3 +143,44 @@
         </div>
     </div>
   </nav>
+
+  <script>
+    function toggleLanguage() {
+        var currentLang = "{{ session('locale') }}";
+        if (currentLang === "en") {
+            window.location.href = "{{ url('setlocale/ar') }}";
+        } else {
+            window.location.href = "{{ url('setlocale/en') }}";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+            var currentLang = "{{ session('locale') }}";
+            var htmlTag = document.getElementById('htmlTag');
+            var bodyTag = document.getElementById('bodyTag');
+            var sidenavMain = document.getElementById('sidenav-main');
+            // var dashboard = document.getElementById('dashboard-text');
+            if (currentLang === "ar") {
+                document.getElementById('languageName').innerText = "العربية";
+                bodyTag.classList.add('rtl');
+                bodyTag.classList.remove('ltr');
+                bodyTag.classList.add('bg-gray-200');
+                bodyTag.classList.remove('bg-white');
+                sidenavMain.classList.add('fixed-end');
+                sidenavMain.classList.remove('fixed-start');
+                // dashboard.classList.add('text-start');
+                // dashboard.classList.remove('text-end');
+                htmlTag.setAttribute('dir', 'rtl');
+            } else {
+                bodyTag.classList.add('ltr');
+                bodyTag.classList.remove('rtl');
+                bodyTag.classList.add('bg-white');
+                bodyTag.classList.remove('bg-gray-200');
+                sidenavMain.classList.add('fixed-start');
+                sidenavMain.classList.remove('fixed-end');
+                // dashboard.classList.add('text-end');
+                // dashboard.classList.remove('text-start');
+                htmlTag.setAttribute('dir', 'ltr');
+            }
+        });
+</script>

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlTag">
 
 <head>
     <meta charset="utf-8" />
@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show bg-gray-200" id="bodyTag">
     <!-- Sidebar -->
     @include('admin.layouts.partials.sidebar')
     <!-- End Sidebar -->
