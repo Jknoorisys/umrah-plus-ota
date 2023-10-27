@@ -160,7 +160,7 @@ class BookingController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData
+                    'data'      => $responseData['hotels']
                 ],$status);
             } else {
                 return response()->json([
@@ -232,7 +232,7 @@ class BookingController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData
+                    'data'      => $responseData['hotel']
                 ],$status);
             } else {
                 return response()->json([

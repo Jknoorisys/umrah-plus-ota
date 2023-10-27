@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterCountry;
+use App\Models\MasterCurrency;
 use App\Models\MasterDestination;
 use App\Models\MasterHotel;
 use App\Models\MasterLanguage;
@@ -380,14 +381,14 @@ class ContentController extends Controller
             $status = $response->status();
 
             // Create Master Country Data
-            $destinations = $responseData['destinations'];
-            foreach ($destinations as $destination) {
-                $destinationData = [
-                    'code' => $destination['code'],
-                    'destination' => $destination['name']['content'],
-                ];
-                $destination = MasterDestination::create($destinationData);
-            }
+            // $destinations = $responseData['destinations'];
+            // foreach ($destinations as $destination) {
+            //     $destinationData = [
+            //         'code' => $destination['code'],
+            //         'destination' => $destination['name']['content'],
+            //     ];
+            //     $destination = MasterDestination::create($destinationData);
+            // }
 
             if ($status == "200") {
                 return response()->json([
@@ -788,6 +789,16 @@ class ContentController extends Controller
             $responseData = $response->json();
             
             $status = $response->status();
+
+            // Create Master Currency Data
+            // $currencies = $responseData['currencies'];
+            // foreach ($currencies as $currency) {
+            //     $currencyData = [
+            //         'code' => $currency['code'],
+            //         'currency' => $currency['description']['content'],
+            //     ];
+            //     $currency = MasterCurrency::create($currencyData);
+            // }
 
             if ($status == "200") {
                 return response()->json([

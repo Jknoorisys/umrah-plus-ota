@@ -15,7 +15,7 @@ class HotelMasterController extends Controller
         try {
             $search = $request->search ? $request->search : '';
 
-            $countires = MasterCountry::where('country', 'like', '%'.$search.'%')->get();
+            $countires = MasterCountry::where('country', 'like', '%'.$search.'%')->orWhere('code', 'like', '%'.$search.'%')->get();
             $total = $countires->count();
 
             if (!empty($countires)) {
@@ -45,7 +45,7 @@ class HotelMasterController extends Controller
 
             $search = $request->search ? $request->search : '';
 
-            $languages = MasterLanguage::where('language', 'like', '%'.$search.'%')->get();
+            $languages = MasterLanguage::where('language', 'like', '%'.$search.'%')->orWhere('code', 'like', '%'.$search.'%')->get();
             $total = $languages->count();
 
             if (!empty($languages)) {

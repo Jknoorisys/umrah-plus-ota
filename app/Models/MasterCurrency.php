@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class MasterDestination extends Model
+class MasterCurrency extends Model
 {
+    use HasFactory;
     use HasFactory;
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -19,7 +20,7 @@ class MasterDestination extends Model
      */
     protected $fillable = [
         'code',
-        'destination',
+        'currency',
     ];
 
     /**
