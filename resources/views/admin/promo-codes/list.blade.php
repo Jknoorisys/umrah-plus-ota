@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
                                             <span class="material-icons text-md">
                                                 edit
                                             </span>

@@ -37,7 +37,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('role.edit-form', ['id' => $role->id]) }}">
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('role.edit-form', ['id' => $role->id]) }}">
                                             <span class="material-icons text-md">
                                                 edit
                                             </span>
