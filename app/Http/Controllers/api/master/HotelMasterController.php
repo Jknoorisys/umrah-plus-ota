@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 
 class HotelMasterController extends Controller
 {
-    public function countries() {
+    public function countries(Request $request) {
         try {
-            $countires = MasterCountry::all();
-            $total = MasterCountry::count();
+            $search = $request->search ? $request->search : '';
+
+            $countires = MasterCountry::where('country', 'like', '%'.$search.'%')->orWhere('code', 'like', '%'.$search.'%')->get();
+            $total = $countires->count();
 
             if (!empty($countires)) {
                 return response()->json([
@@ -38,10 +40,13 @@ class HotelMasterController extends Controller
         }
     }
 
-    public function languages() {
+    public function languages(Request $request) {
         try {
-            $languages = MasterLanguage::all();
-            $total = MasterLanguage::count();
+
+            $search = $request->search ? $request->search : '';
+
+            $languages = MasterLanguage::where('language', 'like', '%'.$search.'%')->orWhere('code', 'like', '%'.$search.'%')->get();
+            $total = $languages->count();
 
             if (!empty($languages)) {
                 return response()->json([
@@ -65,10 +70,12 @@ class HotelMasterController extends Controller
         }
     }
 
-    public function hotels() {
+    public function hotels(Request $request) {
         try {
-            $hotels = MasterHotel::all();
-            $total = MasterHotel::count();
+            $search = $request->search ? $request->search : '';
+
+            $hotels = MasterHotel::where('hotel', 'like', '%'.$search.'%')->get();
+            $total = $hotels->count();
 
             if (!empty($hotels)) {
                 return response()->json([
@@ -97,7 +104,7 @@ class HotelMasterController extends Controller
             $search = $request->search ? $request->search : '';
 
             $destinations = MasterDestination::where('destination', 'like', '%'.$search.'%')->get();
-            $total = MasterDestination::count();
+            $total = $destinations->count();
 
             if (!empty($destinations)) {
                 return response()->json([

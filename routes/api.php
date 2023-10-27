@@ -164,6 +164,9 @@ Route::middleware(['localization'])->group(function () {
         Route::get('countries' , [HotelMasterController::class, 'countries']);
         Route::get('languages' , [HotelMasterController::class, 'languages']);
         Route::get('hotels' , [HotelMasterController::class, 'hotels']);
+        Route::post('countries' , [HotelMasterController::class, 'countries']);
+        Route::post('languages' , [HotelMasterController::class, 'languages']);
+        Route::post('hotels' , [HotelMasterController::class, 'hotels']);
         Route::post('destinations' , [HotelMasterController::class, 'destinations']);
     });
 
