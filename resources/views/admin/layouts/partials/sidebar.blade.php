@@ -41,7 +41,7 @@
 
         {{-- Manage Roles --}}
         <li class="nav-item">
-          <a class="nav-link text-white {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('sub-admin.list') }}">
+          <a class="nav-link text-white {{ (request()->is('role*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('role.list') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">settings_applications</i>
             </div>

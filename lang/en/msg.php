@@ -110,6 +110,7 @@ return [
         'Manage Sub Admins' => 'Manage Sub Admins',
         'Sub Admins' => 'Sub Admins',
         'Sub Admin' => 'Sub Admin',
+        'Created Date' => 'Created Date',
         'Add Sub Admin' => 'Add Sub Admin',
         'Enter Valid Name' => 'Enter Valid Name',
         'Enter Valid Email Address' => 'Enter Valid Email Address',
@@ -130,10 +131,12 @@ return [
         'Select Valid Profile Photo' => 'Select Valid Profile Photo',
 
         // Manage Roles
+        'Manage Roles' => 'Manage Roles',
         'Roles' => 'Roles',
         'Role' => 'Role',
         'Add Role' => 'Add Role',
         'Enter Valid Role' => 'Enter Valid Role',
+        'System Module Permissions' => 'System Module Permissions',
         'Role Added Successfully' => 'Role Added Successfully',
         'Unable to add Role, Please try again' => 'Unable to add Role, Please try again',
         'Role Not Found' => 'Role Not Found',
@@ -162,6 +165,7 @@ return [
         'Manage Promo Codes' => 'Manage Promo Codes',
         'Promo Codes' => 'Promo Codes',
         'Add Promo Code' => 'Add Promo Code',
+        'Edit Promo Code' => 'Edit Promo Code',
         'Code' => 'Code',
         'Ex FIRST50' => 'Ex FIRST50',
         'Discount Type' => 'Discount Type',

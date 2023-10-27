@@ -1,7 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="card">
+    <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-info shadow-info border-radius-lg d-flex justify-content-between align-items-center pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Add Promo Code') }}</h6>
+            </div>
+        </div>
         <div class="card-body">
             <div class="p-4 border rounded">
                 <form class="row g-3 needs-validation" action="{{ route('promo-code.add') }}" method="POST" novalidate>

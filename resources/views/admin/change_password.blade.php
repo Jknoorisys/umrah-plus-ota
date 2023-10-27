@@ -52,7 +52,12 @@
             </div>
         </div>
         <div class="col-lg-8">
-            <div class="card">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-info border-radius-lg d-flex justify-content-between align-items-center pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Change Password') }}</h6>
+                    </div>
+                </div>
                 <div class="card-body mt-3 mb-3">
                     <form id="change_password" action="{{ route('change-password') }}" method="post">
                         @csrf

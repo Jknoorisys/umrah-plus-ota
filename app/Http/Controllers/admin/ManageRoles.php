@@ -14,18 +14,18 @@ class ManageRoles extends Controller
     public function list() {
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
-        $data['title']               = trans('msg.admin.Manage Promo Codes');
-        $data['codes']               = PromoCodes::orderBy('created_at', 'desc')->get();
+        $data['title']               = trans('msg.admin.Manage Roles');
+        $data['roles']               = Role::orderBy('created_at', 'desc')->get();
         
-        return view('admin.promo-codes.list', $data);
+        return view('admin.roles.list', $data);
     }
 
     public function addForm() {
-        $data['previous_title']      = trans('msg.admin.Manage Promo Codes');
-        $data['url']                 = route('promo-code.list');
-        $data['title']               = trans('msg.admin.Add Promo Code');
+        $data['previous_title']      = trans('msg.admin.Manage Roles');
+        $data['url']                 = route('role.list');
+        $data['title']               = trans('msg.admin.Add Role');
         
-        return view('admin.promo-codes.add', $data);
+        return view('admin.roles.add', $data);
     }
 
     public function add(Request $request) {
