@@ -118,7 +118,7 @@
                     }
                 },
                 error: function (error) {
-                    pos4_error_noti(error.responseJSON.error);
+                    pos4_error_noti(data.error);
                 }
             });
         }
@@ -158,7 +158,7 @@
                     }
                 },
                 error: function (error) {
-                    pos4_error_noti(error.responseJSON.error);
+                    pos4_error_noti(data.error);
                 }
             });
         }
