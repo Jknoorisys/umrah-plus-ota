@@ -54,8 +54,7 @@ class ManageUsers extends Controller
         
     }
 
-    public function delete(Request $request)
-    {
+    public function delete(Request $request) {
         $user = User::find($request->user_id);
         if (!$user) {
             return response()->json(['error' => trans('msg.admin.User Not Found')]);

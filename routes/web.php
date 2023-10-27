@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ManageMarkups;
 use App\Http\Controllers\admin\ManagePromoCodes;
+use App\Http\Controllers\admin\ManageRoles;
 use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ProfileController;
@@ -75,6 +76,18 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('edit' , [ManageSubAdmins::class, 'edit'])->name('sub-admin.edit');
         Route::post('delete' , [ManageSubAdmins::class, 'delete'])->name('sub-admin.delete');
         Route::post('change-status' , [ManageSubAdmins::class, 'changeStatus'])->name('sub-admin.change-status');
+
+    });
+
+    Route::prefix('role')->group(function () {
+        Route::get('list' , [ManageRoles::class, 'list'])->name('role.list');
+        Route::get('add' , [ManageRoles::class, 'addForm'])->name('role.add-form');
+        Route::post('add' , [ManageRoles::class, 'add'])->name('role.add');
+        Route::get('view/{id}' , [ManageRoles::class, 'view'])->name('role.view');
+        Route::get('edit/{id}' , [ManageRoles::class, 'editForm'])->name('role.edit-form');
+        Route::post('edit' , [ManageRoles::class, 'edit'])->name('role.edit');
+        Route::post('delete' , [ManageRoles::class, 'delete'])->name('role.delete');
+        Route::post('change-status' , [ManageRoles::class, 'changeStatus'])->name('role.change-status');
 
     });
 

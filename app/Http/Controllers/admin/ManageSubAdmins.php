@@ -144,8 +144,7 @@ class ManageSubAdmins extends Controller
         }
     }
 
-    public function delete(Request $request)
-    {
+    public function delete(Request $request) {
         $admin = Admin::find($request->admin_id);
         if (!$admin) {
             return response()->json(['error' => trans('msg.admin.Sub Admin Not Found')]);

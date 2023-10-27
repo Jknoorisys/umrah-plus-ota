@@ -33,9 +33,19 @@
         <li class="nav-item">
           <a class="nav-link text-white {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('sub-admin.list') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">supervisor_account</i>
+              <i class="material-icons opacity-10">manage_accounts</i>
             </div>
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Sub Admins') }}</span>
+          </a>
+        </li>
+
+        {{-- Manage Roles --}}
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('sub-admin.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">settings_applications</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Roles') }}</span>
           </a>
         </li>
 

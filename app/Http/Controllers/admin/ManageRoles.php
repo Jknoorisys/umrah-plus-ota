@@ -5,10 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Markup;
 use App\Models\PromoCodes;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ManagePromoCodes extends Controller
+class ManageRoles extends Controller
 {
     public function list() {
         $data['previous_title']      = trans('msg.admin.Dashboard');
@@ -28,7 +29,7 @@ class ManagePromoCodes extends Controller
     }
 
     public function add(Request $request) {
-        $markup = Markup::where('service', $request->service)->first()->value('markup');
+        $markup = Role::where('service', $request->service)->first()->value('markup');
 
         $validatedData = $request->validate([
             'service' => 'required',
@@ -48,7 +49,7 @@ class ManagePromoCodes extends Controller
             return redirect()->back()->with('error', trans('msg.admin.Discount can not be greater than 5%').'.')->withInput();
         }
 
-        $insert = PromoCodes::create($validatedData);
+        $insert = Role::create($validatedData);
 
         if ($insert) {
             return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code added successfully').'.');
@@ -58,7 +59,7 @@ class ManagePromoCodes extends Controller
     }
 
     public function editForm($id) {
-        $code = PromoCodes::find($id);
+        $code = Role::find($id);
 
         if ($code) {
             $data['previous_title']  = trans('msg.admin.Manage Promo Codes');
@@ -74,7 +75,7 @@ class ManagePromoCodes extends Controller
     public function edit(Request $request) {
         
         $id = $request->id;
-        $promoCode = PromoCodes::find($id);
+        $promoCode = Role::find($id);
     
         if (!$promoCode) {
             return redirect()->back()->with('error', trans('msg.admin.Promo code not found'));
@@ -105,7 +106,7 @@ class ManagePromoCodes extends Controller
     }
 
     public function changeStatus(Request $request) {
-        $code = PromoCodes::find($request->code_id);
+        $code = Role::find($request->code_id);
 
         if (!$code) {
             return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
@@ -123,7 +124,7 @@ class ManagePromoCodes extends Controller
     }
 
     public function delete(Request $request) {
-        $code = PromoCodes::find($request->code_id);
+        $code = Role::find($request->code_id);
         if (!$code) {
             return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
         }

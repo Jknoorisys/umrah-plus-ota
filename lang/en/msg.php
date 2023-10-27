@@ -129,6 +129,19 @@ return [
         'Please Select Valid Role' => 'Please Select Valid Role',
         'Select Valid Profile Photo' => 'Select Valid Profile Photo',
 
+        // Manage Roles
+        'Roles' => 'Roles',
+        'Role' => 'Role',
+        'Add Role' => 'Add Role',
+        'Enter Valid Role' => 'Enter Valid Role',
+        'Role Added Successfully' => 'Role Added Successfully',
+        'Unable to add Role, Please try again' => 'Unable to add Role, Please try again',
+        'Role Not Found' => 'Role Not Found',
+        'Role :status Successfully' => 'Role :status Successfully',
+        'Edit Role' => 'Edit Role',
+        'Role updated successfully' => 'Role updated successfully',
+        'Unable to update Role, Please try again' => 'Unable to update Role, Please try again',
+
         // Send Notification to all Users
         'Send Notification' => 'Send Notification',
         'Title' => 'Title',

@@ -55,8 +55,7 @@ class ProfileController extends Controller
         }   
     }
 
-    public function uploadImage(Request $request)
-    {
+    public function uploadImage(Request $request) {
         $admin = auth('admin')->user();
 
         $request->validate([
