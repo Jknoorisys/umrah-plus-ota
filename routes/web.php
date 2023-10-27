@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('setlocale/{locale}', function ($locale) {
+    session(['locale' => $locale]);
+    return redirect()->back();
+})->name('setlocale');
 
 Route::middleware(['guest'])->group(function () {
     Route::any('/', function () {

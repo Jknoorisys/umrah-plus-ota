@@ -34,6 +34,10 @@
                 </div>
             </div>
             <ul class="navbar-nav justify-content-end">
+                <li class="nav-item d-xl px-3 d-flex align-items-center">
+                    <i class="material-icons" id="languageToggle" onchange="toggleLanguage()">language</i> العربية
+                </li> 
+
                 <li class="nav-item d-xl-none px-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                       <div class="sidenav-toggler-inner">

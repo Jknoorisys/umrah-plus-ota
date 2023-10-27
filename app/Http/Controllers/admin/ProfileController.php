@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 class ProfileController extends Controller
 {
     public function dashboard() {
-        return view('admin.layouts.app');
+        return view('admin.dashboard');
     }
 
     public function profile() {
