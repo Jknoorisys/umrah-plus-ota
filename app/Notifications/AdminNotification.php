@@ -40,6 +40,7 @@ class AdminNotification extends Notification
         return [
             'title' => $this->message['title'],
             'message' => $this->message['message'],
+            'profile' => $this->message['profile'],
         ];
     }
 }

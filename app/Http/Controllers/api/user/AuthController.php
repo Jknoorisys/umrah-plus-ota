@@ -133,6 +133,7 @@ class AuthController extends Controller
                         $message = [
                             'title' => trans('msg.notification.user_registered_title'),
                             'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
+                            'profile' => $user->photo,
                         ];
         
                         $admin = Admin::where('role', '=', 'super_admin')->first();
@@ -491,6 +492,7 @@ class AuthController extends Controller
                     $image->move($destinationPath, $name);
                     $newUser->photo = $name;
                 }
+                
                 if ($newUser->save()) {
                     $service = new Services();
                     $claims = array(
@@ -502,6 +504,17 @@ class AuthController extends Controller
 
                     $newUser->JWT_token = $token;
                     $newUser->save();
+
+                    $name = $user->fname.' '.$user->lname;
+                    $message = [
+                        'title' => trans('msg.notification.user_registered_title'),
+                        'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
+                        'profile' => $user->photo,
+                    ];
+    
+                    $admin = Admin::where('role', '=', 'super_admin')->first();
+                    $admin->notify(new AdminNotification($message));
+
                     return response()->json(
                         [
                             'status'    => 'success',

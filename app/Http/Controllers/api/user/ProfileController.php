@@ -91,6 +91,7 @@ class ProfileController extends Controller
                 $image->move(public_path('assets/uploads/user-photos'), $imageName);
                 $user->photo = $imageName;
             }
+            
             $data = [
                 'fname'     => $request->input('fname', $user->fname),
                 'lname'     => $request->input('lname', $user->lname),
