@@ -16,6 +16,8 @@ return [
     'admin' => [
         // General
         'Success' => 'Success',
+        'Search here' => 'Search here',
+        'Search' => 'Search',
 
         // Login
         'Login' => 'Login',

@@ -211,7 +211,13 @@
         
             table.buttons().container()
                 .appendTo( '#otaDataTable_wrapper .col-md-6:eq(0)' );
+                var placeholderText = '{{ trans("msg.admin.Search") }}';
+    
+                // Find the search input element and set the new placeholder
+                var searchInput = $('div.dataTables_wrapper input[type="search"]');
+                searchInput.attr('placeholder', placeholderText);
         } );
+        
     </script>
 
     @yield('customJs')

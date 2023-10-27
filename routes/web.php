@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('setlocale/{locale}', function ($locale) {
-    session(['locale' => $locale]);
     App::setLocale($locale);
+    session(['locale' => $locale]);
     return redirect()->back();
 })->name('setlocale');
 
