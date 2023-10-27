@@ -161,10 +161,10 @@ Route::middleware(['localization'])->group(function () {
 
     // Master APIs by Javeriya
     Route::prefix('master')->group(function () {
-        Route::get('countries' , [HotelMasterController::class, 'countries']);
-        Route::get('languages' , [HotelMasterController::class, 'languages']);
-        Route::get('hotels' , [HotelMasterController::class, 'hotels']);
-        Route::get('destinations' , [HotelMasterController::class, 'destinations']);
+        Route::post('countries' , [HotelMasterController::class, 'countries']);
+        Route::post('languages' , [HotelMasterController::class, 'languages']);
+        Route::post('hotels' , [HotelMasterController::class, 'hotels']);
+        Route::post('destinations' , [HotelMasterController::class, 'destinations']);
     });
 
     // Umrah Packages API by Javeriya
