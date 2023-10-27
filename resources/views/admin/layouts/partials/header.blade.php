@@ -116,7 +116,8 @@
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                            @foreach(Auth::guard('admin')->user()->unreadNotifications as $notification)
+                            <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a>
+                            @forelse(Auth::guard('admin')->user()->unreadNotifications as $notification)
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                       <div class="d-flex py-1">
@@ -134,8 +135,12 @@
                                         </div>
                                       </div>
                                     </a>
-                                  </li>
-                            @endforeach
+                                </li>
+                            @empty
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('assets/img/notification.jpg') }}" alt="notification" width="75px" height="75px">
+                                </div>                            
+                            @endforelse
                         </ul>
                     </li>
                 @endif
