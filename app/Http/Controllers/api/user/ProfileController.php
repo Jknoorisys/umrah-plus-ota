@@ -85,11 +85,16 @@ class ProfileController extends Controller
 
         try {
             $user = AuthUser($request->user_id);
-            if ($request->hasFile('photo')) {
-                $image = $request->file('photo');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('assets/uploads/user-photos'), $imageName);
-                $user->photo = $imageName;
+            $file = $request->file('photo');
+            if ($file) {
+                $oldPhotoPath = public_path($user->photo);
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath); 
+                }
+                $extension = $file->getClientOriginalExtension();
+                $image_name = time().'.'.$extension;
+                $file->move('assets/uploads/user-photos/', $image_name);
+                $image_url = 'assets/uploads/user-photos/'. $image_name;
             }
             
             $data = [
@@ -98,7 +103,7 @@ class ProfileController extends Controller
                 'email'     => $request->input('email', $user->email),
                 'country_code' => $request->input('country_code', $user->country_code),
                 'phone'     => $request->input('phone', $user->phone),
-                'photo' => $request->photo ? 'assets/uploads/user-photos/'.$user->photo : 'assets/uploads/user-photos/'.$user->photo,
+                'photo' => $image_url,
             ];
     
             $update = $user->update($data);

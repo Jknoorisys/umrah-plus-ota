@@ -485,12 +485,19 @@ class AuthController extends Controller
                 $newUser->fname = $request->fname;
                 $newUser->is_verified = 'yes';
                 
-                if ($request->hasFile('photo')) {
-                    $image = $request->file('photo');
-                    $name = time().'.'.$image->getClientOriginalExtension();
-                    $destinationPath = public_path('assets/uploads/user-photos');
-                    $image->move($destinationPath, $name);
-                    $newUser->photo = $name;
+                $file = $request->file('photo');
+                if ($file) {
+                    if ($newUser->photo) {
+                        $oldPhotoPath = public_path($newUser->photo);
+            
+                        if (file_exists($oldPhotoPath)) {
+                            unlink($oldPhotoPath); 
+                        }
+                    }
+                    $extension = $file->getClientOriginalExtension();
+                    $image_name = time().'.'.$extension;
+                    $file->move('assets/uploads/user-photos/', $image_name);
+                    $image_url = 'assets/uploads/user-photos/'. $image_name;
                 }
                 
                 if ($newUser->save()) {
@@ -509,7 +516,7 @@ class AuthController extends Controller
                     $message = [
                         'title' => trans('msg.notification.user_registered_title'),
                         'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
-                        'profile' => $user->photo,
+                        'profile' => $image_url,
                     ];
     
                     $admin = Admin::where('role', '=', 'super_admin')->first();
