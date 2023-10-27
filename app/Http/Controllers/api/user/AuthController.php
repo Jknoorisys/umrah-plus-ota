@@ -421,25 +421,21 @@ class AuthController extends Controller
         $messages = [
             'fname.required' => 'First name is required.',
             'fname.max' => 'First name must not exceed :max characters.',
-            'lname.required' => 'Last name is required.',
-            'lname.max' => 'Last name must not exceed :max characters.',
-            'country_code.required' => 'Country code is required.',
+            // 'lname.required' => 'Last name is required.',
+            // 'lname.max' => 'Last name must not exceed :max characters.',
+            // 'country_code.required' => 'Country code is required.',
             
         ];
 
         $validator = Validator::make($request->all(), [
-            'fname'     => ['required', 'string', 'max:255'],
-            'lname'     => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
-            'country_code' => ['required'],
-            'phone'     => ['required', 'numeric', Rule::unique('users')],
-            'password'  => ['required', 'string', 'min:8'],
-            'is_social'     => ['required', Rule::in(['0','1'])],
+            'fname'     => ['string', 'max:255'],
+            'email'     => ['required', 'email', 'max:255'],
+            'photo' => ['nullable', 'image'],
             'social_type'   => [
                 'required',
                 Rule::in(['google','facebook']),
             ],
-            'social_id'     => 'required',
+            // 'social_id'     => 'required',
         ], $messages);
 
         $errors = [];
@@ -457,50 +453,69 @@ class AuthController extends Controller
         }
 
         try {
-            $user = User::where('email', $request->input('email'))->get();
-            // echo json_encode($request->all());exit;
-            if (!empty($user)) {
-                $otp = rand(100000, 999999);
+            $user = User::where('email', $request->email)
+                ->where('social_type', $request->social_type)
+                ->first();
 
-                $data = [
-                    'fname' => $request->fname, 
-                    'lname' => $request->lname,
-                    'password' => Hash::make($request->password),
-                    'email' => $request->email, 
-                    'country_code' => $request->country_code,
-                    'phone' => $request->phone, 
-                    'otp' => $otp,
-                    'is_social' => $request->is_social,
-                    'Social_type' => $request->social_type,
-                    'social_id' => $request->social_id,
-                ];
+            if (!empty($user)) 
+            {
+                $service = new Services();
+                $claims = array(
+                    'exp'   => Carbon::now()->addDays(1)->timestamp,
+                    'uuid'  => $user->id
+                );
 
-                $insert = User::create($data);
+                $token = $service->getSignedAccessTokenForUser($user, $claims);
 
-                if ($insert) {
+                $user->JWT_token = $token;
+                $user->save();
 
-                    $name = $request->fname.' '.$request->lname;
-                    $insert->notify(New RegistrationEmail($name, $request->email, $otp));
-
-                    return response()->json([
+                return response()->json(
+                    [
                         'status'    => 'success',
-                        'message'   => __('msg.registration.otp-sent'),
-                    ], 200);
-                } else {
+                        'message'   =>   trans('msg.login.success'),
+                        'data'      => $user,
+                    ],200);
+            } else {
+                $newUser = new User();
+                $newUser->email = $request->email;
+                $newUser->social_type = $request->social_type;
+                $newUser->is_social = '1';
+                $newUser->fname = $request->fname;
+                $newUser->is_verified = 'yes';
+                
+                if ($request->hasFile('photo')) {
+                    $image = $request->file('photo');
+                    $name = time().'.'.$image->getClientOriginalExtension();
+                    $destinationPath = public_path('assets/uploads/user-photos');
+                    $image->move($destinationPath, $name);
+                    $newUser->photo = $name;
+                }
+                if ($newUser->save()) {
+                    $service = new Services();
+                    $claims = array(
+                        'exp'   => Carbon::now()->addDays(1)->timestamp,
+                        'uuid'  => $newUser->id
+                    );
+
+                    $token = $service->getSignedAccessTokenForUser($newUser, $claims);
+
+                    $newUser->JWT_token = $token;
+                    $newUser->save();
+                    return response()->json(
+                        [
+                            'status'    => 'success',
+                            'message'   =>   trans('msg.login.success'),
+                            'data'      => $newUser,
+                        ],200);
+                }
+                else {
                     return response()->json([
-                        'status'    => 'failed',
-                        'message'   => __('msg.registration.otp-failed'),
+                        'status' => 'failed',
+                        'message' => trans('msg.registration.Notreg'),
                     ], 400);
                 }
             }
-            else
-            {
-                return response()->json([
-                    'status'    => 'failed',
-                    'message'   => __('msg.registration.email-exist'),
-                ], 400);
-            }
-
         }
         catch (\Throwable $e) {
             return response()->json([
