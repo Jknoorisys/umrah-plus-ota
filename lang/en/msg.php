@@ -102,6 +102,7 @@ return [
         'Cancelled' => 'Cancelled',
         'User deleted successfully' => 'User deleted successfully',
         'User Details' => 'User Details',
+        
 
         // Manage Sub Admins
         'Manage Sub Admins' => 'Manage Sub Admins',
@@ -227,6 +228,7 @@ return [
             'keep_secure' => 'Please keep your credentials secure.',
             'login' => 'Login',
             'thank_you' => 'Thank you for using our service!',
+            'Notreg' => 'Failed to register user',
         ],
 
         'reset-password' => [

@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('otp');
             $table->string('country_code');
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->nullable();
             $table->string('photo');
             $table->string('password');
             $table->enum('is_social', [0, 1])->default(0);
-            $table->string('social_id');
             $table->enum('Social_type', ['facebook', 'google','simple'])->default('simple');
             $table->text('JWT_token');
             $table->enum('is_verified', ['no', 'yes'])->default('no');
