@@ -165,6 +165,7 @@ Route::middleware(['localization'])->group(function () {
         Route::post('languages' , [HotelMasterController::class, 'languages']);
         Route::post('hotels' , [HotelMasterController::class, 'hotels']);
         Route::post('destinations' , [HotelMasterController::class, 'destinations']);
+        Route::post('currencies' , [HotelMasterController::class, 'currencies']);
     });
 
     // Umrah Packages API by Javeriya
