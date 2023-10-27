@@ -318,11 +318,11 @@ class BookingController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'language' => 'required',
+                'language' => 'required|json',
                 'holder'  => 'required|json',
                 'transfers'   => 'required|json',
-                'clientReference' => 'required',
-                'remarks' => 'required',
+                'clientReference' => 'required|json',
+                'remarks' => 'required|json',
             ]);
 
             if ($validator->fails()) {
@@ -336,21 +336,23 @@ class BookingController extends Controller
             $data = [
                 "holder" => json_decode($request->holder, TRUE),
                 "transfers" => json_decode($request->transfers, TRUE),
-                'clientReference' => $request->clientReference,
-                'language' => $request->language,
-                'remarks' => $request->remarks,
+                'clientReference' => json_decode($request->clientReference, TRUE),
+                'language' => json_decode($request->language, TRUE),
+                'remarks' => json_decode($request->remarks, TRUE),
             ];
             $queryString = http_build_query($data);
             $signature = self::calculateSignature();
-
+            // echo json_encode($data);exit;
             $response = Http::withHeaders([
                 'Api-key' => config('constants.transfer.Api-key'),
                 'X-Signature' => $signature,
                 'Accept' => 'application/json',
                 'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
-            ])->get(config('constants.end-point') . '/transfer-api/1.0/bookings'.$queryString);
-            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings/'.$queryString);exit;
+                
+            ])->get(config('constants.end-point') . '/transfer-api/1.0/booking'.$queryString);
+            // echo json_encode($response->status());exit;
+            // echo json_encode(config('constants.end-point') . '/transfor-api/1.0/booking'.$queryString);exit;
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
