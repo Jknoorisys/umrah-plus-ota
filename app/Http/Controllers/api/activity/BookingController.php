@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api\activity;
 
 use App\Http\Controllers\Controller;
-use App\Models\PromoCodes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
@@ -31,84 +30,6 @@ class BookingController extends Controller
         // Set the X-Signature in your response headers
         return $hash;
     }
-
-    public function ActivityPromoCode(Request $request)
-    {
-        try{
-
-            $promocode = PromoCodes::where('service','=','activity')->get();
-            if(!empty($promocode))
-            {
-                return response()->json([
-                    'status' => 'success',
-                    'message' => trans('msg.list.success'),
-                    'data' => $promocode,
-                ], 200);
-            } else {
-                
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => trans('msg.list.failed'),
-                    'data' => $promocode,
-                ], 400); 
-            }
-
-        }catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => trans('msg.error'),
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-    
-    // app/Http/Controllers/PromoCodeController.php
-    public function validatePromoCode(Request $request) 
-    {
-        try{
-
-            $validator = Validator::make($request->all(), [
-                'code' => ['required'],
-                'user_id' => ['required'],
-                
-                        ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'failed',
-                    'errors' => $validator->errors(),
-                    'message' => trans('msg.validation'),
-                ], 400);
-            }
-
-            $promoCode = PromoCodes::where('code', $request->input('code'))->first();
-
-        if (!$promoCode) {
-            return response()->json(['message' => 'Invalid promo code'], 404);
-        }
-
-        if ($promoCode->isExpired()) {
-            return response()->json(['message' => 'Promo code has expired'], 422);
-        }
-
-        $user = AuthUser($request->user_id); 
-
-        if ($promoCode->hasUserReachedMaxUsage($user)) {
-            return response()->json(['message' => 'User has reached the maximum usage for this promo code'], 422);
-        }
-
-        return response()->json(['message' => 'Promo code is valid']);
-        }
-        catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => trans('msg.error'),
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-        
-    }
-
 
     public function filterActivities(Request $request)
     {
@@ -422,25 +343,26 @@ class BookingController extends Controller
                     'message' => trans('msg.validation'),
                 ], 400);
             }
-            $data = [];
-            $data['destination'] = $request->input('destination');
-            $data['offset'] = $request->input('offset');
-            $data['limit'] = $request->input('limit');
+            $data = [
+                'destination' => $request->destination,
+                'limit' => $request->limit,
+                'offset' => $request->offset,
+            
+            ];
+            
             $queryString = http_build_query($data);
             $signature = self::calculateSignature();
-
             $response = Http::withHeaders([
                 'Api-key' => config('constants.activites.Api-key'),
                 'X-Signature' => $signature,
                 'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
-            ])->get(config('constants.end-point') . '/activity-cache-api/1.0/avail/'.$queryString);
-                        // echo json_encode(config('constants.end-point') . '/activity-cache-api/1.0/avail/'.$queryString);exit;
+            ])->get(config('constants.end-point') . '/activity-cache-api/1.0/avail?'.$queryString);
+                // echo json_encode($signature);exit;
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
-                // echo json_encode($responseData);exit;
+            
 
                 return response()->json([
                     'status' => 'success',
@@ -471,10 +393,10 @@ class BookingController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'language' => 'required|json',
+                'language' => 'required',
                 'holder'  => 'required|json',
                 'activities'   => 'required|json',
-                'clientReference' => 'required|json',
+                'clientReference' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -488,20 +410,19 @@ class BookingController extends Controller
             $data = [
                 "holder" => json_decode($request->holder, TRUE),
                 "activities" => json_decode($request->activities, TRUE),
-                'clientReference' => json_decode($request->clientReference, TRUE),
-                'language' => json_decode($request->language, TRUE),
+                'clientReference' => $request->clientReference,
+                'language' => $request->language,
             ];
+            // echo json_encode($data);exit;
             $queryString = http_build_query($data);
             $signature = self::calculateSignature();
 
             $response = Http::withHeaders([
                 'Api-key' => config('constants.activites.Api-key'),
                 'X-Signature' => $signature,
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
-            ])->get(config('constants.end-point') . '/activity-api/3.0/bookings'.$queryString);
-            echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings/'.$queryString);exit;
+            ])->put(config('constants.end-point').'/activity-api/3.0/bookings',$data);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
@@ -531,6 +452,333 @@ class BookingController extends Controller
             ], 500);
         }
     }
+
+    public function PreConfirmBoooking(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'holder'  => 'required|json',
+                'activities'   => 'required|json',
+                'clientReference' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            $data = [
+                "holder" => json_decode($request->holder, TRUE),
+                "activities" => json_decode($request->activities, TRUE),
+                'clientReference' => $request->clientReference,
+                'language' => $request->language,
+            ];
+            // echo json_encode($data);exit;
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->put(config('constants.end-point') .'/activity-api/3.0/bookings/preconfirm',$data);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     
+    public function ReConfirmBooking(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'reference' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            $data = [
+                'reference' => $request->reference,
+                'language' => $request->language,
+            ];
+            // echo json_encode($data);exit;
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->put(config('constants.end-point') .'/activity-api/3.0/bookings/reconfirm',$data);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function BookingList(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'filterType' => ['required', Rule::in(['CHECKIN','CREATION','CANCELLATION'])],
+                'start' => 'required|date',
+                'end' => 'required|date',
+                'includedCancelled' => ['required','string'],
+                'holder' => ['array'],
+                'itemsPerPage' => ['integer'],
+                'page' => ['integer'],
+                
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            $data = [
+                'filterType' => $request->filterType,
+                'start' => $request->start,
+                'end' => $request->end,
+                'includedCancelled' => $request->includedCancelled,
+                'holder' => $request->holder ? json_decode($request->holder, TRUE) : null,
+                'itemsPerPage' => $request->itemsPerPage ? $request->itemsPerPage : null,
+                'page' => $request->page ? $request->page : '1',
+            ];
+            // echo json_encode($data);exit;
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') .'/activity-api/3.0/bookings/'.$request->language.'?'.$queryString);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     
+    public function BookingDetails(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'bookingReference' => 'required',
+                
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            
+                $language =$request->language;
+                $bookingReference = $request->bookingReference;
+                
+        
+            // echo json_encode($data);exit;
+            
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') .'/activity-api/3.0/bookings/'.$language.'/'.$bookingReference);
+            // echo json_encode(config('constants.end-point') .'/activity-api/3.0/bookings/'.$language.'/'.$bookingReference);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function BookingDetailOptions(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'customerReference' => 'required',
+                'holderName' => 'required',
+                'holderSurname' => 'required',
+                'from' => 'required|date',
+                'to' => 'required|date',
+                
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            // echo json_encode($request->all());exit;
+            
+                $language =$request->language;
+                $customerReference = $request->customerReference;
+                $holderName = $request->holderName;
+                $holderSurname = $request->holderSurname;
+                $from = $request->from;
+                $to = $request->to;
+                
+        
+            // echo json_encode($data);exit;
+            
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.activites.Api-key'),
+                'X-Signature' => $signature,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') .'/activity-api/3.0/bookings/'.$language.'/'.$customerReference.'/'.$holderName.'/'.$holderSurname.'/'.$from.'/'.$to);
+            // echo json_encode(config('constants.end-point') .'/activity-api/3.0/bookings/'.$language.'/'.$bookingReference);exit;
+            $status = $response->status();
+            if ($status === 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
