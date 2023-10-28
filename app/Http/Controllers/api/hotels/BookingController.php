@@ -122,12 +122,6 @@ class BookingController extends Controller
             ])->post(config('constants.end-point').'/hotel-api/1.0/hotels', $data);
             
             $responseData = $response->json();
-            // $hotels = $responseData['hotels']['hotels'];
-
-            // foreach ($hotels as $hotel) {
-            //     $hotelCode = $hotel['code'];
-            //     $hotelDetails = $this->hotelDetails($hotelCode);
-            // }
             
             $status = $response->status();
 
