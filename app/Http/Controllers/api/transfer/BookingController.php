@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
-use App\Models\PromoCodes;
 
 class BookingController extends Controller
 {
@@ -31,35 +30,6 @@ class BookingController extends Controller
         return $hash;
     }
 
-    public function TransferPromoCode(Request $request)
-    {
-        try{
-
-            $promocode = PromoCodes::where('service','=','transfer')->get();
-            if(!empty($promocode))
-            {
-                return response()->json([
-                    'status' => 'success',
-                    'message' => trans('msg.list.success'),
-                    'data' => $promocode,
-                ], 200);
-            } else {
-                
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => trans('msg.list.failed'),
-                    'data' => $promocode,
-                ], 400); 
-            }
-
-        }catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => trans('msg.error'),
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
     
     public function availability(Request $request)
     {
@@ -318,11 +288,11 @@ class BookingController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'language' => 'required|json',
+                'language' => 'required',
                 'holder'  => 'required|json',
                 'transfers'   => 'required|json',
-                'clientReference' => 'required|json',
-                'remarks' => 'required|json',
+                'clientReference' => 'required',
+                'remarks' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -332,31 +302,25 @@ class BookingController extends Controller
                     'message' => trans('msg.validation'),
                 ], 400);
             }
-            // echo json_encode($request->all());exit;
             $data = [
                 "holder" => json_decode($request->holder, TRUE),
                 "transfers" => json_decode($request->transfers, TRUE),
-                'clientReference' => json_decode($request->clientReference, TRUE),
-                'language' => json_decode($request->language, TRUE),
-                'remarks' => json_decode($request->remarks, TRUE),
+                'clientReference' => $request->clientReference,
+                'language' => $request->language,
+                'remarks' => $request->remarks,
             ];
             $queryString = http_build_query($data);
             $signature = self::calculateSignature();
-            // echo json_encode($data);exit;
             $response = Http::withHeaders([
                 'Api-key' => config('constants.transfer.Api-key'),
                 'X-Signature' => $signature,
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
                 'Content-Type' => 'application/json',
                 
-            ])->get(config('constants.end-point') . '/transfer-api/1.0/booking'.$queryString);
-            // echo json_encode($response->status());exit;
-            // echo json_encode(config('constants.end-point') . '/transfor-api/1.0/booking'.$queryString);exit;
+            ])->put(config('constants.end-point').'/transfer-api/1.0/bookings',$data);
+            
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
-                // echo json_encode($responseData);exit;
 
                 return response()->json([
                     'status' => 'success',

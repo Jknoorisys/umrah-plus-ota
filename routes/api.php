@@ -13,6 +13,9 @@ use App\Http\Controllers\api\umrah\UmrahController;
 use App\Http\Controllers\api\umrah\ZiyaratController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
+use App\Http\Controllers\api\hotels\payments\PaymentController as HotelPaymentController;
+use App\Http\Controllers\api\activity\payments\PaymentController as ActivityPaymentController;
+use App\Http\Controllers\api\transfer\payments\PaymentController as TransferPaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -78,7 +81,7 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('confirmGPS' , [TransferBookingController::class, 'confirmGPS']);
-        Route::post('TransferPromoCode' , [TransferBookingController::class, 'TransferPromoCode']);
+        Route::post('TransferPromoCode' , [TransferPaymentController::class, 'TransferPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -103,8 +106,13 @@ Route::middleware(['localization'])->group(function () {
         Route::post('Detail_full' , [ActivityBookingController::class, 'Detail_full']);
         Route::post('retrivePickup' , [ActivityBookingController::class, 'retrivePickup']);
         Route::post('Availability' , [ActivityBookingController::class, 'Availability']);
-        Route::post('ActivityPromoCode' , [ActivityBookingController::class, 'ActivityPromoCode']);
+        Route::post('ActivityPromoCode' , [ActivityPaymentController::class, 'ActivityPromoCode']);
         Route::post('BookingConfirm' , [ActivityBookingController::class, 'BookingConfirm']);
+        Route::post('PreConfirmBoooking' , [ActivityBookingController::class, 'PreConfirmBoooking']);
+        Route::post('ReConfirmBooking' , [ActivityBookingController::class, 'ReConfirmBooking']);
+        Route::post('BookingList' , [ActivityBookingController::class, 'BookingList']);
+        Route::post('BookingDetails' , [ActivityBookingController::class, 'BookingDetails']);
+        Route::post('BookingDetailOptions' , [ActivityBookingController::class, 'BookingDetailOptions']);
         
         
     });
@@ -119,7 +127,7 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('bookings' , [BookingController::class, 'bookings']);
-        Route::post('HotelPromoCode' , [BookingController::class, 'HotelPromoCode']);
+        Route::post('HotelPromoCode' , [HotelPaymentController::class, 'HotelPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
