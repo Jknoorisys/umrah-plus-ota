@@ -81,7 +81,7 @@
                                     convertToTd(currentCell, newMarkup);
                                 },
                                 error: function(error) {
-                                    pos4_error_noti(data.error);
+                                    pos4_error_noti(error.responseJSON.message);
                                     convertToTd(currentCell, originalMarkup);
                                 }
                             });

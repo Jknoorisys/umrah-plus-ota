@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\ManagePromoCodes;
 use App\Http\Controllers\admin\ManageRoles;
 use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
+use App\Http\Controllers\admin\ManageVisaCountry;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -104,6 +105,15 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('markup')->group(function () {
         Route::get('list' , [ManageMarkups::class, 'list'])->name('markup.list');
         Route::post('edit' , [ManageMarkups::class, 'edit'])->name('markup.edit');
+    });
+
+    Route::prefix('visa-country')->group(function () {
+        Route::get('list' , [ManageVisaCountry::class, 'list'])->name('visa-country.list');
+        Route::post('add' , [ManageVisaCountry::class, 'add'])->name('visa-country.add');
+        Route::get('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
+        Route::put('edit' , [ManageVisaCountry::class, 'edit'])->name('visa-country.edit');
+        Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
+        Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
     });
 
 });

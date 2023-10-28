@@ -217,6 +217,22 @@ return [
         'Markup not found' => 'Markup not found',
         'Markup updated successfully' => 'Markup updated successfully',
         'Failed to update Markup. Please try again' => 'Failed to update Markup. Please try again',
+
+        // Manage Visa Country
+        'Manage Visa Country' => 'Manage Visa Country',
+        'Visa Country' => 'Visa Country',
+        'Visa Countries' => 'Visa Countries',
+        'Add Visa Country' => 'Add Visa Country',
+        'Edit Visa Country' => 'Edit Visa Country',
+        'Enter Country Name' => 'Enter Country Name',
+        'Enter Valid Country Name' => 'Enter Valid Country Name',
+        'Visa Country Added Successfully' => 'Visa Country Added Successfully',
+        'Failed to Add Visa Country' => 'Failed to Add Visa Country',
+        'Featured' => 'Featured',
+        'Visa Country not found' => 'Visa Country not found',
+        'Visa Country updated successfully' => 'Visa Country updated successfully',
+        'Failed to update Visa Country. Please try again' => 'Failed to update Visa Country. Please try again',
+
     ],
 
     'alert' => [
