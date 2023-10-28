@@ -94,52 +94,28 @@ class ContentController extends Controller
             if (!empty($PMSRoomCode) && isset($PMSRoomCode)) {
                 $data['PMSRoomCode']= $request->PMSRoomCode;
             }
-
-            // $from = 175133;
-            // $to = 175633;
             
-            // while ($to <= 163896) {
-            //     $data['from'] = $from;
-            //     $data['to'] = $to;
-            
-                $queryString = http_build_query($data);
-            
-                $Signature = self::calculateSignature();
-            
-                $response = Http::withHeaders([
-                    'Api-key' => config('constants.hotel.Api-key'),
-                    'X-Signature' => $Signature,
-                    'Accept' => 'application/json',
-                    'Accept-Encoding' => 'gzip',
-                    'Content-Type' => 'application/json',
-                ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
-            
-                $responseData = $response->json();
-            
-                $status = $response->status();
-                // Create Master Hotels Data
-                // $hotels = $responseData['hotels'];
-                // return $hotels;
-                // foreach ($hotels as $hotel) {
-                //     $hotelData = [
-                //         'code' => $hotel['code'],
-                //         'hotel' => $hotel['name']['content'],
-                //     ];
-                //     $hotel = MasterHotel::create($hotelData);
-                // }
-            
-            //     $from = $to + 1;
-            //     $to = $to + 500;
-            // }
-            
-
-            // exit;
+            $queryString = http_build_query($data);
+        
+            $Signature = self::calculateSignature();
+        
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.hotel.Api-key'),
+                'X-Signature' => $Signature,
+                'Accept' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
+        
+            $responseData = $response->json();
+        
+            $status = $response->status();
 
             if ($status == "200") {
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    // 'data'      => $responseData
+                    'data'      => $responseData['hotels']
                 ],$status);
             } else {
                 return response()->json([

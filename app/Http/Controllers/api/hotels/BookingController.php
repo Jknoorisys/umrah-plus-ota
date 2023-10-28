@@ -130,10 +130,16 @@ class BookingController extends Controller
                 $hotelDetailsArray = [];
 
                 foreach ($hotels as $hotel) {
+                    if (isset($hotel['rooms'])) {
+                        unset($hotel['rooms']);
+                    }
+                    
                     $hotelCode = $hotel['code'];
                     $hotelDetails = $this->hotelDetails($hotelCode);
                     $hotel['images'] = $hotelDetails['images']; 
-                    $hotel['facilities'] = $hotelDetails['facilities']; 
+                    $hotel['facilities'] = $hotelDetails['facilities'];
+                    $hotel['S2C'] = $hotelDetails['S2C'];
+                    $hotel['ranking'] = $hotelDetails['ranking'];
                     $hotelDetailsArray[] = $hotel; 
                 }
 
@@ -173,10 +179,41 @@ class BookingController extends Controller
         
         $responseData = $response->json();
 
-        $data = [
-            'images' => $responseData ? $responseData['hotel']['images'] : '',
-            'facilities' => $responseData ? $responseData['hotel']['facilities'] : ''
-        ];
+        $status = $response->status();
+
+        if ($status == "200") {
+            $images = isset($responseData['hotel']['images']) ? $responseData['hotel']['images'] : [];
+            $facilities = isset($responseData['hotel']['facilities']) ? $responseData['hotel']['facilities'] : [];
+            $S2C = isset($responseData['hotel']['S2C']) ? $responseData['hotel']['S2C'] : [];
+            $ranking = isset($responseData['hotel']['ranking']) ? $responseData['hotel']['ranking'] : [];
+            $falilityData = [];
+            $facilityImages = [];
+
+            foreach($facilities as $facility) {
+                $falilityData[] = $facility['description']['content'];
+            }
+
+            $limitedImages = array_slice($images, 0, 8);
+
+            foreach($limitedImages as $limitedImage) {
+                $facilityImages[] = 'https://photos.hotelbeds.com/giata/'.$limitedImage['path'];
+            }
+
+            $data = [
+                'images' => $facilityImages,
+                'facilities' => $falilityData,
+                'S2C' =>  $S2C,
+                'ranking' => $ranking
+            ];
+        } else {
+           $data = [
+                'images' => '',
+                'facilities' => '',
+                'S2C' =>  '',
+                'ranking' => ''
+           ];
+        }
+       
 
         return $data;
     }
