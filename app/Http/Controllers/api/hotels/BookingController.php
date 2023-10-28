@@ -153,14 +153,33 @@ class BookingController extends Controller
             ])->post(config('constants.end-point').'/hotel-api/1.0/hotels', $data);
             
             $responseData = $response->json();
+            // $hotels = $responseData['hotels']['hotels'];
+
+            // foreach ($hotels as $hotel) {
+            //     $hotelCode = $hotel['code'];
+            //     $hotelDetails = $this->hotelDetails($hotelCode);
+            // }
             
             $status = $response->status();
 
             if ($status == "200") {
+                $hotels = $responseData['hotels']['hotels'];
+                $hotelDetailsArray = [];
+
+                foreach ($hotels as $hotel) {
+                    $hotelCode = $hotel['code'];
+                    $hotelDetails = $this->hotelDetails($hotelCode);
+                    $hotel['images'] = $hotelDetails['images']; 
+                    $hotel['facilities'] = $hotelDetails['facilities']; 
+                    $hotelDetailsArray[] = $hotel; 
+                }
+
+                $responseData['hotels']['hotels'] = $hotelDetailsArray;
+
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData['hotels']
+                    'data'      => $responseData['hotels']['hotels']
                 ],$status);
             } else {
                 return response()->json([
@@ -177,6 +196,26 @@ class BookingController extends Controller
                 'error'     => $e->getMessage()
             ],500);
         }
+    }
+
+    function hotelDetails($hotelCode) {
+        $Signature = self::calculateSignature();
+        $response = Http::withHeaders([
+            'Api-key' => config('constants.hotel.Api-key'),
+            'X-Signature' => $Signature,
+            'Accept' => 'application/json',
+            'Accept-Encoding' => 'gzip',
+            'Content-Type' => 'application/json',
+        ])->get(config('constants.end-point').'/hotel-content-api/1.0/hotels/'.$hotelCode.'/details');   
+        
+        $responseData = $response->json();
+
+        $data = [
+            'images' => $responseData ? $responseData['hotel']['images'] : '',
+            'facilities' => $responseData ? $responseData['hotel']['facilities'] : ''
+        ];
+
+        return $data;
     }
 
     public function checkrates(Request $request) {
