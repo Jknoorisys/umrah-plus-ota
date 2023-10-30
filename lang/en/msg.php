@@ -229,9 +229,10 @@ return [
         'Visa Country Added Successfully' => 'Visa Country Added Successfully',
         'Failed to Add Visa Country' => 'Failed to Add Visa Country',
         'Featured' => 'Featured',
-        'Visa Country not found' => 'Visa Country not found',
-        'Visa Country updated successfully' => 'Visa Country updated successfully',
-        'Failed to update Visa Country. Please try again' => 'Failed to update Visa Country. Please try again',
+        'Visa Country Not Found' => 'Visa Country Not Found',
+        'Visa Country Updated Successfully' => 'Visa Country Updated Successfully',
+        'Failed to Update Visa Country' => 'Failed to Update Visa Country',
+        'Visa Country :status Successfully' => 'Visa Country :status Successfully',
 
     ],
 

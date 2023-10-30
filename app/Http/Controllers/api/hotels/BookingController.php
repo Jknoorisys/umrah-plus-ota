@@ -207,8 +207,8 @@ class BookingController extends Controller
             ];
         } else {
            $data = [
-                'images' => '',
-                'facilities' => '',
+                'images' => [],
+                'facilities' => [],
                 'S2C' =>  '',
                 'ranking' => ''
            ];

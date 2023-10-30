@@ -110,10 +110,11 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('visa-country')->group(function () {
         Route::get('list' , [ManageVisaCountry::class, 'list'])->name('visa-country.list');
         Route::post('add' , [ManageVisaCountry::class, 'add'])->name('visa-country.add');
-        Route::get('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
-        Route::put('edit' , [ManageVisaCountry::class, 'edit'])->name('visa-country.edit');
+        Route::any('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
+        Route::any('update' , [ManageVisaCountry::class, 'edit'])->name('visa-country.update');
         Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
         Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
+        Route::post('toggle-featured', [ManageVisaCountry::class, 'toggleFeatured'])->name('visa-country.toggle-featured');
     });
 
 });

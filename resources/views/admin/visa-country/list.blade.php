@@ -47,7 +47,7 @@
                                     <span class="text-danger error">@error('code') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Visa Country') }}</div>
                                 </div>
-                                
+                        
                                 <div class="col-md-2">
                                     <button class="btn bg-gradient-info" type="submit">{{ isset($country) ? Str::upper(trans('msg.admin.Update Country')) : Str::upper(trans('msg.admin.Save Changes')) }}</button>
                                 </div>
@@ -74,28 +74,42 @@
                         @forelse ($countries as $country)
                             <tr id="delete{{ $country->id }}">
                                 <td class="text-sm text-center">{{ $loop->iteration }}</td>
-                                <td>{{ str_replace('_', ' ', Str::upper($country->country))}}</td>
+                                <td id="countryValue">{{ $country->country }}</td>
                                 <td class="text-sm">
                                     <span class="badge badge-sm bg-gradient-{{ $country->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $country->status }}</span>
                                 </td>
-                                <td>
+                                {{-- <td>
+                                    <i class="btn material-icons h4" onclick="toggleFeatured(this)" data-country-id="{{ $country->id }}">
+                                        {{ $country->is_featured ? 'star' : 'star_border' }}
+                                    </i>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $country->status == 'active' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}">
+                                        <input class="form-check-input btn-lg featured" type="checkbox" style="display:none" {{ $country->is_featured == 'yes' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}" onchange="toggleFeatured(this)">
+                                        <label for="flexSwitchCheckChecked{{ $loop->iteration }}" class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }}" >&#9733;</label>
                                     </div>
+                                </td> --}}
+                                {{-- <td>
+                                    <div class="featured-container">
+                                        <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} featured-icon" data-country-id="{{ $country->id }}" data-featured="{{ $country->is_featured }}" onclick="toggleFeatured(this)">
+                                            &#9733;
+                                        </span>
+                                    </div>
+                                </td> --}}
+                                <td>
+                                    <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} material-icons featured-icon" onclick="toggleFeatured(this)" data-country-id="{{ $country->id }}">
+                                        star
+                                    </span>
                                 </td>
                                 <td>
                                     <div class="row">
                                         <div class="col-1"></div>
                                         <div class="col-2">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $country->status == 'active' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}">
+                                                <input class="form-check-input btn-lg change-status" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $country->status == 'active' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}">
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <button type="button" class="btn btn-outline-info btn-sm" onclick="editCountry('{{ $country->id }}')">
-                                                <span class="material-icons text-md">
-                                                    edit
-                                                </span>
+                                                <span class="material-icons text-md">edit</span>
                                             </button>
                                         </div>
                                         <div class="col-2">
@@ -119,30 +133,30 @@
 
 @section('customJs')
     <script>
+        var editMode = false; // Declare editMode globally
+        var editId = null; // Declare editId globally
+
         function editCountry(id) {
             editMode = true;
             editId = id;
-
             $.ajax({
                 type: 'GET',
                 url: "{{ url('visa-country/edit') }}" + "/" + id,
                 success: function (data) {
-                    $('#country').val(data.country.country); 
+                    $('#country').val(data.country.country);
+                    $('#country').focus();
                 },
-                error: function (xhr, status, error) {
-                    console.error(error);
+                error: function (error) {
+                    pos4_error_noti(error.responseJSON.message);
                 }
             });
         }
-        
-        $(document).ready(function () {
-            var editMode = false;
-            var editId = null;
 
+        $(document).ready(function () {
             $('#countryForm').submit(function (e) {
                 e.preventDefault();
                 var country = $('#country').val();
-                var url = editMode ? "{{ url('visa-country/edit') }}" + "/" + editId : "{{ route('visa-country.add') }}";
+                var url = editMode ? "{{ url('visa-country/update') }}" : "{{ route('visa-country.add') }}";
                 var method = editMode ? 'PUT' : 'POST';
 
                 $.ajax({
@@ -150,29 +164,31 @@
                     url: url,
                     data: {
                         '_token': '{{ csrf_token() }}',
-                        'country': country
+                        'country': country,
+                        'id' : editId
                     },
                     success: function (response) {
-                        // Handle success response here
-                        if (editMode) {
+                        if (editMode == true) {
+                            $('#country').val('');
+                            $('#countryValue').text(country);
                             pos5_success_noti(response.message);
                         } else {
                             pos5_success_noti(response.message);
+                            location.reload();
                         }
-                        // Reset the edit mode and form fields
-                        editMode = false;
-                        editId = null;
-                        $('#country').val('');
+
+                        editMode = false; 
+                        editId = null; 
                     },
-                    error: function (xhr, status, error) {
+                    error: function (error) {
                         pos4_error_noti(error.responseJSON.message);
                     }
                 });
             });
         });
-
+    
         document.addEventListener("DOMContentLoaded", function() {
-            let checkboxes = document.querySelectorAll('.form-check-input');
+            let checkboxes = document.querySelectorAll('.change-status');
             checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('change', function() {
                     let countryId = checkbox.getAttribute('data-country-id');
@@ -249,22 +265,49 @@
         }
 
         // Function to delete the country
-        function deleteCountry(codeId) {
+        function deleteCountry(countryId) {
             $.ajax({
                 type: 'POST',
                 url: '{{ route("visa-country.delete") }}', 
                 data: {
-                    code_id: codeId,
+                    country_id: countryId,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
                     pos5_success_noti(data.message);
-                    let row = document.getElementById('delete' + codeId);
+                    let row = document.getElementById('delete' + countryId);
                     if (row) {
                         row.remove();
                     }
                 },
                 error: function (error) {
+                    pos4_error_noti(error.responseJSON.message);
+                }
+            });
+        }
+
+        // Make Featured Functionality
+        function toggleFeatured(element) {
+            var countryId = element.getAttribute('data-country-id');
+            var isFeatured = element.getAttribute('data-featured') === 'yes';
+            var newFeaturedStatus = isFeatured ? 'no' : 'yes';
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route("visa-country.toggle-featured") }}',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': countryId,
+                    'status': newFeaturedStatus
+                },
+                success: function (data) {
+                    // Handle success response here
+                    pos5_success_noti(data.message);
+                    element.setAttribute('data-featured', newFeaturedStatus);
+                    element.classList.toggle('active'); 
+                },
+                error: function (error) {
+                    // Handle error response here
                     pos4_error_noti(error.responseJSON.message);
                 }
             });
