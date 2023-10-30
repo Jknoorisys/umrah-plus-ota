@@ -91,7 +91,7 @@ class ManageVisaCountry extends Controller
             return response()->json(['error' => trans('msg.admin.Visa Country Not Found')]);
         }
 
-        $country->status = $request->status;
+        $country->is_featured = $request->status;
         $update = $country->save();
 
         if ($update) {

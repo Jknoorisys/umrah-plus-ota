@@ -78,27 +78,12 @@
                                 <td class="text-sm">
                                     <span class="badge badge-sm bg-gradient-{{ $country->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $country->status }}</span>
                                 </td>
-                                {{-- <td>
-                                    <i class="btn material-icons h4" onclick="toggleFeatured(this)" data-country-id="{{ $country->id }}">
-                                        {{ $country->is_featured ? 'star' : 'star_border' }}
-                                    </i>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input btn-lg featured" type="checkbox" style="display:none" {{ $country->is_featured == 'yes' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}" onchange="toggleFeatured(this)">
-                                        <label for="flexSwitchCheckChecked{{ $loop->iteration }}" class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }}" >&#9733;</label>
-                                    </div>
-                                </td> --}}
-                                {{-- <td>
-                                    <div class="featured-container">
-                                        <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} featured-icon" data-country-id="{{ $country->id }}" data-featured="{{ $country->is_featured }}" onclick="toggleFeatured(this)">
-                                            &#9733;
-                                        </span>
-                                    </div>
-                                </td> --}}
                                 <td>
-                                    <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} material-icons featured-icon" onclick="toggleFeatured(this)" data-country-id="{{ $country->id }}">
+                                    <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} material-icons featured-icon" onclick="confirmToggleFeatured(this)" data-country-id="{{ $country->id }}" data-featured="{{ $country->is_featured }}">
                                         star
                                     </span>
                                 </td>
+                                
                                 <td>
                                     <div class="row">
                                         <div class="col-1"></div>
@@ -232,11 +217,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-warning');
-                            statusElement.classList.add('bg-gradient-primary');
+                            statusElement.classList.remove('bg-gradient-secondary');
+                            statusElement.classList.add('bg-gradient-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-primary');
-                            statusElement.classList.add('bg-gradient-warning');
+                            statusElement.classList.remove('bg-gradient-info');
+                            statusElement.classList.add('bg-gradient-secondary');
                         }
                     }
                 },
@@ -287,11 +272,28 @@
         }
 
         // Make Featured Functionality
-        function toggleFeatured(element) {
+        function confirmToggleFeatured(element) {
             var countryId = element.getAttribute('data-country-id');
             var isFeatured = element.getAttribute('data-featured') === 'yes';
             var newFeaturedStatus = isFeatured ? 'no' : 'yes';
 
+            // Show confirmation dialog
+            Swal.fire({
+                title: "{{ trans('msg.alert.Confirmation') }}",
+                text: "{{ trans('msg.alert.Are you sure you want to :action this :type', ['action' => 'update', 'type' => 'country']) }}?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: "{{ trans('msg.alert.Yes') }}",
+                confirmButtonColor: '#1A73E8',
+                cancelButtonText: "{{ trans('msg.alert.No') }}"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    toggleFeatured(countryId, newFeaturedStatus);
+                }
+            });
+        }
+
+        function toggleFeatured(countryId, newFeaturedStatus) {
             $.ajax({
                 type: 'POST',
                 url: '{{ route("visa-country.toggle-featured") }}',
@@ -303,8 +305,7 @@
                 success: function (data) {
                     // Handle success response here
                     pos5_success_noti(data.message);
-                    element.setAttribute('data-featured', newFeaturedStatus);
-                    element.classList.toggle('active'); 
+                    location.reload();
                 },
                 error: function (error) {
                     // Handle error response here
