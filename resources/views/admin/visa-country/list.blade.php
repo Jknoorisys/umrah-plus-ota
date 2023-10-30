@@ -11,28 +11,11 @@
             <div class="row">
               <div class="col-lg-12 col-md-8 col-12 mx-auto">
                 <div class="card z-index-0 fadeIn3 fadeInBottom">
-                    <h6 class="input-label p-4 mt-1 text-capitalize">
-                        <span class="material-icons font-weight-bolder me-1">add_to_photos</span>
-                        {{ trans('msg.admin.Add Visa Country') }} : 
-                    </h6>
                     <div class="card-body">
-                        {{-- <form country="form" id="countryForm" class="text-start" action="{{ route('visa-country.add') }}" method="POST" novalidate>
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="input-group input-group-outline" id="emailInput">
-                                        <label class="form-label">{{ trans('msg.admin.Enter Country Name') }}</label>
-                                        <input type="text" name="country" id="country" :value="old('country')" class="form-control" required>
-                                    </div>
-                                    <span class="text-danger error">@error('code') {{$message}} @enderror</span>
-                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Promo Code') }}</div>
-                                </div>
-                                
-                                <div class="col-md-2">
-                                    <button class="btn bg-gradient-info" type="submit">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
-                                </div>
-                            </div>
-                        </form> --}}
+                        <h6 class="input-label text-capitalize" id="formTitle">
+                            <span class="material-icons font-weight-bolder me-1" id="formIcon">add_to_photos</span>
+                            {{ trans('msg.admin.Add/Edit Visa Country') }} : 
+                        </h6>
                         <form country="form" id="countryForm" class="text-start" action="{{ isset($country) ? route('visa-country.update', $country->id) : route('visa-country.add') }}" method="{{ isset($country) ? 'PUT' : 'POST' }}" novalidate>
                             @csrf
                             @if (isset($country))
@@ -118,8 +101,8 @@
 
 @section('customJs')
     <script>
-        var editMode = false; // Declare editMode globally
-        var editId = null; // Declare editId globally
+        var editMode = false; 
+        var editId = null; 
 
         function editCountry(id) {
             editMode = true;
@@ -303,12 +286,10 @@
                     'status': newFeaturedStatus
                 },
                 success: function (data) {
-                    // Handle success response here
                     pos5_success_noti(data.message);
                     location.reload();
                 },
                 error: function (error) {
-                    // Handle error response here
                     pos4_error_noti(error.responseJSON.message);
                 }
             });
