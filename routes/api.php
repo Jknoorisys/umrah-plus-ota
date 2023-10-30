@@ -113,6 +113,8 @@ Route::middleware(['localization'])->group(function () {
         Route::post('BookingList' , [ActivityBookingController::class, 'BookingList']);
         Route::post('BookingDetails' , [ActivityBookingController::class, 'BookingDetails']);
         Route::post('BookingDetailOptions' , [ActivityBookingController::class, 'BookingDetailOptions']);
+        Route::post('ConfirmedBookingListFilter' , [ActivityBookingController::class, 'ConfirmedBookingListFilter']);
+        Route::post('CancelBooking' , [ActivityBookingController::class, 'CancelBooking']);
         
         
     });
