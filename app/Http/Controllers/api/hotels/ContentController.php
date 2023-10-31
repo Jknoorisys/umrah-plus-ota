@@ -7,11 +7,14 @@ use App\Models\MasterCountry;
 use App\Models\MasterCurrency;
 use App\Models\MasterDestination;
 use App\Models\MasterHotel;
+use App\Models\MasterHotelsAfrica;
+use App\Models\MasterHotelsAfricaImages;
 use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class ContentController extends Controller
 {
@@ -112,10 +115,45 @@ class ContentController extends Controller
             $status = $response->status();
 
             if ($status == "200") {
+                $hotels = $responseData['hotels'];
+                foreach ($hotels as $hotel) {
+                    $hotelCode = $hotel['code'];
+                    $hotelDetails = $this->hotelData($hotelCode);
+                    $images = $hotelDetails['images']; 
+                    $facilities = $hotelDetails['facilities'];
+                    $S2C = $hotelDetails['S2C'];
+                    $ranking = $hotelDetails['ranking'];
+
+                    $hotelData = [
+                        'code' => $hotelCode,
+                        'hotel' => $hotel['name']['content'],
+                        'facilities' => implode(',',$facilities),
+                        'S2C' => $S2C,
+                        'ranking' => $ranking
+                    ];
+
+                    // echo json_encode($hotelData); 
+
+                    MasterHotelsAfrica::create($hotelData);
+
+                    foreach ($images as $image) {
+                        $imageData = [
+                            'hotel_code' => $hotelCode,
+                            'image' => $image
+                        ];
+
+                        // echo json_encode($imageData);
+
+                        MasterHotelsAfricaImages::create($imageData);
+                    }
+                    
+                }
+                
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData['hotels']
+                    'total'     => $responseData['total'],
+                    // 'data'      => $responseData['hotels']
                 ],$status);
             } else {
                 return response()->json([
@@ -132,6 +170,57 @@ class ContentController extends Controller
                 'error'     => $e->getMessage()
             ],500);
         }
+    }
+
+    function hotelData($hotelCode) {
+        $Signature = self::calculateSignature();
+        $response = Http::withHeaders([
+            'Api-key' => config('constants.hotel.Api-key'),
+            'X-Signature' => $Signature,
+            'Accept' => 'application/json',
+            'Accept-Encoding' => 'gzip',
+            'Content-Type' => 'application/json',
+        ])->get(config('constants.end-point').'/hotel-content-api/1.0/hotels/'.$hotelCode.'/details');   
+        
+        $responseData = $response->json();
+
+        $status = $response->status();
+
+        if ($status == "200") {
+            $images = isset($responseData['hotel']['images']) ? $responseData['hotel']['images'] : [];
+            $facilities = isset($responseData['hotel']['facilities']) ? $responseData['hotel']['facilities'] : [];
+            $S2C = isset($responseData['hotel']['S2C']) ? $responseData['hotel']['S2C'] : [];
+            $ranking = isset($responseData['hotel']['ranking']) ? $responseData['hotel']['ranking'] : [];
+            $falilityData = [];
+            $facilityImages = [];
+
+            foreach($facilities as $facility) {
+                $falilityData[] = $facility['description']['content'];
+            }
+
+            $limitedImages = array_slice($images, 0, 8);
+
+            foreach($limitedImages as $limitedImage) {
+                $facilityImages[] = 'https://photos.hotelbeds.com/giata/'.$limitedImage['path'];
+            }
+
+            $data = [
+                'images' => $facilityImages,
+                'facilities' => $falilityData,
+                'S2C' =>  $S2C ? $S2C : '',
+                'ranking' => $ranking ? $ranking : ''
+            ];
+        } else {
+           $data = [
+                'images' => [],
+                'facilities' => [],
+                'S2C' =>  '',
+                'ranking' => ''
+           ];
+        }
+       
+
+        return $data;
     }
 
     public function hotelDetails(Request $request) {
