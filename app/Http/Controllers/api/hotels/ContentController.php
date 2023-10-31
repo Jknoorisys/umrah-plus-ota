@@ -273,7 +273,7 @@ class ContentController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.detail.success'),
-                    'data'      => $responseData['hotel']
+                    'data'      => $responseData
                 ],$status);
             } else {
                 return response()->json([
