@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_hotels_asia_images', function (Blueprint $table) {
+        Schema::create('master_hotels_oceanias', function (Blueprint $table) {
             $table->id('id');
-            $table->string('hotel_code');
-            $table->string('image');
+            $table->string('code');
+            $table->string('hotel');
+            $table->longText('facilities');
+            $table->string('S2C');
+            $table->string('ranking');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_hotels_asia_images');
+        Schema::dropIfExists('master_hotels_oceanias');
     }
 };
