@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('master_hotels_asias', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
+            $table->string('hotel');
+            $table->longText('facilities');
+            $table->string('S2C');
+            $table->string('ranking');
             $table->timestamps();
         });
     }

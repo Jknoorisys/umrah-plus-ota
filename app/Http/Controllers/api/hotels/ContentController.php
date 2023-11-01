@@ -9,6 +9,8 @@ use App\Models\MasterDestination;
 use App\Models\MasterHotel;
 use App\Models\MasterHotelsAfrica;
 use App\Models\MasterHotelsAfricaImages;
+use App\Models\MasterHotelsAsia;
+use App\Models\MasterHotelsAsiaImages;
 use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -134,7 +136,7 @@ class ContentController extends Controller
 
                     // echo json_encode($hotelData); 
 
-                    MasterHotelsAfrica::create($hotelData);
+                    MasterHotelsAsia::create($hotelData);
 
                     foreach ($images as $image) {
                         $imageData = [
@@ -144,7 +146,7 @@ class ContentController extends Controller
 
                         // echo json_encode($imageData);
 
-                        MasterHotelsAfricaImages::create($imageData);
+                        MasterHotelsAsiaImages::create($imageData);
                     }
                     
                 }

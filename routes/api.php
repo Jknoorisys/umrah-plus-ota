@@ -11,6 +11,7 @@ use App\Http\Controllers\api\activity\ContentController as ActivityContentContro
 use App\Http\Controllers\api\master\HotelMasterController;
 use App\Http\Controllers\api\umrah\UmrahController;
 use App\Http\Controllers\api\umrah\ZiyaratController;
+use App\Http\Controllers\api\promocode\PromoCodeController;
 use App\Http\Controllers\api\user\AuthController as UserAuthController;
 use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use App\Http\Controllers\api\hotels\payments\PaymentController as HotelPaymentController;
@@ -81,7 +82,6 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('confirmGPS' , [TransferBookingController::class, 'confirmGPS']);
-        Route::post('TransferPromoCode' , [TransferPaymentController::class, 'TransferPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -106,7 +106,6 @@ Route::middleware(['localization'])->group(function () {
         Route::post('Detail_full' , [ActivityBookingController::class, 'Detail_full']);
         Route::post('retrivePickup' , [ActivityBookingController::class, 'retrivePickup']);
         Route::post('Availability' , [ActivityBookingController::class, 'Availability']);
-        Route::post('ActivityPromoCode' , [ActivityPaymentController::class, 'ActivityPromoCode']);
         Route::post('BookingConfirm' , [ActivityBookingController::class, 'BookingConfirm']);
         Route::post('PreConfirmBoooking' , [ActivityBookingController::class, 'PreConfirmBoooking']);
         Route::post('ReConfirmBooking' , [ActivityBookingController::class, 'ReConfirmBooking']);
@@ -129,7 +128,6 @@ Route::middleware(['localization'])->group(function () {
 
         // BOOKING
         Route::post('bookings' , [BookingController::class, 'bookings']);
-        Route::post('HotelPromoCode' , [HotelPaymentController::class, 'HotelPromoCode']);
 
         // POST BOOKING
         Route::get('booking-list' , [BookingController::class, 'bookingList']);
@@ -190,6 +188,11 @@ Route::middleware(['localization'])->group(function () {
     // Ziyarat Packages API by Javeriya
     Route::prefix('ziyarat')->group(function () {
         Route::post('list' , [ZiyaratController::class, 'list']);
+    });
+
+    Route::prefix('promocode')->group(function () {
+        Route::post('list' , [PromoCodeController::class, 'GetPromoCode']);
+        Route::post('validate' , [PromoCodeController::class, 'validatePromoCode']);
     });
 });
 

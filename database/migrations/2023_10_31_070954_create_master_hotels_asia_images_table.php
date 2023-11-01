@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('master_hotels_asia_images', function (Blueprint $table) {
             $table->id();
+            $table->string('hotel_code');
+            $table->string('image');
             $table->timestamps();
         });
     }
