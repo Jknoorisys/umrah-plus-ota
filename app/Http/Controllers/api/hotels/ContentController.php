@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterCountry;
 use App\Models\MasterCurrency;
 use App\Models\MasterDestination;
+use App\Models\MasterFacilities;
 use App\Models\MasterHotel;
 use App\Models\MasterHotelsAfrica;
 use App\Models\MasterHotelsAfricaImages;
 use App\Models\MasterHotelsAsia;
 use App\Models\MasterHotelsAsiaImages;
+use App\Models\MasterHotelsAntarctica;
+use App\Models\MasterHotelsAntarcticaImages;
+use App\Models\MasterHotelsEurope;
+use App\Models\MasterHotelsEuropeImages;
 use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -120,16 +125,32 @@ class ContentController extends Controller
                 $hotels = $responseData['hotels'];
                 foreach ($hotels as $hotel) {
                     $hotelCode = $hotel['code'];
-                    $hotelDetails = $this->hotelData($hotelCode);
-                    $images = $hotelDetails['images']; 
-                    $facilities = $hotelDetails['facilities'];
-                    $S2C = $hotelDetails['S2C'];
-                    $ranking = $hotelDetails['ranking'];
+
+                    // $hotelDetails = $this->hotelData($hotelCode);
+                    // $images = $hotelDetails['images']; 
+                    // $facilities = $hotelDetails['facilities'];
+                    // $S2C = $hotelDetails['S2C'];
+                    // $ranking = $hotelDetails['ranking'];
+                    
+                    $images = isset($hotel['images']) ? $hotel['images'] : [];
+                    $facilities = isset($hotel['facilities']) ? $hotel['facilities'] : [];
+                    $S2C = isset($hotel['S2C']) ? $hotel['S2C'] : '';
+                    $ranking = isset($hotel['ranking']) ? $hotel['ranking'] : '';
+
+                    if ($facilities) {
+                        $hotelFacilities = [];
+                        foreach ($facilities as $facility) {
+                            $facilityDetails = MasterFacilities::where('code', '=', $facility['facilityCode'])->where('group_code', '=', $facility['facilityGroupCode'])->first();
+                            if ($facilityDetails) {
+                                $hotelFacilities[] = $facilityDetails->facility; 
+                            }
+                        }
+                    }
 
                     $hotelData = [
                         'code' => $hotelCode,
                         'hotel' => $hotel['name']['content'],
-                        'facilities' => implode(',',$facilities),
+                        'facilities' => $hotelFacilities ? implode(', ', $hotelFacilities) : '',
                         'S2C' => $S2C,
                         'ranking' => $ranking
                     ];
@@ -143,12 +164,29 @@ class ContentController extends Controller
                             'hotel_code' => $hotelCode,
                             'image' => $image
                         ];
+                    MasterHotelsEurope::create($hotelData);
+                    
+                    if ($images) {
+                        
+                        foreach ($images as $image) {
+                            // $imageData = [
+                            //     'hotel_code' => $hotelCode,
+                            //     'image' => $image
+                            // ];
 
-                        // echo json_encode($imageData);
+                            $imageData = [
+                                'hotel_code' => $hotelCode,
+                                'image' => 'https://photos.hotelbeds.com/giata/'.$image['path']
+                            ];
+
+                            // echo json_encode($imageData);
 
                         MasterHotelsAsiaImages::create($imageData);
                     }
                     
+                            MasterHotelsEuropeImages::create($imageData);
+                        }   
+                    }
                 }
                 
                 return response()->json([
@@ -275,7 +313,7 @@ class ContentController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.detail.success'),
-                    'data'      => $responseData['hotel']
+                    'data'      => $responseData
                 ],$status);
             } else {
                 return response()->json([
@@ -948,10 +986,22 @@ class ContentController extends Controller
             $status = $response->status();
 
             if ($status == "200") {
+                $facilities = $responseData['facilities'];
+                // foreach ($facilities as $facility) {
+                //     $data = [
+                //         'code' => $facility['code'],
+                //         'group_code' => $facility['facilityGroupCode'],
+                //         'facility' => $facility['description'] ?  $facility['description']['content'] : ''
+                //     ];
+                    
+                //     MasterFacilities::create($data);
+                // }
+                
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData
+                    'total'     => $responseData['total'],
+                    'data'      => $facilities
                 ],$status);
             } else {
                 return response()->json([
