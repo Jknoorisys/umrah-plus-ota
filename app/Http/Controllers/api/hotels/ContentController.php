@@ -10,6 +10,8 @@ use App\Models\MasterFacilities;
 use App\Models\MasterHotel;
 use App\Models\MasterHotelsAfrica;
 use App\Models\MasterHotelsAfricaImages;
+use App\Models\MasterHotelsAsia;
+use App\Models\MasterHotelsAsiaImages;
 use App\Models\MasterHotelsAntarctica;
 use App\Models\MasterHotelsAntarcticaImages;
 use App\Models\MasterHotelsEurope;
@@ -153,6 +155,15 @@ class ContentController extends Controller
                         'ranking' => $ranking
                     ];
 
+                    // echo json_encode($hotelData); 
+
+                    MasterHotelsAsia::create($hotelData);
+
+                    foreach ($images as $image) {
+                        $imageData = [
+                            'hotel_code' => $hotelCode,
+                            'image' => $image
+                        ];
                     MasterHotelsEurope::create($hotelData);
                     
                     if ($images) {
@@ -170,6 +181,9 @@ class ContentController extends Controller
 
                             // echo json_encode($imageData);
 
+                        MasterHotelsAsiaImages::create($imageData);
+                    }
+                    
                             MasterHotelsEuropeImages::create($imageData);
                         }   
                     }
