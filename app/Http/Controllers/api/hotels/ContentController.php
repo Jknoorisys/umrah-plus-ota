@@ -49,7 +49,7 @@ class ContentController extends Controller
 
         try {
             $data = [];       
-    
+            ini_set('max_execution_time', 1200);
             $destinationCode = $request->destinationCode ? $request->destinationCode : "";
             if (!empty($destinationCode) && isset($destinationCode)) {
                 $data['destinationCode'] = $request->destinationCode;
@@ -155,16 +155,7 @@ class ContentController extends Controller
                         'ranking' => $ranking
                     ];
 
-                    // echo json_encode($hotelData); 
-
                     MasterHotelsAsia::create($hotelData);
-
-                    foreach ($images as $image) {
-                        $imageData = [
-                            'hotel_code' => $hotelCode,
-                            'image' => $image
-                        ];
-                    MasterHotelsEurope::create($hotelData);
                     
                     if ($images) {
                         
@@ -181,10 +172,7 @@ class ContentController extends Controller
 
                             // echo json_encode($imageData);
 
-                        MasterHotelsAsiaImages::create($imageData);
-                    }
-                    
-                            MasterHotelsEuropeImages::create($imageData);
+                            MasterHotelsAsiaImages::create($imageData);
                         }   
                     }
                 }
