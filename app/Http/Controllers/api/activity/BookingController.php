@@ -873,7 +873,7 @@ class BookingController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'language' => 'required',
-                'filterType' => ['required', Rule::in(['-','CREATION','CANCELLATION'])],
+                'filterType' => ['required', Rule::in(['CHECKIN','CREATION','CANCELLATION'])],
                 'includedCancelled' => 'required',
                 'start' => 'required|date',
                 'end' => 'required|date',

@@ -12,6 +12,8 @@ use App\Models\MasterHotel_1;
 use App\Models\MasterHotels1;
 use App\Models\MasterHotelsAfrica;
 use App\Models\MasterHotelsAfricaImages;
+use App\Models\MasterHotelsAsia;
+use App\Models\MasterHotelsAsiaImages;
 use App\Models\MasterHotelsAntarctica;
 use App\Models\MasterHotelsAntarcticaImages;
 use App\Models\MasterHotelsEurope;
