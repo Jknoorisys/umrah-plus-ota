@@ -304,8 +304,8 @@ class ContentController extends Controller
                 $data['fields']= $request->fields;
             }
 
-            $data['from'] = 1;
-            $data['to'] = 100;
+            $data['from'] = 100001;
+            $data['to'] = 100101;
             
             for ($i = 0; $i < 50; $i++) {
             
