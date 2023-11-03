@@ -9,6 +9,7 @@ use App\Models\MasterDestination;
 use App\Models\MasterFacilities;
 use App\Models\MasterHotel;
 use App\Models\MasterHotel_1;
+use App\Models\MasterHotel_2;
 use App\Models\MasterHotels1;
 use App\Models\MasterHotelsAfrica;
 use App\Models\MasterHotelsAfricaImages;
@@ -357,7 +358,7 @@ class ContentController extends Controller
                             'ranking' => $ranking
                         ];
 
-                        MasterHotel_1::create($hotelData);
+                        MasterHotel_2::create($hotelData);
                     }
                 }
 
