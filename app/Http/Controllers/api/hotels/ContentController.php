@@ -293,6 +293,91 @@ class ContentController extends Controller
         }
     }
 
+    public function hotels_aaisha(Request $request) {
+        ini_set('max_execution_time', 2000);
+
+        try {
+            $data = [];       
+    
+            $fields = $request->fields ? $request->fields : "";
+            if (!empty($fields) && isset($fields)) {
+                $data['fields']= $request->fields;
+            }
+
+            $data['from'] = 1;
+            $data['to'] = 100;
+            
+            for ($i = 0; $i < 50; $i++) {
+            
+                $queryString = http_build_query($data);
+            
+                $Signature = self::calculateSignature();
+            
+                $response = Http::withHeaders([
+                    'Api-key' => config('constants.hotel.Api-key'),
+                    'X-Signature' => $Signature,
+                    'Accept' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                    'Content-Type' => 'application/json',
+                ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
+            
+                $responseData = $response->json();
+            
+                $status = $response->status();
+
+                if ($status == "200") {
+                    $hotels = $responseData['hotels'];
+                    foreach ($hotels as $hotel) {
+                        $hotelCode = $hotel['code'];
+                        
+                        $images = isset($hotel['images']) ? $hotel['images'] : [];
+                        $paths = collect($images)->pluck('path')->toArray();
+                        $commaSeparatedValues = implode(', ', $paths);
+
+                        $S2C = isset($hotel['S2C']) ? $hotel['S2C'] : '';
+                        $ranking = isset($hotel['ranking']) ? $hotel['ranking'] : '';
+                        $facilities = isset($hotel['facilities']) ? $hotel['facilities'] : [];
+
+                        if ($facilities) {
+                            $hotelFacilities = [];
+                            foreach ($facilities as $facility) {
+                                $facilityDetails = MasterFacilities::where('code', '=', $facility['facilityCode'])->where('group_code', '=', $facility['facilityGroupCode'])->first();
+                                if ($facilityDetails) {
+                                    $hotelFacilities[] = $facilityDetails->facility; 
+                                }
+                            }
+                        }
+
+                        $hotelData = [
+                            'code' => $hotelCode,
+                            'hotel' => $hotel['name']['content'],
+                            'facilities' => $hotelFacilities ? implode(', ', $hotelFacilities) : '',
+                            'S2C' => $S2C,
+                            'images' => $commaSeparatedValues,
+                            'ranking' => $ranking
+                        ];
+
+                        MasterHotel_1::create($hotelData);
+                    }
+                }
+
+                $data['from'] = $data['to'] + 1;
+                $data['to'] += 100;
+
+                sleep(3);
+            }
+
+            return 'Successfully Done';
+            
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.error'),
+                'error'     => $e->getMessage()
+            ],500);
+        }
+    }
+
     function hotelData($hotelCode) {
         $Signature = self::calculateSignature();
         $response = Http::withHeaders([

@@ -140,6 +140,7 @@ Route::middleware(['localization'])->group(function () {
     Route::prefix('hotel-content-api')->group(function () {
         // HOTELS
         Route::get('hotels' , [ContentController::class, 'hotels']);
+        Route::get('hotels-aaisha' , [ContentController::class, 'hotels_aaisha']);
         Route::get('hotel-details' , [ContentController::class, 'hotelDetails']);
 
         // LOCATIONS
