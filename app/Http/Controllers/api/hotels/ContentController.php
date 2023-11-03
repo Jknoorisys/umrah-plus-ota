@@ -219,10 +219,10 @@ class ContentController extends Controller
                 $data['fields']= $request->fields;
             }
 
-            $data['from'] = 10001;
-            $data['to'] = 10100;
+            $data['from'] = 1;
+            $data['to'] = 100;
             
-            for ($i = 0; $i < 100; $i++) {
+            for ($i = 0; $i < 50; $i++) {
             
                 $queryString = http_build_query($data);
             
