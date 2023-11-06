@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
+use App\Models\Markup;
 use App\Models\MasterHotel_1;
 use App\Models\MasterHotel_2;
 use Illuminate\Http\Request;
@@ -127,9 +128,16 @@ class BookingController extends Controller
             $status = $response->status();
 
             if ($status == "200" && isset($responseData['hotels']['hotels'])) {
+                
+                $markup = Markup::where('status', 1)->first()->value('markup');
                 $hotels = $responseData['hotels']['hotels'];
 
                 foreach ($hotels as &$hotel) {
+                    $minRate = $hotel['minRate'];
+                    $hotel['minRate'] = $minRate + ($minRate * $markup / 100);
+                    $maxRate = $hotel['maxRate'];
+                    $hotel['maxRate'] = $maxRate + ($maxRate * $markup / 100);
+                    
                     if (isset($hotel['rooms'])) {
                         unset($hotel['rooms']);
                     }
@@ -160,7 +168,7 @@ class BookingController extends Controller
                     'status'    => 'failed',
                     'message'   => trans('msg.list.failed'),
                     'data'      => []
-                ],$status);
+                ], $status);
             }
             
         } catch (\Throwable $e) {
@@ -917,6 +925,4 @@ class BookingController extends Controller
             ],500);
         }
     }
-
-    
 }
