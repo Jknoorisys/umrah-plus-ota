@@ -160,6 +160,7 @@ class BookingController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
+                    'total'     => $responseData['hotels']['total'],
                     'data'      => $responseData['hotels']['hotels']
                 ], $status);
                 
