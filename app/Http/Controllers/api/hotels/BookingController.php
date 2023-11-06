@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterHotel_1;
+use App\Models\MasterHotel_2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
-    public function calculateSignature()
-    {
+    public function calculateSignature() {
         // Retrieve the public key, private key, and UTC date from your Laravel environment or configuration.
         $publicKey = config('constants.hotel.Api-key');
         $privateKey = config('constants.hotel.secret');
@@ -28,7 +29,7 @@ class BookingController extends Controller
         // Set the X-Signature in your response headers
         return $hash;
     }
-    
+
     public function hotels(Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -125,36 +126,40 @@ class BookingController extends Controller
             
             $status = $response->status();
 
-            if ($status == "200") {
+            if ($status == "200" && isset($responseData['hotels']['hotels'])) {
                 $hotels = $responseData['hotels']['hotels'];
-                $hotelDetailsArray = [];
 
-                foreach ($hotels as $hotel) {
+                foreach ($hotels as &$hotel) {
                     if (isset($hotel['rooms'])) {
                         unset($hotel['rooms']);
                     }
                     
                     $hotelCode = $hotel['code'];
-                    $hotelDetails = $this->hotelDetails($hotelCode);
-                    $hotel['images'] = $hotelDetails['images']; 
-                    $hotel['facilities'] = $hotelDetails['facilities'];
-                    $hotel['S2C'] = $hotelDetails['S2C'];
-                    $hotel['ranking'] = $hotelDetails['ranking'];
-                    $hotelDetailsArray[] = $hotel; 
+                
+                    $hotelDetails = MasterHotel_1::where('code', $hotelCode)->first();
+                    if (!$hotelDetails) {
+                        $hotelDetails = MasterHotel_2::where('code', $hotelCode)->first();
+                    }
+                
+                    $hotel['images'] = $hotelDetails ? explode(', ', $hotelDetails->images) : [];
+                    $hotel['facilities'] = $hotelDetails ? explode(', ', $hotelDetails->facilities) : [];
+                    $hotel['S2C'] = $hotelDetails ? $hotelDetails->S2C : null;
+                    $hotel['ranking'] = $hotelDetails ? $hotelDetails->ranking : null;
                 }
-
-                $responseData['hotels']['hotels'] = $hotelDetailsArray;
-
+                
+                $responseData['hotels']['hotels'] = $hotels;
+                
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
                     'data'      => $responseData['hotels']['hotels']
-                ],$status);
+                ], $status);
+                
             } else {
                 return response()->json([
                     'status'    => 'failed',
                     'message'   => trans('msg.list.failed'),
-                    'data'      => $responseData
+                    'data'      => []
                 ],$status);
             }
             
@@ -166,6 +171,144 @@ class BookingController extends Controller
             ],500);
         }
     }
+    
+    // public function hotels(Request $request) {
+
+    //     $validator = Validator::make($request->all(), [
+    //         'stay'        => 'required|json',
+    //         'occupancies' => 'required|json',
+    //     ]);
+
+    //     if($validator->fails()){
+    //         return response()->json([
+    //             'status'    => 'failed',
+    //             'message'   => trans('msg.validation'),
+    //             'errors'    => $validator->errors()
+    //         ],400);
+    //     }
+
+    //     try {
+            
+    //         $data = [
+    //             "stay" => json_decode($request->stay, TRUE),
+    //             "occupancies" => json_decode($request->occupancies, TRUE),
+    //         ];        
+    
+    //         $hotel = $request->hotel ? $request->hotel : "";
+    //         if (!empty($hotel) && isset($hotel)) {
+    //             $data['hotels']['hotel'] = explode(',', $request->hotel);
+    //         }
+
+    //         $geolocation = $request->geolocation ? $request->geolocation : "";
+    //         if (!empty($geolocation) && isset($geolocation)) {
+    //             $data['geolocation']= json_decode($request->geolocation, TRUE);
+    //         }
+
+    //         $rooms = $request->rooms ? $request->rooms : "";
+    //         if (!empty($rooms) && isset($rooms)) {
+    //             $data['rooms']= json_decode($request->rooms, TRUE);
+    //         }
+
+    //         $filter = $request->filter ? $request->filter : "";
+    //         if (!empty($filter) && isset($filter)) {
+    //             $data['filter']= json_decode($request->filter, TRUE);
+    //         }
+
+    //         $boards = $request->boards ? $request->boards : "";
+    //         if (!empty($boards) && isset($boards)) {
+    //             $data['boards']= json_decode($request->boards, TRUE);
+    //         }
+            
+    //         $dailyRate = $request->dailyRate ? $request->dailyRate : "";
+    //         if (!empty($dailyRate) && isset($dailyRate)) {
+    //             $data['dailyRate']= $request->dailyRate;
+    //         }
+
+    //         $language = $request->language ? $request->language : "";
+    //         if (!empty($language) && isset($language)) {
+    //             $data['language']= $request->language;
+    //         }
+
+    //         $keywords = $request->keywords ? $request->keywords : "";
+    //         if (!empty($keywords) && isset($keywords)) {
+    //             $data['keywords']= json_decode($request->keywords, TRUE);
+    //         }
+
+    //         $review = $request->review ? $request->review : "";
+    //         if (!empty($review) && isset($review)) {
+    //             $data['reviews']= json_decode($request->review, TRUE);
+    //         }
+
+    //         $accommodations = $request->accommodations ? $request->accommodations : "";
+    //         if (!empty($accommodations) && isset($accommodations)) {
+    //             $data['accommodations']= explode(',', $request->accommodations);
+    //         }
+
+    //         $inclusions = $request->inclusions ? $request->inclusions : "";
+    //         if (!empty($inclusions) && isset($inclusions)) {
+    //             $data['inclusions']= explode(',', $request->inclusions);
+    //         }
+            
+    //         $destination = $request->destination ? $request->destination : "";
+    //         if (!empty($destination) && isset($destination)) {
+    //             $data['destination'] = json_decode($request->destination, TRUE);
+    //         }
+            
+    //         $Signature = self::calculateSignature();
+
+    //         $response = Http::withHeaders([
+    //             'Api-key' => config('constants.hotel.Api-key'),
+    //             'X-Signature' => $Signature,
+    //             'Accept' => 'application/json',
+    //             'Accept-Encoding' => 'gzip',
+    //             'Content-Type' => 'application/json',
+    //         ])->post(config('constants.end-point').'/hotel-api/1.0/hotels', $data);
+            
+    //         $responseData = $response->json();
+            
+    //         $status = $response->status();
+
+    //         if ($status == "200") {
+    //             $hotels = $responseData['hotels']['hotels'];
+    //             $hotelDetailsArray = [];
+
+    //             foreach ($hotels as $hotel) {
+    //                 if (isset($hotel['rooms'])) {
+    //                     unset($hotel['rooms']);
+    //                 }
+                    
+    //                 $hotelCode = $hotel['code'];
+    //                 $hotelDetails = $this->hotelDetails($hotelCode);
+    //                 $hotel['images'] = $hotelDetails['images']; 
+    //                 $hotel['facilities'] = $hotelDetails['facilities'];
+    //                 $hotel['S2C'] = $hotelDetails['S2C'];
+    //                 $hotel['ranking'] = $hotelDetails['ranking'];
+    //                 $hotelDetailsArray[] = $hotel; 
+    //             }
+
+    //             $responseData['hotels']['hotels'] = $hotelDetailsArray;
+
+    //             return response()->json([
+    //                 'status'    => 'success',
+    //                 'message'   => trans('msg.list.success'),
+    //                 'data'      => $responseData['hotels']['hotels']
+    //             ],$status);
+    //         } else {
+    //             return response()->json([
+    //                 'status'    => 'failed',
+    //                 'message'   => trans('msg.list.failed'),
+    //                 'data'      => $responseData
+    //             ],$status);
+    //         }
+            
+    //     } catch (\Throwable $e) {
+    //         return response()->json([
+    //             'status'    => 'failed',
+    //             'message'   => trans('msg.error'),
+    //             'error'     => $e->getMessage()
+    //         ],500);
+    //     }
+    // }
 
     function hotelDetails($hotelCode) {
         $Signature = self::calculateSignature();
