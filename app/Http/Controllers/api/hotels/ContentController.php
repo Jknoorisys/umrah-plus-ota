@@ -3,29 +3,12 @@
 namespace App\Http\Controllers\api\hotels;
 
 use App\Http\Controllers\Controller;
-use App\Models\MasterCountry;
-use App\Models\MasterCurrency;
-use App\Models\MasterDestination;
 use App\Models\MasterFacilities;
-use App\Models\MasterHotel;
 use App\Models\MasterHotel_1;
 use App\Models\MasterHotel_2;
-use App\Models\MasterHotels1;
-use App\Models\MasterHotelsAfrica;
-use App\Models\MasterHotelsAfricaImages;
-use App\Models\MasterHotelsAsia;
-use App\Models\MasterHotelsAsiaImages;
-use App\Models\MasterHotelsAntarctica;
-use App\Models\MasterHotelsAntarcticaImages;
-use App\Models\MasterHotelsEurope;
-use App\Models\MasterHotelsEuropeImages;
-use App\Models\MasterLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class ContentController extends Controller
 {
@@ -49,241 +32,97 @@ class ContentController extends Controller
         return $hash;
     }
 
-    // public function hotels(Request $request) {
-
-    //     try {
-    //         $data = [];       
-    
-    //         $destinationCode = $request->destinationCode ? $request->destinationCode : "";
-    //         if (!empty($destinationCode) && isset($destinationCode)) {
-    //             $data['destinationCode'] = $request->destinationCode;
-    //         }
-
-    //         $countryCode = $request->countryCode ? $request->countryCode : "";
-    //         if (!empty($countryCode) && isset($countryCode)) {
-    //             $data['countryCode']= $request->countryCode;
-    //         }
-
-    //         $codes = $request->codes ? $request->codes : "";
-    //         if (!empty($codes) && isset($codes)) {
-    //             $data['codes']= $request->codes;
-    //         }
-
-    //         $includeHotels = $request->includeHotels ? $request->includeHotels : "";
-    //         if (!empty($includeHotels) && isset($includeHotels)) {
-    //             $data['includeHotels']= $request->includeHotels;
-    //         }
-
-    //         $fields = $request->fields ? $request->fields : "";
-    //         if (!empty($fields) && isset($fields)) {
-    //             $data['fields']= $request->fields;
-    //         }
-
-    //         $language = $request->language ? $request->language : "";
-    //         if (!empty($language) && isset($language)) {
-    //             $data['language']= $request->language;
-    //         }
-
-    //         $from = $request->from ? $request->from : "";
-    //         if (!empty($from) && isset($from)) {
-    //             $data['from']= $request->from;
-    //         }
-
-    //         $to = $request->to ? $request->to : "";
-    //         if (!empty($to) && isset($to)) {
-    //             $data['to']= $request->to;
-    //         }
-
-    //         $useSecondaryLanguage = $request->useSecondaryLanguage ? $request->useSecondaryLanguage : "";
-    //         if (!empty($useSecondaryLanguage) && isset($useSecondaryLanguage)) {
-    //             $data['useSecondaryLanguage']= $request->useSecondaryLanguage;
-    //         }
-
-    //         $lastUpdateTime = $request->lastUpdateTime ? $request->lastUpdateTime : "";
-    //         if (!empty($lastUpdateTime) && isset($lastUpdateTime)) {
-    //             $data['lastUpdateTime']= $request->lastUpdateTime;
-    //         }
-
-    //         $PMSRoomCode = $request->PMSRoomCode ? $request->PMSRoomCode : "";
-    //         if (!empty($PMSRoomCode) && isset($PMSRoomCode)) {
-    //             $data['PMSRoomCode']= $request->PMSRoomCode;
-    //         }
-            
-    //         $queryString = http_build_query($data);
-        
-    //         $Signature = self::calculateSignature();
-        
-    //         $response = Http::withHeaders([
-    //             'Api-key' => config('constants.hotel.Api-key'),
-    //             'X-Signature' => $Signature,
-    //             'Accept' => 'application/json',
-    //             'Accept-Encoding' => 'gzip',
-    //             'Content-Type' => 'application/json',
-    //         ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
-        
-    //         $responseData = $response->json();
-        
-    //         $status = $response->status();
-
-    //         if ($status == "200") {
-    //             // $hotels = $responseData['hotels'];
-    //             // $codes = [];
-    //             foreach ($hotels as $hotel) {
-    //                 $hotelCode = $hotel['code'];
-    //                 $codes[] = $hotelCode;
-
-    //                 // $hotelDetails = $this->hotelData($hotelCode);
-    //                 // $images = $hotelDetails['images']; 
-    //                 // $facilities = $hotelDetails['facilities'];
-    //                 // $S2C = $hotelDetails['S2C'];
-    //                 // $ranking = $hotelDetails['ranking'];
-                    
-    //                 $images = isset($hotel['images']) ? $hotel['images'] : [];
-    //                 $facilities = isset($hotel['facilities']) ? $hotel['facilities'] : [];
-    //                 $S2C = isset($hotel['S2C']) ? $hotel['S2C'] : '';
-    //                 $ranking = isset($hotel['ranking']) ? $hotel['ranking'] : '';
-
-    //                 if ($facilities) {
-    //                     $hotelFacilities = [];
-    //                     foreach ($facilities as $facility) {
-    //                         $facilityDetails = MasterFacilities::where('code', '=', $facility['facilityCode'])->where('group_code', '=', $facility['facilityGroupCode'])->first();
-    //                         if ($facilityDetails) {
-    //                             $hotelFacilities[] = $facilityDetails->facility; 
-    //                         }
-    //                     }
-    //                 }
-
-    //                 $hotelData = [
-    //                     'code' => $hotelCode,
-    //                     'hotel' => $hotel['name']['content'],
-    //                     'facilities' => $hotelFacilities ? implode(', ', $hotelFacilities) : '',
-    //                     'S2C' => $S2C,
-    //                     'ranking' => $ranking
-    //                 ];
-
-    //                 MasterHotelsEurope::create($hotelData);
-                    
-    //                 if ($images) {
-                        
-    //                     foreach ($images as $image) {
-    //                         // $imageData = [
-    //                         //     'hotel_code' => $hotelCode,
-    //                         //     'image' => $image
-    //                         // ];
-
-    //                         $imageData = [
-    //                             'hotel_code' => $hotelCode,
-    //                             'image' => 'https://photos.hotelbeds.com/giata/'.$image['path']
-    //                         ];
-
-    //                         // echo json_encode($imageData);
-
-    //                         MasterHotelsEuropeImages::create($imageData);
-    //                     }   
-    //                 }
-    //             }
-
-    //             // $count = MasterHotelsEurope::whereIn('code', $codes)->count();
-    //             // return $count;exit;
-                
-    //             return response()->json([
-    //                 'status'    => 'success',
-    //                 'message'   => trans('msg.list.success'),
-    //                 'total'     => $responseData['total'],
-    //                 // 'data'      => $responseData['hotels']
-    //             ],$status);
-    //         } else {
-    //             return response()->json([
-    //                 'status'    => 'failed',
-    //                 'message'   => trans('msg.list.failed'),
-    //                 'data'      => $responseData
-    //             ],$status);
-    //         }
-            
-    //     } catch (\Throwable $e) {
-    //         return response()->json([
-    //             'status'    => 'failed',
-    //             'message'   => trans('msg.error'),
-    //             'error'     => $e->getMessage()
-    //         ],500);
-    //     }
-    // }
-
     public function hotels(Request $request) {
-        ini_set('max_execution_time', 2000);
 
         try {
             $data = [];       
     
+            $destinationCode = $request->destinationCode ? $request->destinationCode : "";
+            if (!empty($destinationCode) && isset($destinationCode)) {
+                $data['destinationCode'] = $request->destinationCode;
+            }
+
+            $countryCode = $request->countryCode ? $request->countryCode : "";
+            if (!empty($countryCode) && isset($countryCode)) {
+                $data['countryCode']= $request->countryCode;
+            }
+
+            $codes = $request->codes ? $request->codes : "";
+            if (!empty($codes) && isset($codes)) {
+                $data['codes']= $request->codes;
+            }
+
+            $includeHotels = $request->includeHotels ? $request->includeHotels : "";
+            if (!empty($includeHotels) && isset($includeHotels)) {
+                $data['includeHotels']= $request->includeHotels;
+            }
+
             $fields = $request->fields ? $request->fields : "";
             if (!empty($fields) && isset($fields)) {
                 $data['fields']= $request->fields;
             }
 
-            $data['from'] = 1;
-            $data['to'] = 100;
-            
-            for ($i = 0; $i < 50; $i++) {
-            
-                $queryString = http_build_query($data);
-            
-                $Signature = self::calculateSignature();
-            
-                $response = Http::withHeaders([
-                    'Api-key' => config('constants.hotel.Api-key'),
-                    'X-Signature' => $Signature,
-                    'Accept' => 'application/json',
-                    'Accept-Encoding' => 'gzip',
-                    'Content-Type' => 'application/json',
-                ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
-            
-                $responseData = $response->json();
-            
-                $status = $response->status();
-
-                if ($status == "200") {
-                    $hotels = $responseData['hotels'];
-                    foreach ($hotels as $hotel) {
-                        $hotelCode = $hotel['code'];
-                        
-                        $images = isset($hotel['images']) ? $hotel['images'] : [];
-                        $paths = collect($images)->pluck('path')->toArray();
-                        $commaSeparatedValues = implode(', ', $paths);
-
-                        $S2C = isset($hotel['S2C']) ? $hotel['S2C'] : '';
-                        $ranking = isset($hotel['ranking']) ? $hotel['ranking'] : '';
-                        $facilities = isset($hotel['facilities']) ? $hotel['facilities'] : [];
-
-                        if ($facilities) {
-                            $hotelFacilities = [];
-                            foreach ($facilities as $facility) {
-                                $facilityDetails = MasterFacilities::where('code', '=', $facility['facilityCode'])->where('group_code', '=', $facility['facilityGroupCode'])->first();
-                                if ($facilityDetails) {
-                                    $hotelFacilities[] = $facilityDetails->facility; 
-                                }
-                            }
-                        }
-
-                        $hotelData = [
-                            'code' => $hotelCode,
-                            'hotel' => $hotel['name']['content'],
-                            'facilities' => $hotelFacilities ? implode(', ', $hotelFacilities) : '',
-                            'S2C' => $S2C,
-                            'images' => $commaSeparatedValues,
-                            'ranking' => $ranking
-                        ];
-
-                        MasterHotel_1::create($hotelData);
-                    }
-                }
-
-                $data['from'] = $data['to'] + 1;
-                $data['to'] += 100;
-
-                sleep(3);
+            $language = $request->language ? $request->language : "";
+            if (!empty($language) && isset($language)) {
+                $data['language']= $request->language;
             }
 
-            return 'Successfully Done';
+            $from = $request->from ? $request->from : "";
+            if (!empty($from) && isset($from)) {
+                $data['from']= $request->from;
+            }
+
+            $to = $request->to ? $request->to : "";
+            if (!empty($to) && isset($to)) {
+                $data['to']= $request->to;
+            }
+
+            $useSecondaryLanguage = $request->useSecondaryLanguage ? $request->useSecondaryLanguage : "";
+            if (!empty($useSecondaryLanguage) && isset($useSecondaryLanguage)) {
+                $data['useSecondaryLanguage']= $request->useSecondaryLanguage;
+            }
+
+            $lastUpdateTime = $request->lastUpdateTime ? $request->lastUpdateTime : "";
+            if (!empty($lastUpdateTime) && isset($lastUpdateTime)) {
+                $data['lastUpdateTime']= $request->lastUpdateTime;
+            }
+
+            $PMSRoomCode = $request->PMSRoomCode ? $request->PMSRoomCode : "";
+            if (!empty($PMSRoomCode) && isset($PMSRoomCode)) {
+                $data['PMSRoomCode']= $request->PMSRoomCode;
+            }
+            
+            $queryString = http_build_query($data);
+        
+            $Signature = self::calculateSignature();
+        
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.hotel.Api-key'),
+                'X-Signature' => $Signature,
+                'Accept' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
+        
+            $responseData = $response->json();
+        
+            $status = $response->status();
+
+            if ($status == "200") {
+                
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.list.success'),
+                    'total'     => $responseData['total'],
+                    'data'      => $responseData['hotels']
+                ],$status);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.list.failed'),
+                    'data'      => $responseData
+                ],$status);
+            }
             
         } catch (\Throwable $e) {
             return response()->json([
@@ -293,6 +132,91 @@ class ContentController extends Controller
             ],500);
         }
     }
+
+    // public function hotels(Request $request) {
+    //     ini_set('max_execution_time', 2000);
+
+    //     try {
+    //         $data = [];       
+    
+    //         $fields = $request->fields ? $request->fields : "";
+    //         if (!empty($fields) && isset($fields)) {
+    //             $data['fields']= $request->fields;
+    //         }
+
+    //         $data['from'] = 300001;
+    //         $data['to'] = 300100;
+            
+    //         for ($i = 0; $i < 50; $i++) {
+            
+    //             $queryString = http_build_query($data);
+            
+    //             $Signature = self::calculateSignature();
+            
+    //             $response = Http::withHeaders([
+    //                 'Api-key' => config('constants.hotel.Api-key'),
+    //                 'X-Signature' => $Signature,
+    //                 'Accept' => 'application/json',
+    //                 'Accept-Encoding' => 'gzip',
+    //                 'Content-Type' => 'application/json',
+    //             ])->get(config('constants.end-point') . '/hotel-content-api/1.0/hotels?' . $queryString);
+            
+    //             $responseData = $response->json();
+            
+    //             $status = $response->status();
+
+    //             if ($status == "200") {
+    //                 $hotels = $responseData['hotels'];
+    //                 foreach ($hotels as $hotel) {
+    //                     $hotelCode = $hotel['code'];
+                        
+    //                     $images = isset($hotel['images']) ? $hotel['images'] : [];
+    //                     $paths = collect($images)->pluck('path')->toArray();
+    //                     $commaSeparatedValues = implode(', ', $paths);
+
+    //                     $S2C = isset($hotel['S2C']) ? $hotel['S2C'] : '';
+    //                     $ranking = isset($hotel['ranking']) ? $hotel['ranking'] : '';
+    //                     $facilities = isset($hotel['facilities']) ? $hotel['facilities'] : [];
+
+    //                     if ($facilities) {
+    //                         $hotelFacilities = [];
+    //                         foreach ($facilities as $facility) {
+    //                             $facilityDetails = MasterFacilities::where('code', '=', $facility['facilityCode'])->where('group_code', '=', $facility['facilityGroupCode'])->first();
+    //                             if ($facilityDetails) {
+    //                                 $hotelFacilities[] = $facilityDetails->facility; 
+    //                             }
+    //                         }
+    //                     }
+
+    //                     $hotelData = [
+    //                         'code' => $hotelCode,
+    //                         'hotel' => $hotel['name']['content'],
+    //                         'facilities' => $hotelFacilities ? implode(', ', $hotelFacilities) : '',
+    //                         'S2C' => $S2C,
+    //                         'images' => $commaSeparatedValues,
+    //                         'ranking' => $ranking
+    //                     ];
+
+    //                     MasterHotel_2::create($hotelData);
+    //                 }
+    //             }
+
+    //             $data['from'] = $data['to'] + 1;
+    //             $data['to'] += 100;
+
+    //             sleep(3);
+    //         }
+
+    //         return 'Successfully Done';
+            
+    //     } catch (\Throwable $e) {
+    //         return response()->json([
+    //             'status'    => 'failed',
+    //             'message'   => trans('msg.error'),
+    //             'error'     => $e->getMessage()
+    //         ],500);
+    //     }
+    // }
 
     public function hotels_aaisha(Request $request) {
         ini_set('max_execution_time', 2000);
@@ -306,7 +230,7 @@ class ContentController extends Controller
             }
 
             $data['from'] = 100001;
-            $data['to'] = 100101;
+            $data['to'] = 100100;
             
             for ($i = 0; $i < 50; $i++) {
             
