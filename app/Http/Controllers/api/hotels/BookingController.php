@@ -137,10 +137,10 @@ class BookingController extends Controller
                     $hotel['minRate'] = $minRate + ($minRate * $markup / 100);
                     $maxRate = $hotel['maxRate'];
                     $hotel['maxRate'] = $maxRate + ($maxRate * $markup / 100);
-                    
-                    if (isset($hotel['rooms'])) {
-                        unset($hotel['rooms']);
-                    }
+
+                    // if (isset($hotel['rooms'])) {
+                    //     unset($hotel['rooms']);
+                    // }
                     
                     $hotelCode = $hotel['code'];
                 
