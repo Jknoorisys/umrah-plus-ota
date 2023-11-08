@@ -46,6 +46,7 @@ return [
 
         // Sidebar
         'Dashboard' => 'Dashboard',
+        'Bookings' => 'Bookings',
 
         // Profile
         'First Name' => 'First Name',
