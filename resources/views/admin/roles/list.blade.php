@@ -33,28 +33,22 @@
                                     <div class="col-1"></div>
                                     <div class="col-2">
                                         <div class="form-check form-switch">
-                                        @if ($role->role != 'super_admin')
                                             <input class="form-check-input btn-lg" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $role->status == 'active' ? 'checked' : '' }} data-role-id="{{ $role->id }}" data-id="{{ $loop->iteration }}">
-                                        @endif
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                    @if ($role->role != 'super_admin')
                                     <a class="btn btn-outline-info btn-sm" href="{{ route('role.edit-form', ['id' => $role->id]) }}">
                                         <span class="material-icons text-md">
                                             edit
                                         </span>
                                     </a>
-                                    @endif
                                     </div>
                                     <div class="col-2">
-                                    @if ($role->role != 'super_admin')
                                     <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleterole('{{ $role->id }}', {{ $loop->iteration }})">
                                         <span class="material-icons text-md">
                                             delete
                                         </span>
                                     </button>
-                                    @endif
                                     </div>
                                 </div>                                   
                             </td>
