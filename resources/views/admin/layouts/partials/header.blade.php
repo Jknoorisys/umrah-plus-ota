@@ -34,7 +34,7 @@
                 </div>
             </div>
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item dropdown pe-2" onclick="toggleLanguage()" style="cursor: pointer;">
+                <li class="nav-item dropdown pe-2 d-none" onclick="toggleLanguage()" style="cursor: pointer;">
                     <span class="material-icons" id="languageToggle">translate</span>
                     <span id="languageName">Eng</span>
                 </li>
@@ -48,12 +48,10 @@
                       </div>
                     </a>
                 </li>
-                <li class="nav-item dropdown pe-2">
+
+                <li class="nav-item dropdown pe-2 d-none">
                     <a href="javascript:;" class="nav-link text-body p-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="material-icons cursor-pointer">account_circle</i>
-                        {{-- <div class="my-auto">
-                            <img src="{{ Auth::guard('admin')->user()->photo ? asset(Auth::guard('admin')->user()->photo) : asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm  me-3 ">
-                        </div> --}}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
                         <li class="mb-2">
@@ -72,7 +70,7 @@
                             </div>
                             </a>
                         </li>
-                        <li class="mb-2">
+                        {{-- <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="{{ route('settings') }}">
                             <div class="d-flex align-items-center py-1">
                                 <div class="my-auto">
@@ -87,7 +85,7 @@
                                 </div>
                             </div>
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a class="dropdown-item border-radius-md" href="{{ route('logout') }}">
                             <div class="d-flex align-items-center py-1">
@@ -106,6 +104,15 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item dropdown pe-2" style="cursor: pointer;">
+                    <a href="{{ route('profile') }}" class="text-secondary"><span class="material-icons">account_circle</span></a>
+                </li>
+
+                <li class="nav-item dropdown pe-2" style="cursor: pointer;">
+                    <a href="{{ route('logout') }}" class="text-secondary"><span class="material-icons">logout</span></a>
+                </li>
+
                 @if(Auth::guard('admin')->check())
                     <li class="nav-item dropdown pe-2">
                         <a href="javascript:;" class="nav-link text-body p-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,7 +123,10 @@
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                            <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a>
+                            @if (Auth::guard('admin')->user()->unreadNotifications->count() > 0)
+                                <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a>
+                            @endif
+                            {{-- <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a> --}}
                             @forelse(Auth::guard('admin')->user()->unreadNotifications as $notification)
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
@@ -144,12 +154,13 @@
                         </ul>
                     </li>
                 @endif
+
             </ul>
         </div>
     </div>
-  </nav>
+</nav>
 
-  <script>
+<script>
     function toggleLanguage() {
         var currentLang = "{{ session('locale') }}";
         if (currentLang === "en") {
