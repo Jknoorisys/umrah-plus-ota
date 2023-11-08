@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Markup;
-use App\Models\PromoCodes;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ManageRoles extends Controller
 {
