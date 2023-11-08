@@ -15,7 +15,7 @@ class ManageRoles extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Roles');
-        $data['roles']               = Role::orderBy('created_at', 'desc')->get();
+        $data['roles']               = Role::where('role', '!=', 'super_admin')->orderBy('created_at', 'desc')->get();
         
         return view('admin.roles.list', $data);
     }
