@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,19 +17,29 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::guard('admin')->attempt($credentials)) {
             $data = Admin::where('email', $request->email)->first();
-            // echo json_encode($data);exit;
-            if($data->role !== 'super_admin')
-            {
-                return redirect()->intended('dashboard');
+            $userRole = $data->role;
+
+            if ($userRole != 'super_admin') {
+                $roles = Role::where('role', $userRole)->first();
+                $permissions = explode(',', $roles->privileges);
+
+                // Save userRole and permissions in the session
+                session(['userRole' => $userRole, 'permissions' => $permissions]);
+            } else {
+                // Save only userRole in the session
+                session(['userRole' => $userRole]);
             }
-            return redirect()->intended('dashboard');
+
+            return redirect()->route('dashboard');
         }
-        
+
         return redirect()->route('/')->with(['error' => trans('msg.admin.Invalid credentials')]);
     }
+
+
 
     public function logout()
     {

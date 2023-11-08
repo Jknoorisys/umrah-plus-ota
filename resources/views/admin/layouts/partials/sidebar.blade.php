@@ -1,3 +1,9 @@
+
+@php
+    $userRole = session('userRole');
+    $permissions = session('permissions');
+@endphp
+
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -18,7 +24,8 @@
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Dashboard') }}</span>
           </a>
         </li>
-
+        @if($userRole === 'super_admin')
+        
         {{-- Manage Users --}}
         <li class="nav-item">
           <a class="nav-link text-white {{ (request()->is('user/list')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.list') }}">
@@ -147,6 +154,96 @@
             <span class="nav-link-text ms-1">Sign Up</span>
           </a>
         </li> --}}
+
+        @else
+        <ul class="navbar-nav">
+          @foreach($permissions as $permission)
+            @if($permission[0] == 1)
+            {{-- Manage Users --}}
+            <li class="nav-item">
+              <a class="nav-link text-white {{ (request()->is('user/list')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.list') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">group</i>
+                </div>
+                <span class="nav-link-text ms-1">{{ trans('msg.admin.Users') }}</span>
+              </a>
+            </li>
+            @elseif($permission[0] == 2)
+            {{-- Manage Sub Admins --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('sub-admin.list') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">manage_accounts</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Sub Admins') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 3)
+          {{-- Manage Roles --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('role*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('role.list') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">settings_applications</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Roles') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 4)
+          {{-- Manage Promo Codes --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('promo-code*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('promo-code.list') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">price_change</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Promo Codes') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 5)
+          {{-- Manage Markups --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('markup*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('markup.list') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">account_balance_wallet</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Markups') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 6)
+          {{-- Send Norification To All Users --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('user/send-notification')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.send-notification-form') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">send</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Send Notification') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 7)
+          {{-- Manage Visa Countries --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('visa-country*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-country.list') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">flag</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Countries') }}</span>
+            </a>
+          </li>
+          @elseif($permission[0] == 8)
+          {{-- Manage Visa Types --}}
+          <li class="nav-item">
+            <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.index') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">flag</i>
+              </div>
+              <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
+            </a>
+          </li>
+          @endif
+        @endforeach
+                
+        </ul>
+        @endif
+
 
       </ul>
     </div>
