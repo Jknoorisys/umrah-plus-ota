@@ -75,7 +75,7 @@ class ManageRoles extends Controller
         if (!$role) {
             return redirect()->back()->with('error', trans('msg.admin.Role not found'));
         }
-
+        
         $data = [
                 'role' => $request->role ? $request->role : $role->role,
                 'privileges' => $request->privilege ? implode(',',$request->privilege) : $role->privileges,

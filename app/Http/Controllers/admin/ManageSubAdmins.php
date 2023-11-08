@@ -76,7 +76,7 @@ class ManageSubAdmins extends Controller
     }
 
     public function view($id) {
-        // 
+        
     }
 
     // public function editForm($id) {
