@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,12 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         
         if (Auth::guard('admin')->attempt($credentials)) {
+            $data = Admin::where('email', $request->email)->first();
+            // echo json_encode($data);exit;
+            if($data->role !== 'super_admin')
+            {
+                return redirect()->intended('dashboard');
+            }
             return redirect()->intended('dashboard');
         }
         

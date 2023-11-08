@@ -29,87 +29,73 @@ class ManageRoles extends Controller
     }
 
     public function add(Request $request) {
-        $markup = Role::where('service', $request->service)->first()->value('markup');
 
-        $validatedData = $request->validate([
-            'service' => 'required',
-            'start_date' => 'required|date',
-            'expire_date' => 'required|date|after:start_date',
-            'code' => ['required', 'string', Rule::unique('promo_codes')->where(function ($query) use ($request) {
-                return $query->where('service', $request->service);
-            })],
-            'type' => 'required',
-            'max_discount' => 'required|numeric|min:0',
-            'min_purchase' => 'required|numeric|min:0',
-            'max_usage_per_user' => 'required|numeric|min:0',
-            'discount' => ['required', 'numeric', 'min:0'],
-        ]);
-    
-        if ($request->type == 'percentage' && $request->discount >= $markup && $request->discount > 5 ) {
-            return redirect()->back()->with('error', trans('msg.admin.Discount can not be greater than 5%').'.')->withInput();
-        }
+        $allowedPrivilege = implode(',', $request->privilege);
+        $data = [
+            'role' => strtolower($request->role),
+            'privileges' => $allowedPrivilege,
+            'status' => 'active'
+        ];
 
-        $insert = Role::create($validatedData);
-
-        if ($insert) {
-            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code added successfully').'.');
+        $addRole = Role::create($data);
+        if ($addRole) {
+            return redirect()->route('role.list')->with('success', trans('msg.admin.Role Added successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to add promo code'))->withInput();
+            return redirect()->back()->with('error', trans('msg.admin.Unable to add Role, Please try again').'.');
         }
+        
+        
     }
 
     public function editForm($id) {
         $code = Role::find($id);
-
+        $explode = explode(',',$code->privileges);
+        // dd($explode);
         if ($code) {
-            $data['previous_title']  = trans('msg.admin.Manage Promo Codes');
-            $data['url']             = route('promo-code.list');
-            $data['title']           = trans('msg.admin.Edit Promo Code');
+            $data['previous_title']  = trans('msg.admin.Manage Roles');
+            $data['url']             = route('role.list');
+            $data['title']           = trans('msg.admin.Edit Role');
             $data['code']            = $code;
-            return view('admin.promo-codes.edit', $data);
+            $data['selectedPrivileges']      = $explode;
+            $data['allPrivileges']           = ['1' => 'User', '2' =>'Sub Admin', '3' => 'Roles', '4' => 'Promo Codes', 
+            '5' => 'Markups', '6' => 'Send Notification', '7' => 'Visa Countries', '8' => 'Visa Types', 
+            '9' => 'Service Type', '10' => 'Service Type', '11' => 'Service Type', '12' => 'Service Type'];
+            // dd($data['code']);
+            return view('admin.roles.edit', $data);
         } else {
-            return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
+            return response()->json(['error' => trans('msg.admin.Role Not Found')]);
         }
     }
 
     public function edit(Request $request) {
         
         $id = $request->id;
-        $promoCode = Role::find($id);
+        $role = Role::find($id);
+        // dd($role);
     
-        if (!$promoCode) {
-            return redirect()->back()->with('error', trans('msg.admin.Promo code not found'));
+        if (!$role) {
+            return redirect()->back()->with('error', trans('msg.admin.Role not found'));
         }
 
-        $validatedData = $request->validate([
-            'service' => 'required',
-            'start_date' => 'required|date',
-            'expire_date' => 'required|date|after:start_date',
-            'code' => ['required', 'string', Rule::unique('promo_codes')->ignore($id)->where(function ($query) use ($request) {
-                return $query->where('service', $request->service);
-            })],
-            'type' => 'required',
-            'discount' => 'required|numeric|min:0',
-            'max_discount' => 'required|numeric|min:0',
-            'min_purchase' => 'required|numeric|min:0',
-            'max_usage_per_user' => 'required|numeric|min:0',
-        ]);
+        $data = ['role' => $request->role ? $request->role : $role->role,
+        'privileges' => $request->privilege ? implode(',',$request->privilege) : $role->privileges,
+        'status' => $request->status ? $request->status : $role->status];
     
-        $update = $promoCode->update($validatedData);
+        $update = Role::where('id',$id)->update($data);
 
         if ($update) {
-            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code updated successfully').'.');
+            return redirect()->route('role.list')->with('success', trans('msg.admin.Role updated successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to update promo code').'.');
+            return redirect()->back()->with('error', trans('msg.admin.Unable to update Role, Please try again').'.');
         }
             
     }
 
     public function changeStatus(Request $request) {
-        $code = Role::find($request->code_id);
+        $code = Role::find($request->role_id);
 
         if (!$code) {
-            return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
+            return response()->json(['error' => trans('msg.admin.Role Not Found')]);
         }
 
         $code->status = $request->status;
@@ -124,7 +110,7 @@ class ManageRoles extends Controller
     }
 
     public function delete(Request $request) {
-        $code = Role::find($request->code_id);
+        $code = Role::find($request->role_id);
         if (!$code) {
             return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
         }

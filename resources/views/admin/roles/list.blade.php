@@ -142,17 +142,17 @@
         }
 
         // Function to delete the role
-        function deleterole(codeId) {
+        function deleterole(roleId) {
             $.ajax({
                 type: 'POST',
                 url: '{{ route("role.delete") }}', 
                 data: {
-                    code_id: codeId,
+                    role_id: roleId,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
                     pos5_success_noti(data.message);
-                    let row = document.getElementById('delete' + codeId);
+                    let row = document.getElementById('delete' + roleId);
                     if (row) {
                         row.remove();
                     }

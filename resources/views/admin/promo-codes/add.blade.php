@@ -130,4 +130,12 @@
                 })
             })()
     </script>
+    <script>
+        function checkAllBoxes(source) {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
 @endsection

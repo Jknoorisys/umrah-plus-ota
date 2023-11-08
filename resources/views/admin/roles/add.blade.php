@@ -30,7 +30,71 @@
                     </div>
                     <div class="col-md-2 mt-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
+                            <input class="form-check-input" type="checkbox" value="1" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Users') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="2" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Sub Admin') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="3" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Roles') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="4" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Promo Codes') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="5" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Markups') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="6" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Send Notification') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="7" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Visa Countries') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="8" name="privilege[]" id="fcustomCheck1" checked="">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Visa Types') }}</label>
+                        </div>
+                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="9" name="privilege[]" id="fcustomCheck1" checked="">
                             <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
                         </div>
                         <span class="text-danger error">@error('service') {{$message}} @enderror</span>
@@ -38,7 +102,7 @@
                     </div>
                     <div class="col-md-2 mt-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
+                            <input class="form-check-input" type="checkbox" value="10" name="privilege[]" id="fcustomCheck1" checked="">
                             <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
                         </div>
                         <span class="text-danger error">@error('service') {{$message}} @enderror</span>
@@ -46,7 +110,7 @@
                     </div>
                     <div class="col-md-2 mt-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
+                            <input class="form-check-input" type="checkbox" value="11" name="privilege[]" id="fcustomCheck1" checked="">
                             <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
                         </div>
                         <span class="text-danger error">@error('service') {{$message}} @enderror</span>
@@ -54,71 +118,7 @@
                     </div>
                     <div class="col-md-2 mt-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                        </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
-                    </div>
-                    <div class="col-md-2 mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1" checked="">
+                            <input class="form-check-input" type="checkbox" value="12" name="privilege[]" id="fcustomCheck1" checked="">
                             <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
                         </div>
                         <span class="text-danger error">@error('service') {{$message}} @enderror</span>

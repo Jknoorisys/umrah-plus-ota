@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class ManageVisaTypes extends Controller
 {
-    //
+    public function index()
+    {
+        return view('admin/visa-type/manage-visa-type');
+    }
 }
