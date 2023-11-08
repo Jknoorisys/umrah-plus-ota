@@ -231,13 +231,13 @@
           @elseif($permission[0] == 8)
           {{-- Manage Visa Types --}}
           <li class="nav-item">
-            <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.index') }}">
-              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">flag</i>
-              </div>
-              <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
-            </a>
-          </li>
+          <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">list_alt</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
+          </a>
+        </li>
           @endif
         @endforeach
                 
