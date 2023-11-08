@@ -21,19 +21,16 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt($credentials)) {
             $data = Admin::where('email', $request->email)->first();
             $userRole = $data->role;
-
-            if ($userRole != 'super_admin') {
-                $roles = Role::where('role', $userRole)->first();
+            $roles = Role::where('role', $userRole)->first();
+            if(!empty($roles))
+            {
                 $permissions = explode(',', $roles->privileges);
-
                 // Save userRole and permissions in the session
                 session(['userRole' => $userRole, 'permissions' => $permissions]);
-            } else {
-                // Save only userRole in the session
-                session(['userRole' => $userRole]);
+                return redirect()->route('dashboard');
             }
-
-            return redirect()->route('dashboard');
+            return redirect()->route('/')->with(['error' => trans('msg.admin.Role Not Found')]);
+            
         }
 
         return redirect()->route('/')->with(['error' => trans('msg.admin.Invalid credentials')]);
