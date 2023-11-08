@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\NotificationHistory;
+use App\Models\Role;
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Http\Request;
@@ -74,6 +75,7 @@ class ManageUsers extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Send Notification');
+        $data['roles']               = Role::where([['status', 'active'], ['role', '!=', 'super_admin']])->get();
         return view('admin.user.send_notification', $data);
     }
 
