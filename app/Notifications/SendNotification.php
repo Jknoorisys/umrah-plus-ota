@@ -40,6 +40,7 @@ class SendNotification extends Notification
             'title' => $this->message['title'],
             'message' => $this->message['message'],
             'image' => $this->message['image'] ?? '',
+            'profile' => $this->message['profile'] ?? '',
         ];
     }
 }

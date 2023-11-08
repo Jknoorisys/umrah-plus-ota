@@ -26,11 +26,14 @@
                                 <div class="input-group input-group-outline">
                                     <select class="single-select" id="type" name="type">
                                         <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
+                                        <option value="user">{{ trans('msg.admin.Users') }}</option>
                                         @forelse ($roles as $role)
                                             <option value="{{ $role->role }}">{{ Str::ucfirst(str_replace('_', ' ', $role->role)) }}</option>
                                         @empty
                                             
                                         @endforelse
+                                        {{-- <option value="admin">{{ trans('msg.admin.Sub Admins') }}</option>
+                                        <option value="user">{{ trans('msg.admin.Users') }}</option> --}}
                                     </select>
                                 </div>
                                 <span class="err_type error text-danger">@error('type') {{$message}} @enderror</span>

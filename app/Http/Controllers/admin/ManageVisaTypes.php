@@ -76,25 +76,22 @@ class ManageVisaTypes extends Controller
         }
 
         $validatedData = $request->validate([
-            'service' => 'required',
-            'start_date' => 'required|date',
-            'expire_date' => 'required|date|after:start_date',
-            'code' => ['required', 'string', Rule::unique('promo_codes')->ignore($id)->where(function ($query) use ($request) {
-                return $query->where('service', $request->service);
-            })],
+            'country_id' => 'required',
             'type' => 'required',
-            'discount' => 'required|numeric|min:0',
-            'max_discount' => 'required|numeric|min:0',
-            'min_purchase' => 'required|numeric|min:0',
-            'max_usage_per_user' => 'required|numeric|min:0',
+            'processing_time' => 'required',
+            'stay_period' => 'required',
+            'validity' => 'required',
+            'entry' => 'required',
+            'fees' => 'required',
+            'currency' => 'required',
         ]);
     
         $update = $visaType->update($validatedData);
 
         if ($update) {
-            return redirect()->route('visa-type.list')->with('success', trans('msg.admin.Visa Type updated successfully').'.');
+            return redirect()->route('visa-type.list')->with('success', trans('msg.admin.Visa Type Updated Successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to update Visa Type').'.');
+            return redirect()->back()->with('error', trans('msg.admin.Failed to Update Visa Type').'.');
         }
             
     }

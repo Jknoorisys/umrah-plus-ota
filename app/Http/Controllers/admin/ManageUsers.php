@@ -82,7 +82,7 @@ class ManageUsers extends Controller
     public function sendNotification(Request $request) {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|in:admin,user',
+            'type' => 'required',
             'message' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -94,19 +94,28 @@ class ManageUsers extends Controller
             $image_url = 'assets/uploads/notification-photos/'. $imageName;
         }
 
+        $admin = auth()->guard('admin')->user();
+
         $data = [
             'title' => $request->title,
             'message' => $request->message,
             'image' => $image_url ?? '',
             'type' => $request->type,
+            'profile' => $admin->photo ?? '',
         ];
 
         $users = [];
-        if ($validatedData['type'] === 'admin') {
-            $users = Admin::where([['role', 'admin'], ['status', '=', 'active']])->get();
-        } elseif ($validatedData['type'] === 'user') {
+        if ($validatedData['type'] === 'user') {
             $users = User::where('status', 'active')->get();
+        }else{
+            $users = Admin::where([['role', $request->type], ['status', '=', 'active']])->get();
         }
+
+        // if ($validatedData['type'] === 'admin') {
+        //     $users = Admin::where([['role', 'admin'], ['status', '=', 'active']])->get();
+        // } elseif ($validatedData['type'] === 'user') {
+        //     $users = User::where('status', 'active')->get();
+        // }
 
         foreach ($users as $user) {
             $user->notify(new SendNotification($data));
