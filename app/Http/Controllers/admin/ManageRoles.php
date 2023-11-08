@@ -32,7 +32,7 @@ class ManageRoles extends Controller
 
         $allowedPrivilege = implode(',', $request->privilege);
         $data = [
-            'role' => strtolower($request->role),
+            'role' => str_replace(' ', '_', strtolower($request->role)),
             'privileges' => $allowedPrivilege,
             'status' => 'active'
         ];
@@ -50,7 +50,7 @@ class ManageRoles extends Controller
     public function editForm($id) {
         $code = Role::find($id);
         $explode = explode(',',$code->privileges);
-        // dd($explode);
+    
         if ($code) {
             $data['previous_title']  = trans('msg.admin.Manage Roles');
             $data['url']             = route('role.list');
@@ -60,7 +60,7 @@ class ManageRoles extends Controller
             $data['allPrivileges']           = ['1' => 'User', '2' =>'Sub Admin', '3' => 'Roles', '4' => 'Promo Codes', 
             '5' => 'Markups', '6' => 'Send Notification', '7' => 'Visa Countries', '8' => 'Visa Types', 
             '9' => 'Service Type', '10' => 'Service Type', '11' => 'Service Type', '12' => 'Service Type'];
-            // dd($data['code']);
+
             return view('admin.roles.edit', $data);
         } else {
             return response()->json(['error' => trans('msg.admin.Role Not Found')]);
@@ -71,15 +71,16 @@ class ManageRoles extends Controller
         
         $id = $request->id;
         $role = Role::find($id);
-        // dd($role);
     
         if (!$role) {
             return redirect()->back()->with('error', trans('msg.admin.Role not found'));
         }
 
-        $data = ['role' => $request->role ? $request->role : $role->role,
-        'privileges' => $request->privilege ? implode(',',$request->privilege) : $role->privileges,
-        'status' => $request->status ? $request->status : $role->status];
+        $data = [
+                'role' => $request->role ? $request->role : $role->role,
+                'privileges' => $request->privilege ? implode(',',$request->privilege) : $role->privileges,
+                'status' => $request->status ? $request->status : $role->status
+            ];
     
         $update = Role::where('id',$id)->update($data);
 

@@ -18,7 +18,7 @@
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Dashboard') }}</span>
           </a>
         </li>
-        @if(auth()->user()->role === 'super_admin')
+
         {{-- Manage Users --}}
         <li class="nav-item">
           <a class="nav-link text-white {{ (request()->is('user/list')) ? 'active bg-gradient-info' : '' }}" href="{{ route('user.list') }}">
@@ -90,15 +90,15 @@
         </li>
 
         {{-- Manage Visa Types --}}
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">flag</i>
             </div>
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
           </a>
-        </li>
-        @elseif(auth()->user()->role === 'subadmin')
+        </li> --}}
+
         {{-- <li class="nav-item">
           <a class="nav-link text-white " href="pages/rtl.html">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
