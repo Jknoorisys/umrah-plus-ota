@@ -115,11 +115,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-warning');
-                            statusElement.classList.add('bg-gradient-primary');
+                            statusElement.classList.remove('bg-gradient-secondary');
+                            statusElement.classList.add('bg-gradient-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-primary');
-                            statusElement.classList.add('bg-gradient-warning');
+                            statusElement.classList.remove('bg-gradient-info');
+                            statusElement.classList.add('bg-gradient-secondary');
                         }
                     }
                 },

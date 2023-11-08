@@ -28,14 +28,15 @@
                                 <td class="text-sm text-center">{{ $loop->iteration }}</td>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                    <div>
-                                        <img src="{{ $admin->photo ? asset($admin->photo) : asset('assets/img/marie.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="admin">
+                                        <div>
+                                            <img src="{{ $admin->photo ? asset($admin->photo) : asset('assets/img/marie.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="admin">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{ $admin->fname. ' ' .$admin->lname }}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{ $admin->email }}</p>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">{{ $admin->fname. ' ' .$admin->lname }}</h6>
-                                        <p class="text-xs text-secondary mb-0">{{ $admin->email }}</p>
-                                    </div>
-                                    </div>
+                                </td>
                                 <td>{{ $admin->country_code. '-'. $admin->phone }}</td>
                                 <td>{{ str_replace('_', ' ', Str::ucfirst($admin->role)) }}</td>
                                 <td class="text-sm">

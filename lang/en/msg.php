@@ -240,6 +240,27 @@ return [
         'Failed to Update Visa Country' => 'Failed to Update Visa Country',
         'Visa Country :status Successfully' => 'Visa Country :status Successfully',
 
+        // Manage Visa Type
+        'Manage Visa Types' => 'Manage Visa Types',
+        'Visa Type' => 'Visa Type',
+        'Visa Types' => 'Visa Types',
+        'Add Visa Type' => 'Add Visa Type',
+        'Edit Visa Type' => 'Edit Visa Type',
+        'Country' => 'Country',
+        'Select Country' => 'Select Country',
+        'Type' => 'Type',
+        'Processing Time' => 'Processing Time',
+        'Fees' => 'Fees',
+        'Enter Visa Type' => 'Enter Visa Type',
+        'Enter Valid Visa Type' => 'Enter Valid Visa Type',
+        'Visa Type Added Successfully' => 'Visa Type Added Successfully',
+        'Failed to Add Visa Type' => 'Failed to Add Visa Type',
+        'Visa Type Not Found' => 'Visa Type Not Found',
+        'Visa Type Updated Successfully' => 'Visa Type Updated Successfully',
+        'Failed to Update Visa Type' => 'Failed to Update Visa Type',
+        'Visa Type :status Successfully' => 'Visa Type :status Successfully',
+
+
     ],
 
     'alert' => [

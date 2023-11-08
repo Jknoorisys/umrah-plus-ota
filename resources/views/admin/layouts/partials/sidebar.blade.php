@@ -90,14 +90,14 @@
         </li>
 
         {{-- Manage Visa Types --}}
-        {{-- <li class="nav-item">
-          <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.index') }}">
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.list') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">flag</i>
+              <i class="material-icons opacity-10">list_alt</i>
             </div>
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
           </a>
-        </li> --}}
+        </li>
 
         {{-- <li class="nav-item">
           <a class="nav-link text-white " href="pages/rtl.html">
