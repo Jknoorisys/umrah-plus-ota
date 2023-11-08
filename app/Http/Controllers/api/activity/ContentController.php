@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\activity;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterDestination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
@@ -252,7 +253,7 @@ class ContentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'language'   => ['required', 'string'],
-            'country'   => ['required', 'string'],
+            // 'country'   => ['required', 'string'],
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -269,32 +270,36 @@ class ContentController extends Controller
         try {
 
             $languages = $request->language;
-            $country = $request->country;
-            $Signature = self::calculateSignature();
+            // $country = $request->country;
+
+            $data = MasterDestination::all();
+            $total = $data->count();
+            // $Signature = self::calculateSignature();
             // echo json_encode($Signature);exit;
-            $response = Http::withHeaders([
-                'Api-key' => config('constants.activites.Api-key'),
-                'X-Signature' => $Signature,
-                'Accept' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-            ])->get(config('constants.end-point') . '/activity-content-api/3.0/destinations/' . $languages . '/' . $country);
+            // $response = Http::withHeaders([
+            //     'Api-key' => config('constants.activites.Api-key'),
+            //     'X-Signature' => $Signature,
+            //     'Accept' => 'application/json',
+            //     'Accept-Encoding' => 'gzip',
+            // ])->get(config('constants.end-point') . '/activity-content-api/3.0/destinations/' . $languages . '/' . $country);
 
-            $responseData = $response->json();
+            // $responseData = $response->json();
 
-            $status = $response->status();
+            // $status = $response->status();
 
-            if ($status == "200") {
+            if ($data) {
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
-                    'data'      => $responseData
-                ], $status);
+                    'total'     => $total,
+                    'data'      => $data
+                ], 200);
             } else {
                 return response()->json([
                     'status'    => 'failed',
                     'message'   => trans('msg.list.failed'),
-                    'data'      => $responseData
-                ], $status);
+                    'data'      => $data
+                ], 500);
             }
         } catch (\Throwable $e) {
             return response()->json([

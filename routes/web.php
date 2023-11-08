@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\ManageRoles;
 use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ManageVisaCountry;
+use App\Http\Controllers\admin\ManageVisaTypes;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -115,6 +116,17 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
         Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
         Route::post('toggle-featured', [ManageVisaCountry::class, 'toggleFeatured'])->name('visa-country.toggle-featured');
+    });
+
+    Route::prefix('visa-type')->group(function () {
+        Route::get('index' , [ManageVisaTypes::class, 'index'])->name('visa-type.index');
+        Route::get('list' , [ManageVisaTypes::class, 'list'])->name('visa-type.list');
+        Route::post('add' , [ManageVisaTypes::class, 'add'])->name('visa-type.add');
+        // Route::any('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
+        // Route::any('update' , [ManageVisaCountry::class, 'edit'])->name('visa-country.update');
+        // Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
+        // Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
+        // Route::post('toggle-featured', [ManageVisaCountry::class, 'toggleFeatured'])->name('visa-country.toggle-featured');
     });
 
 });

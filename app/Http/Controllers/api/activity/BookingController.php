@@ -423,8 +423,8 @@ class BookingController extends Controller
             $languages =  $request->input('language');
             $filters = $request->input('filters');
             $paxes = $request->input('paxes');
-            $from = $request->input('from');
-            $to = $request->input('to');
+            $from = $request->input('from') ? $request->input('from') : '';
+            $to = $request->input('to') ? $request->input('to') : '';
             $pagination = $request->input('pagination');
             $order = $request->input('order');
             
@@ -444,7 +444,10 @@ class BookingController extends Controller
                             'pagination' => $pagination,
                             'order' => $order,
             ]);
-                // echo json_encode($signature);exit;
+            $total = $response['activities'];
+            $data = count($total);
+            // echo json_encode($data);exit;
+
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
@@ -453,6 +456,7 @@ class BookingController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => trans('msg.list.success'),
+                    'total' => $data,
                     'data' => $responseData,
                 ], $status);
             } else {

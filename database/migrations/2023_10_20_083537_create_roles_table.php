@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('role');
+            $table->string('privileges');
             $table->enum('status', ['active', 'inactive']);
             $table->softDeletes();            
             $table->timestamps();
