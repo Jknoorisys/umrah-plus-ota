@@ -4,96 +4,87 @@
     <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-info shadow-info border-radius-lg d-flex justify-content-between align-items-center pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Add Promo Code') }}</h6>
+                <h6 class="text-white text-capitalize ps-3">{{ trans('msg.admin.Add Visa Type') }}</h6>
             </div>
         </div>
         <div class="card-body">
             <div class="p-4 border rounded">
-                <form class="row g-3 needs-validation" action="{{ route('promo-code.add') }}" method="POST" novalidate>
+                <form class="row g-3 needs-validation" action="{{ route('visa-type.add') }}" method="POST" novalidate>
                     @csrf
-                    <div class="col-md-4">
-                        <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
+                    <div class="col-md-3">
+                        <label for="country_id" class="form-label">{{ trans('msg.admin.Select Country') }}</label>
                         <div class="input-group input-group-outline">
-                            <select class="single-select" name="service" id="service" required>
-                                <option disabled {{ old('service') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
-                                <option value="hotel">{{ trans('msg.admin.Hotel') }}</option>
-                                <option value="flight">{{ trans('msg.admin.Flight') }}</option>
-                                <option value="transfer">{{ trans('msg.admin.Transfer') }}</option>
-                                <option value="activity">{{ trans('msg.admin.Activities') }}</option>
-                                <option value="umrah">{{ trans('msg.admin.Umrah') }}</option>
-                                <option value="ziyarat">{{ trans('msg.admin.Ziyarat') }}</option>
-                                <option value="visa">{{ trans('msg.admin.Visa') }}</option>
+                            <select class="single-select" name="country_id" id="country_id" required>
+                                <option disabled {{ old('country_id') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
+                                @forelse ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->country }}</option>
+                                @empty
+                                @endforelse
                             </select>
                         </div>
-                        <span class="text-danger error">@error('service') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
+                        <span class="text-danger error">@error('country_id') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Country') }}.</div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="start_date" class="form-label">{{ trans('msg.admin.Start Date') }}</label>
+                    <div class="col-md-9">
+                        <label for="type" class="form-label">{{ trans('msg.admin.Visa Type') }}</label>
                         <div class="input-group input-group-outline">
-                            <input type="text" name="start_date" id="start_date" placeholder="{{ trans('msg.admin.Start Date') }}" value="{{ old('start_date') }}" class="form-control datepicker" required />
+                            <input type="text" class="form-control" id="type" name="type" placeholder="{{ trans('msg.admin.Visa Type') }}" value="{{ old('type') }}" required>
                         </div>
-                        <span class="text-danger error">@error('start_date') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Start Date') }}</div>
+                        <span class="text-danger error">@error('type') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Visa Type') }}</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="expire_date" class="form-label">{{ trans('msg.admin.Expire Date') }}</label>
+                        <label for="processing_time" class="form-label">{{ trans('msg.admin.Processing Time') }}</label>
                         <div class="input-group input-group-outline">
-                            <input type="text" name="expire_date" id="expire_date" placeholder="{{ trans('msg.admin.Expire Date') }}" value="{{ old('expire_date') }}" class="form-control datepicker" required />
+                            <input type="text" name="processing_time" id="processing_time" placeholder="{{ trans('msg.admin.Ex Upto 5 days') }}" value="{{ old('processing_time') }}" class="form-control" required />
                         </div>
-                        <span class="text-danger error">@error('expire_date') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Expire Date') }}</div>
+                        <span class="text-danger error">@error('processing_time') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Processing Time') }}</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="code" class="form-label">{{ trans('msg.admin.Code') }}</label>
+                        <label for="stay_period" class="form-label">{{ trans('msg.admin.Stay Period') }}</label>
                         <div class="input-group input-group-outline">
-                            <input type="text" class="form-control" id="code" name="code" placeholder="{{ trans('msg.admin.Ex FIRST50') }}" value="{{ old('code') }}" oninput="toUppercase()" required>
+                            <input type="text" class="form-control" id="stay_period" name="stay_period" placeholder="{{ trans('msg.admin.Ex 20 days') }}" value="{{ old('stay_period') }}" required>
                         </div>
-                        <span class="text-danger error">@error('code') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Promo Code') }}</div>
+                        <span class="text-danger error">@error('stay_period') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Stay Period') }}</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="type" class="form-label">{{ trans('msg.admin.Discount Type') }}</label>
+                        <label for="validity" class="form-label">{{ trans('msg.admin.Validity') }}</label>
                         <div class="input-group input-group-outline">
-                            <select class="single-select" name="type" id="type" required>
-                                <option {{ old('type') == '' ? 'selected' : '' }} disabled>{{ trans('msg.admin.Choose') }}...</option>
-                                <option value="flat">{{ trans('msg.admin.Flat') }}</option>
-                                <option value="percentage">{{ trans('msg.admin.Percentage') }}</option>
+                            <input type="text" class="form-control" id="validity" name="validity" placeholder="{{ trans('msg.admin.Ex 30 days') }}" value="{{ old('validity') }}" required>
+                        </div>
+                        <span class="text-danger error">@error('validity') {{$message}} @enderror</span>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Validity') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="entry" class="form-label">{{ trans('msg.admin.Entry Type') }}</label>
+                        <div class="input-group input-group-outline">
+                            <select class="single-select" name="entry" id="entry" required>
+                                <option {{ old('entry') == '' ? 'selected' : '' }} disabled>{{ trans('msg.admin.Choose') }}...</option>
+                                <option value="single">{{ trans('msg.admin.Single') }}</option>
+                                <option value="multiple">{{ trans('msg.admin.Multiple') }}</option>
                             </select>
                         </div>
                         <span class="text-danger error">@error('type') {{$message}} @enderror</span>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid discount type') }}.</div>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Entry Type') }}.</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="discount" class="form-label">{{ trans('msg.admin.Discount') }}</label>
+                        <label for="fees" class="form-label">{{ trans('msg.admin.Fees') }}</label>
                         <div class="input-group input-group-outline">
-                            <input type="number" class="form-control" step="0.5" min="0" name="discount" id="discount" value="{{ old('discount') }}" placeholder="{{ trans('msg.admin.Discount') }}" required>
+                            <input type="number" class="form-control" step="1" min="0" name="fees" value="{{ old('fees') }}" id="fees" placeholder="{{ trans('msg.admin.Fees') }}" required>
                         </div>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Discount') }}</div>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Fees') }}</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="max_discount" class="form-label">{{ trans('msg.admin.Max Discount') }}</label>
+                        <label for="currency" class="form-label">{{ trans('msg.admin.Currency') }}</label>
                         <div class="input-group input-group-outline">
-                            <input type="number" class="form-control" step="0.5" min="0" name="max_discount" value="{{ old('max_discount') }}" id="max_discount" placeholder="{{ trans('msg.admin.Max Discount') }}" required>
+                            <input type="text" class="form-control" name="currency" value="{{ old('currency') }}" id="currency" placeholder="{{ trans('msg.admin.Ex INR') }}" required>
                         </div>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Max Discount') }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="min_purchase" class="form-label">{{ trans('msg.admin.Min Purchase') }}</label>
-                        <div class="input-group input-group-outline">
-                            <input type="number" class="form-control" step="0.5" min="0" name="min_purchase" value="{{ old('min_purchase') }}" id="min_purchase" placeholder="{{ trans('msg.admin.Min Purchase') }}" required>
-                        </div>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Min Purchase') }}</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="max_usage_per_user" class="form-label">{{ trans('msg.admin.Max Usage Per User') }}</label>
-                        <div class="input-group input-group-outline">
-                            <input type="number" class="form-control" min="0" name="max_usage_per_user" id="max_usage_per_user" value="{{ old('max_usage_per_user') }}" placeholder="{{ trans('msg.admin.Max Usage Per User') }}" required>
-                        </div>
-                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Max Usage Per User') }}</div>
+                        <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Currency') }}</div>
                     </div>
                     <div class="col-12">
-                        <a href="{{ route('promo-code.list') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
+                        <a href="{{ route('visa-type.list') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
                         <button class="btn bg-gradient-info" type="submit">{{ Str::upper(trans('msg.admin.Save Changes')) }}</button>
                     </div>
                 </form>

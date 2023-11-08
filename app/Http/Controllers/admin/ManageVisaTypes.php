@@ -21,65 +21,58 @@ class ManageVisaTypes extends Controller
     }
 
     public function addForm() {
-        $data['previous_title']      = trans('msg.admin.Manage Promo Codes');
-        $data['url']                 = route('promo-code.list');
-        $data['title']               = trans('msg.admin.Add Promo Code');
+        $data['previous_title']      = trans('msg.admin.Manage Visa Types');
+        $data['url']                 = route('visa-type.list');
+        $data['title']               = trans('msg.admin.Add Visa Type');
         $data['countries']           = VisaCountry::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
         
-        return view('admin.promo-codes.add', $data);
+        return view('admin.visa-type.add', $data);
     }
 
     public function add(Request $request) {
-        $markup = Markup::where('service', $request->service)->first()->value('markup');
 
         $validatedData = $request->validate([
-            'service' => 'required',
-            'start_date' => 'required|date',
-            'expire_date' => 'required|date|after:start_date',
-            'code' => ['required', 'string', Rule::unique('promo_codes')->where(function ($query) use ($request) {
-                return $query->where('service', $request->service);
-            })],
+            'country_id' => 'required',
             'type' => 'required',
-            'max_discount' => 'required|numeric|min:0',
-            'min_purchase' => 'required|numeric|min:0',
-            'max_usage_per_user' => 'required|numeric|min:0',
-            'discount' => ['required', 'numeric', 'min:0'],
+            'processing_time' => 'required',
+            'stay_period' => 'required',
+            'validity' => 'required',
+            'entry' => 'required',
+            'fees' => 'required',
+            'currency' => 'required',
         ]);
-    
-        if ($request->type == 'percentage' && $request->discount >= $markup && $request->discount > 5 ) {
-            return redirect()->back()->with('error', trans('msg.admin.Discount can not be greater than 5%').'.')->withInput();
-        }
 
         $insert = VisaTypes::create($validatedData);
 
         if ($insert) {
-            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code added successfully').'.');
+            return redirect()->route('visa-type.list')->with('success', trans('msg.admin.Visa Type Added Successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to add promo code'))->withInput();
+            return redirect()->back()->with('error', trans('msg.admin.Failed to Add Visa Type'))->withInput();
         }
     }
 
     public function editForm($id) {
-        $code = VisaTypes::find($id);
+        $type = VisaTypes::find($id);
 
-        if ($code) {
-            $data['previous_title']  = trans('msg.admin.Manage Promo Codes');
-            $data['url']             = route('promo-code.list');
-            $data['title']           = trans('msg.admin.Edit Promo Code');
-            $data['code']            = $code;
-            return view('admin.promo-codes.edit', $data);
+        if ($type) {
+            $data['previous_title']  = trans('msg.admin.Manage Visa Types');
+            $data['url']             = route('visa-type.list');
+            $data['title']           = trans('msg.admin.Edit Visa Type');
+            $data['countries']       = VisaCountry::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
+            $data['type']            = $type;
+            return view('admin.visa-type.edit', $data);
         } else {
-            return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
+            return response()->json(['error' => trans('msg.admin.Visa Type Not Found')]);
         }
     }
 
     public function edit(Request $request) {
         
         $id = $request->id;
-        $promoCode = VisaTypes::find($id);
+        $visaType = VisaTypes::find($id);
     
-        if (!$promoCode) {
-            return redirect()->back()->with('error', trans('msg.admin.Promo code not found'));
+        if (!$visaType) {
+            return redirect()->back()->with('error', trans('msg.admin.Visa Type Not Found'));
         }
 
         $validatedData = $request->validate([
@@ -96,12 +89,12 @@ class ManageVisaTypes extends Controller
             'max_usage_per_user' => 'required|numeric|min:0',
         ]);
     
-        $update = $promoCode->update($validatedData);
+        $update = $visaType->update($validatedData);
 
         if ($update) {
-            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code updated successfully').'.');
+            return redirect()->route('visa-type.list')->with('success', trans('msg.admin.Visa Type updated successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to update promo code').'.');
+            return redirect()->back()->with('error', trans('msg.admin.Failed to update Visa Type').'.');
         }
             
     }
