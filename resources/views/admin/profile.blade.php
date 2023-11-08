@@ -108,7 +108,7 @@
           <div class="col-12 col-xl-6">
             <div class="card card-plain h-100">
               <div class="card-header pb-0 p-3">
-                <h6 class="mb-0">Profile Details</h6>
+                <h6 class="mb-0">{{ trans('msg.admin.Profile') }}</h6>
               </div>
               <div class="card-body p-3">
                 <form id="edit_profile" action="{{ route('update-profile') }}" method="post" enctype="multipart/form-data">
