@@ -106,6 +106,16 @@
           </a>
         </li>
 
+        {{-- Manage Bookings --}}
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">list_alt</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Bookings') }}</span>
+          </a>
+        </li>
+
         {{-- <li class="nav-item">
           <a class="nav-link text-white " href="pages/rtl.html">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -238,7 +248,17 @@
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
           </a>
         </li>
-          @endif
+        @elseif($permission[0] == 9)
+        {{-- Manage Bookings --}}
+        <li class="nav-item">
+          <a class="nav-link text-white {{ (request()->is('visa-type*')) ? 'active bg-gradient-info' : '' }}" href="{{ route('visa-type.list') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">list_alt</i>
+            </div>
+            <span class="nav-link-text ms-1">{{ trans('msg.admin.Bookings') }}</span>
+          </a>
+        </li>
+        @endif
         @endforeach
                 
         </ul>

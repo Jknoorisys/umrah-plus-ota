@@ -95,7 +95,7 @@
                     <div class="col-md-2 mt-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="9" name="privilege[]" id="fcustomCheck1">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
+                            <label for="service" class="form-label">{{ trans('msg.admin.Bookings') }}</label>
                         </div>
                         <span class="text-danger error">@error('service') {{$message}} @enderror</span>
                         <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>

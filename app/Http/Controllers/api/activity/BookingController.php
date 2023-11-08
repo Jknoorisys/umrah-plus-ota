@@ -444,8 +444,8 @@ class BookingController extends Controller
                             'pagination' => $pagination,
                             'order' => $order,
             ]);
-            $total = $response['activities'];
-            $data = count($total);
+            // $total = $response['activities'];
+            // $data = count($total);
             // echo json_encode($data);exit;
 
             $status = $response->status();
@@ -456,7 +456,7 @@ class BookingController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => trans('msg.list.success'),
-                    'total' => $data,
+                    // 'total' => $data,
                     'data' => $responseData,
                 ], $status);
             } else {
