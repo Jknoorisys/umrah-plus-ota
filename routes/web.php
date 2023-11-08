@@ -119,14 +119,14 @@ Route::middleware(['auth:admin'])->group(function () {
     });
 
     Route::prefix('visa-type')->group(function () {
-        Route::get('index' , [ManageVisaTypes::class, 'index'])->name('visa-type.index');
         Route::get('list' , [ManageVisaTypes::class, 'list'])->name('visa-type.list');
+        Route::get('add' , [ManageVisaTypes::class, 'addForm'])->name('visa-type.add-form');
         Route::post('add' , [ManageVisaTypes::class, 'add'])->name('visa-type.add');
-        // Route::any('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
-        // Route::any('update' , [ManageVisaCountry::class, 'edit'])->name('visa-country.update');
-        // Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
-        // Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
-        // Route::post('toggle-featured', [ManageVisaCountry::class, 'toggleFeatured'])->name('visa-country.toggle-featured');
+        Route::get('edit/{id}' , [ManageVisaTypes::class, 'editForm'])->name('visa-type.edit-form');
+        Route::post('edit' , [ManageVisaTypes::class, 'edit'])->name('visa-type.edit');
+        Route::post('delete' , [ManageVisaTypes::class, 'delete'])->name('visa-type.delete');
+        Route::post('change-status' , [ManageVisaTypes::class, 'changeStatus'])->name('visa-type.change-status');
+        Route::post('toggle-featured', [ManageVisaTypes::class, 'toggleFeatured'])->name('visa-type.toggle-featured');
     });
 
 });

@@ -77,7 +77,7 @@ class ManagePromoCodes extends Controller
         $promoCode = PromoCodes::find($id);
     
         if (!$promoCode) {
-            return redirect()->back()->with('error', trans('msg.admin.Promo code not found'));
+            return redirect()->back()->with('error', trans('msg.admin.Promo Code Not Found'));
         }
 
         $validatedData = $request->validate([

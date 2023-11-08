@@ -63,7 +63,7 @@
                                 </td>
                                 <td>
                                     <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} material-icons featured-icon" onclick="confirmToggleFeatured(this)" data-country-id="{{ $country->id }}" data-featured="{{ $country->is_featured }}">
-                                        star
+                                        grade
                                     </span>
                                 </td>
                                 

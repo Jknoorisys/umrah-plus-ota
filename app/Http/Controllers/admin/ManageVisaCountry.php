@@ -13,7 +13,7 @@ class ManageVisaCountry extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Visa Country');
-        $data['countries']               = VisaCountry::orderBy('created_at', 'desc')->get();
+        $data['countries']           = VisaCountry::orderBy('created_at', 'desc')->get();
         
         return view('admin.visa-country.list', $data);
     }
@@ -83,8 +83,7 @@ class ManageVisaCountry extends Controller
         }
     }
 
-    public function toggleFeatured(Request $request)
-    {
+    public function toggleFeatured(Request $request) {
         $country = VisaCountry::find($request->id);
 
         if (!$country) {
