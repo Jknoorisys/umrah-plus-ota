@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body class="g-sidenav-show bg-gray-200" id="bodyTag">
+<body class="g-sidenav-show bg-gray-200" id="bodyTag" style="background-image: linear-gradient(195deg, #EBEFF4 0%, #eaf4fd 100%);">
     <!-- Sidebar -->
     @include('admin.layouts.partials.sidebar')
     <!-- End Sidebar -->
