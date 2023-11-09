@@ -124,15 +124,15 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
                             @if (Auth::guard('admin')->user()->unreadNotifications->count() > 0)
-                                <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a>
+                                <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="btn text-secondary float-start cursor-pointer">{{ trans('msg.admin.View All Notifications') }}</a>
+                                <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info float-end"><i class="btn material-icons">mark_email_read</i></a>
                             @endif
-                            {{-- <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-info"><i class="material-icons cursor-pointer">mark_email_read</i></a> --}}
                             @forelse(Auth::guard('admin')->user()->unreadNotifications as $notification)
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                       <div class="d-flex py-1">
                                         <div class="my-auto">
-                                          <img src="{{$notification->data['profile'] ? asset($notification->data['profile']) : asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm  me-3 ">
+                                          <img src="{{ asset('assets/img/user-blue.jpg') }}" class="avatar avatar-sm  me-3 ">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="text-sm font-weight-normal mb-1">
@@ -148,7 +148,7 @@
                                 </li>
                             @empty
                                 <div class="d-flex justify-content-center">
-                                    <img src="{{ asset('assets/img/notification.jpg') }}" alt="notification" width="75px" height="75px">
+                                    <p class="text-info text-center">{{ Str::upper("No notification Found!") }}</p>
                                 </div>                            
                             @endforelse
                         </ul>
