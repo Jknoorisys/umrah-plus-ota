@@ -4,14 +4,15 @@
     <div class="card">
         <div class="card-body">
             <div class="p-4 border rounded">
-                <form class="row g-3 needs-validation" action="{{ route('sub-admin.add') }}" method="POST" enctype="multipart/form-data" novalidate>
+                <form class="row g-3 needs-validation" action="{{ route('sub-admin.edit') }}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col-md-4 mt-4">
+                                <input type="hidden" name="id" value="{{ $subadmin->id }}">
                                 <label for="fname" class="form-label">{{ trans('msg.admin.First Name') }}</label>
                                 <div class="input-group input-group-outline">
-                                    <input type="text" class="form-control" id="fname" name="fname" value="{{ $subadmin->fname }}" placeholder="{{ trans('msg.admin.First Name') }}" required>
+                                    <input type="text" class="form-control" id="fname" name="fname" value="{{ $subadmin->fname }}" placeholder="{{ trans('msg.admin.First Name') }}" >
                                 </div>
                                 <span class="text-danger error">@error('fname') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid First Name') }}</div>
@@ -19,7 +20,7 @@
                             <div class="col-md-4 mt-4">
                                 <label for="lname" class="form-label">{{ trans('msg.admin.Last Name') }}</label>
                                 <div class="input-group input-group-outline">
-                                    <input type="text" class="form-control" id="lname" name="lname" value="{{ $subadmin->lname }}" placeholder="{{ trans('msg.admin.Last Name') }}" required>
+                                    <input type="text" class="form-control" id="lname" name="lname" value="{{ $subadmin->lname }}" placeholder="{{ trans('msg.admin.Last Name') }}" >
                                 </div>
                                 <span class="text-danger error">@error('lname') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Last Name') }}</div>
@@ -28,20 +29,22 @@
                                 <label for="role" class="form-label">{{ trans('msg.admin.Select Role') }}</label>
                                 <div class="input-group input-group-outline">
                                     <select class="single-select" id="role" name="role" required>
-                                        <option selected disabled value="">{{ trans('msg.admin.Choose') }}...</option>
-                                        @forelse ($roles as $role)
-                                            <option value="{{ $role->role }}">{{ str_replace('_', ' ', Str::ucfirst($role->role)) }}</option>
-                                        @empty
-                                        @endforelse
+                                        <option disabled value="">{{ trans('msg.admin.Choose') }}...</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->role }}" @if($subadmin->role == $role->role) selected @endif>
+                                                {{ str_replace('_', ' ', Str::ucfirst($role->role)) }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <span class="text-danger error">@error('role') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Please Select Valid Role') }}</div>
                             </div>
+
                             <div class="col-md-6 mt-4">
                                 <label for="email" class="form-label">{{ trans('msg.admin.Email') }}</label>
                                 <div class="input-group input-group-outline">
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ $subadmin->email }}" placeholder="{{ trans('msg.admin.Email') }}" required>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ $subadmin->email }}" placeholder="{{ trans('msg.admin.Email') }}" >
                                 </div>
                                 <span class="text-danger error">@error('email') {{$message}} @enderror</span>
                                 <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid email') }}</div>
@@ -51,34 +54,19 @@
                                 <div class="input-group phonecode">
                                     <div class="input-group input-group-outline">
                                         <div class="col-sm-3">
-                                            <select class="single-select" value="{{ old('country_code') }}" id="country-select" name="country_code" required>
+                                            <select class="single-select" value="{{ $subadmin->country_code }}" id="country-select" name="country_code" >
                                                 @foreach($country as $code)
                                                     <option value="{{ $code->phone_code }}">{{ $code->phone_code }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" id="phone" placeholder="{{ trans('msg.admin.Phone') }}" required>
+                                        <input type="tel" class="form-control" name="phone" value="{{ $subadmin->phone }}" id="phone" placeholder="{{ trans('msg.admin.Phone') }}" >
                                     </div>
                                     <span class="text-danger error">@error('phone') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Phone Number') }}</div>  
                                 </div>                          
                             </div>
-                            <div class="col-md-6 mt-4">
-                                <label for="password" class="form-label">{{ trans('msg.admin.Password') }}</label>
-                                <div class="input-group input-group-outline">
-                                    <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" placeholder="{{ trans('msg.admin.Password') }}" required>
-                                </div>
-                                <span class="text-danger error">@error('password') {{$message}} @enderror</span>
-                                <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Password') }}</div>
-                            </div>
-                            <div class="col-md-6 mt-4">
-                                <label for="cnfm_password" class="form-label">{{ trans('msg.admin.Confirm Password') }}</label>
-                                <div class="input-group input-group-outline">
-                                    <input type="password" class="form-control" id="cnfm_password" name="cnfm_password" placeholder="{{ trans('msg.admin.Confirm Password') }}" required>
-                                </div>
-                                <span class="text-danger error">@error('cnfm_password') {{$message}} @enderror</span>
-                                <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Confirm Password') }}</div>
-                            </div>                            
+                                                
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -104,9 +92,9 @@
                                     </span>
                                     <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
                                     <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-                                    <img src="" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
-                                    <input type="file" id="fileInput" name="image" class="drop-zoon__file-input" value="{{ old('image') }}" accept="image/*" required>
-                                    <span class="text-danger error">@error('image') {{$message}} @enderror</span>
+                                    <img src="{{ asset( $subadmin->photo) }}" id="previousProfilePhoto" class="drop-zoon__preview-image" draggable="false">
+                                    <input type="file" id="fileInput" name="photo" class="drop-zoon__file-input" value="{{ $subadmin->photo }}" accept="image/*" >
+                                    <span class="text-danger error">@error('photo') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Profile Photo') }}</div>
                                 </div>
                                 <!-- End Drop Zoon -->
@@ -144,16 +132,27 @@
 @section('customJs')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('#cnfm_password').on('keyup', function () {
-                if ($('#password').val() != $('#cnfm_password').val()) {
-                    $('#cnfm_password').get(0).setCustomValidity('Passwords do not match');
-                } else {
-                    $('#cnfm_password').get(0).setCustomValidity('');
-                }
-            });
+    $(document).ready(function() {
+        $('#cnfm_password').on('keyup', function () {
+            if ($('#password').val() != $('#cnfm_password').val()) {
+                $('#cnfm_password').get(0).setCustomValidity('Passwords do not match');
+            } else {
+                $('#cnfm_password').get(0).setCustomValidity('');
+            }
         });
-    </script>
+
+        // Handle file input change event to display the previous profile photo
+        $('#fileInput').on('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#previousProfilePhoto').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+</script>
         
     <script>
         function toUppercase() {
