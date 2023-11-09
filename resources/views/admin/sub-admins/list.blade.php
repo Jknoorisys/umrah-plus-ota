@@ -29,7 +29,7 @@
                                 <td>
                                     <div class="d-flex px-2 py-1">
                                         <div>
-                                            <img src="{{ $admin->photo ? asset($admin->photo) : asset('assets/img/marie.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="admin">
+                                            <img src="{{ $admin->photo ? asset($admin->photo) : asset('assets/img/user-blue.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="admin">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{ $admin->fname. ' ' .$admin->lname }}</h6>
