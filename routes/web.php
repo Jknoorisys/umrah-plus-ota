@@ -73,7 +73,6 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('list' , [ManageSubAdmins::class, 'list'])->name('sub-admin.list');
         Route::get('add' , [ManageSubAdmins::class, 'addForm'])->name('sub-admin.add-form');
         Route::post('add' , [ManageSubAdmins::class, 'add'])->name('sub-admin.add');
-        Route::get('view/{id}' , [ManageSubAdmins::class, 'view'])->name('sub-admin.view');
         Route::get('edit/{id}' , [ManageSubAdmins::class, 'editForm'])->name('sub-admin.edit-form');
         Route::post('edit' , [ManageSubAdmins::class, 'edit'])->name('sub-admin.edit');
         Route::post('delete' , [ManageSubAdmins::class, 'delete'])->name('sub-admin.delete');

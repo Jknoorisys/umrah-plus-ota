@@ -75,10 +75,6 @@ class ManageSubAdmins extends Controller
         }
     }
 
-    public function view($id) {
-        
-    }
-
     public function editForm($id) {
         $subadmin = Admin::find($id);
         $role =  Role::where('role', '!=', 'super_admin')->orderBy('created_at', 'desc')->get();
@@ -144,7 +140,6 @@ class ManageSubAdmins extends Controller
         }
     }
     
-
     public function changeStatus(Request $request) {
         $admin = Admin::find($request->admin_id);
 
