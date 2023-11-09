@@ -175,7 +175,7 @@
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
                 cancelButtonText: "{{ trans('msg.alert.No') }}",
-                confirmButtonColor: '#1A73E8',
+                confirmButtonColor: '#4aa4d9',
             }).then((result) => {
                 if (result.isConfirmed) {
                     updateCountryStatus(countryId, isActive, dataId);
@@ -221,7 +221,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
-                confirmButtonColor: '#1A73E8',
+                confirmButtonColor: '#4aa4d9',
                 cancelButtonText: "{{ trans('msg.alert.No') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -267,7 +267,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: "{{ trans('msg.alert.Yes') }}",
-                confirmButtonColor: '#1A73E8',
+                confirmButtonColor: '#4aa4d9',
                 cancelButtonText: "{{ trans('msg.alert.No') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
