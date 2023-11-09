@@ -81,54 +81,69 @@ class ManageSubAdmins extends Controller
 
     public function editForm($id) {
         $subadmin = Admin::find($id);
-        $role =  Admin::where('role', '!=', 'super_admin')->orderBy('created_at', 'desc')->get();
+        $role =  Role::where('role', '!=', 'super_admin')->orderBy('created_at', 'desc')->get();
 
         if ($subadmin) {
-            $data['previous_title']  = trans('msg.admin.Manage Promo subadmins');
+            $data['previous_title']  = trans('msg.admin.Manage Sub Admins');
             $data['url']             = route('sub-admin.list');
-            $data['title']           = trans('msg.admin.Edit Promo subadmin');
+            $data['title']           = trans('msg.admin.Manage Sub Admins');
             $data['subadmin']            = $subadmin;
             $data['roles']            = $role;
             $data['country']             = Country::all();
             // return $data;
             return view('admin.sub-admins.edit', $data);
         } else {
-            return response()->json(['error' => trans('msg.admin.Promo Code Not Found')]);
+            return response()->json(['error' => trans('msg.admin.Sub Admin Not Found')]);
         }
     }
 
     public function edit(Request $request) {
-        
         $id = $request->id;
         $subadmin = Admin::find($id);
     
         if (!$subadmin) {
-            return redirect()->back()->with('error', trans('msg.admin.Promo code not found'));
+            return redirect()->back()->with('error', trans('msg.admin.Sub Admin Not Found'));
         }
-
-        $validatedData = $request->validate([
-            'service' => 'required',
-            'start_date' => 'required|date',
-            'expire_date' => 'required|date|after:start_date',
-            'code' => ['required', 'string', Rule::unique('promo_codes')->ignore($id)->where(function ($query) use ($request) {
-                return $query->where('service', $request->service);
-            })],
-            'type' => 'required',
-            'discount' => 'required|numeric|min:0',
-            'max_discount' => 'required|numeric|min:0',
-            'min_purchase' => 'required|numeric|min:0',
-            'max_usage_per_user' => 'required|numeric|min:0',
+    
+        $request->validate([
+            'fname' => 'nullable|string|max:255',
+            'lname' => 'nullable|string|max:255',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|numeric',
+            'role' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
-        $update = $subadmin->update($validatedData);
-
-        if ($update) {
-            return redirect()->route('promo-code.list')->with('success', trans('msg.admin.Promo code updated successfully').'.');
-        } else {
-            return redirect()->back()->with('error', trans('msg.admin.Failed to update promo code. Please try again').'...');
+        // Custom validation for phone field
+        if ($request->filled('phone') && !is_numeric($request->phone)) {
+            return redirect()->back()->with('error', trans('msg.admin.Invalid phone number format'))->withErrors(['phone' => 'Invalid phone number format']);
         }
-            
+    
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('assets/uploads/admin-photos/'), $imageName);
+            $image_url = 'assets/uploads/admin-photos/' . $imageName;
+        }
+    
+        $data = [
+            'fname' => $request->filled('fname') ? $request->fname : $subadmin->fname,
+            'lname' => $request->filled('lname') ? $request->lname : $subadmin->lname,
+            'email' => $request->filled('email') ? $request->email : $subadmin->email,
+            'role' => $request->filled('role') ? $request->role : $subadmin->role,
+            'phone' => $request->filled('phone') ? $request->phone : $subadmin->phone,
+            'photo' => $request->hasFile('photo') ? $image_url : $subadmin->photo,
+        ];
+    
+        $update = $subadmin->update($data);
+    
+        if ($update) {
+            return redirect()->route('sub-admin.list')->with('success', trans('msg.admin.Sub Admin updated successfully') . '.');
+        } else {
+            return redirect()->back()->with('error', trans('msg.admin.Failed to update Sub Admin. Please try again') . '...');
+        }
     }
+    
 
     public function changeStatus(Request $request) {
         $admin = Admin::find($request->admin_id);
