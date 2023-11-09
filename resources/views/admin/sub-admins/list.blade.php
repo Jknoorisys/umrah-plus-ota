@@ -51,13 +51,6 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <a class="btn btn-outline-info btn-sm" href="{{ route('sub-admin.view', ['id' => $admin->id]) }}">
-                                                <span class="material-icons text-md">
-                                                    visibility
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="col-2">
                                             <a class="btn btn-outline-info btn-sm" href="{{ route('sub-admin.edit-form', ['id' => $admin->id]) }}">
                                                 <span class="material-icons text-md">
                                                     edit
