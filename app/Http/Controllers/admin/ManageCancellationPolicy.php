@@ -41,12 +41,12 @@ class ManageCancellationPolicy extends Controller
         }
         
         $data = [
-                'policy_en' => $request->policy_en ? $request->policy_en : $policy->policy_en,
-                'policy_ar' => $request->policy_ar ? $request->policy_ar : $policy->policy_ar,
-                'before_7_days' => $request->before_7_days ? $request->before_7_days : $policy->before_7_days,
-                'within_24_hours' => $request->within_24_hours ? $request->within_24_hours : $policy->within_24_hours,
-                'less_than_24_hours' => $request->less_than_24_hours ? $request->less_than_24_hours : $policy->less_than_24_hours,
-            ];
+            'policy_en' => $request->policy_en ? $request->policy_en : $policy->policy_en,
+            'policy_ar' => $request->policy_ar ? $request->policy_ar : $policy->policy_ar,
+            'before_7_days' => $request->before_7_days ? $request->before_7_days : $policy->before_7_days,
+            'within_24_hours' => $request->within_24_hours ? $request->within_24_hours : $policy->within_24_hours,
+            'less_than_24_hours' => $request->less_than_24_hours ? $request->less_than_24_hours : $policy->less_than_24_hours,
+        ];
     
         $update = CancellationPolicy::where('id', '=', $id)->update($data);
 

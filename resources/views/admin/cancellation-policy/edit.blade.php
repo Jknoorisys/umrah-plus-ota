@@ -115,11 +115,11 @@
 @section('customJs')
     <script data-sample="3">
         CKEDITOR.replace('policy_en', {
-            height: 300
+            height: 200
         });
 
         CKEDITOR.replace('policy_ar', {
-            height: 300
+            height: 200
         });
     </script>
     <script>
