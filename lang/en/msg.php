@@ -277,7 +277,18 @@ return [
         'Failed to Update Visa Type' => 'Failed to Update Visa Type',
         'Visa Type :status Successfully' => 'Visa Type :status Successfully',
 
-
+        // Manage Cancellation Policies
+        'Manage Cancellation Policies' => 'Manage Cancellation Policies',
+        'Cancellation Policies' => 'Cancellation Policies',
+        'Cancellation Policy' => 'Cancellation Policy',
+        '7 Days Before' => '7 Days Before',
+        'Within 24 Hours' => 'Within 24 Hours',
+        'Less than 24 Hours' => 'Less than 24 Hours',
+        'Edit Cancellation Policy' => 'Edit Cancellation Policy',
+        'Enter Valid Cancellation Policy' => 'Enter Valid Cancellation Policy',
+        'Cancellation Policy Not Found' => 'Cancellation Policy Not Found',
+        'Cancellation Policy Updated Successfully' => 'Cancellation Policy Updated Successfully',
+        'Failed to Update Cancellation Policy' => 'Failed to Update Cancellation Policy',
     ],
 
     'alert' => [

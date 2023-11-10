@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             <div class="p-4 border rounded">
-            <form class="row g-3 needs-validation" action="{{ route('role.edit') }}" method="POST" novalidate>
+                <form class="row g-3 needs-validation" action="{{ route('role.edit') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" name="id" value="{{ $code->id }}">
                     <div class="col-md-12">

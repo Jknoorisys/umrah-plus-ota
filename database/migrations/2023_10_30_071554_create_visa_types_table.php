@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('entry');
             $table->string('fees');
             $table->string('currency');
-            
             $table->enum('is_featured', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();

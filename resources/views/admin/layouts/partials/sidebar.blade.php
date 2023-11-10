@@ -116,6 +116,17 @@
               </a>
             </li>
 
+          {{-- Manage Cancellation Policy --}}
+          @elseif($permission[0] == 9)
+            <li class="nav-item">
+              <a class="nav-link {{ (request()->is('cancellation-policy*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('cancellation-policy.list') }}">
+                <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">policy</i>
+                </div>
+                <span class="nav-link-text ms-1">{{ trans('msg.admin.Cancellation Policies') }}</span>
+              </a>
+            </li>
+
           @endif
 
         @endforeach

@@ -31,6 +31,9 @@
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 	<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" />
+     <!-- Ck Editor -->
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/ckeditor/samples/css/samples.css') }}">
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     {{-- <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script> --}}
@@ -41,7 +44,7 @@
     </style>
 </head>
 
-<body class="g-sidenav-show bg-gray-200" id="bodyTag" style="background-image: linear-gradient(195deg, #EBEFF4 0%, #eaf4fd 100%);">
+<body class="g-sidenav-show bg-gray-200" id="bodyTag" style="background-image: linear-gradient(195deg, #f1f4fa 10%, #f1f4fa 50%, #f1f4fa 100%);">
     <!-- Sidebar -->
     @include('admin.layouts.partials.sidebar')
     <!-- End Sidebar -->
@@ -130,6 +133,9 @@
     <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
 
+     <!--Ck editor js -->
+    <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/plugins/ckeditor/samples/js/sample.js') }}"></script>
   
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
