@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     @foreach($allPrivileges as $privilege => $privilegeName)
-                        <div class="col-md-2 mt-4">
+                        <div class="col-md-{{ ($privilegeName == 'Cancellation Policies') ? '3' : '2' }} mt-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="{{ $privilege }}" name="privilege[]" id="fcustomCheck1"
                                     {{ in_array($privilege, $selectedPrivileges) ? 'checked' : '' }}>

@@ -54,9 +54,9 @@ class ManageRoles extends Controller
             $data['title']           = trans('msg.admin.Edit Role');
             $data['code']            = $code;
             $data['selectedPrivileges']      = $explode;
-            $data['allPrivileges']           = ['1' => 'User', '2' =>'Sub Admin', '3' => 'Roles', '4' => 'Promo Codes', 
-            '5' => 'Markups', '6' => 'Send Notification', '7' => 'Visa Countries', '8' => 'Visa Types', 
-            '9' => 'Service Type', '10' => 'Service Type', '11' => 'Service Type', '12' => 'Service Type'];
+            $data['allPrivileges']           = ['1' => trans('msg.admin.Users'), '2' => trans('msg.admin.Sub Admins'), '3' => trans('msg.admin.Roles'), '4' => trans('msg.admin.Promo Codes'), 
+            '5' => trans('msg.admin.Markups'), '6' => trans('msg.admin.Send Notification'), '7' => trans('msg.admin.Visa Countries'), '8' => trans('msg.admin.Visa Types'), 
+            '9' => trans('msg.admin.Cancellation Policies')];
 
             return view('admin.roles.edit', $data);
         } else {
