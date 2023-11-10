@@ -123,8 +123,7 @@
         });
     </script>
     <script>
-        // You may need to initialize your tabs with JavaScript
         var tab = new bootstrap.Tab(document.querySelector('#profile-tabs-icons'));
-        tab.show(); // Show the default tab on page load
+        tab.show();
     </script>
 @endsection
