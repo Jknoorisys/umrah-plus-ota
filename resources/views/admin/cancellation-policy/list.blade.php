@@ -30,7 +30,7 @@
                                     <div class="d-flex flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{ Str::ucfirst($policy->service) }}</h6>
                                         <p class="text-xs text-secondary mb-0">
-                                            {{ $policy->policy_en ? substr($policy->policy_en, 0, 80) . (strlen($policy->policy_en) > 80 ? '...' : '') : '' }}
+                                            {{ $policy->policy_en ? substr(strip_tags($policy->policy_en), 0, 80) . (strlen(strip_tags($policy->policy_en)) > 80 ? '...' : '') : '' }}
                                         </p>                                        
                                     </div>
                                 </div>

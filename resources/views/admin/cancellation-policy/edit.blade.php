@@ -40,7 +40,7 @@
                                     {{-- <div class="input-group input-group-outline">
                                         <input type="text" class="form-control" id="policy_en" name="policy_en" placeholder="{{ trans('msg.admin.Cancellation Policy') }}" value="{{ $policy->policy_en }}" required>
                                     </div> --}}
-                                    <textarea id="policy_en" name="policy_en" rows="10" data-sample="3" data-sample-short>{{ $policy->policy_en ?  $policy->policy_en : '' }}</textarea>
+                                    <textarea id="policy_en" name="policy_en" rows="4" data-sample="3" data-sample-short>{{ $policy->policy_en ?  $policy->policy_en : '' }}</textarea>
                                     <span class="text-danger error">@error('policy_en') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid policy_en') }}</div>
                                 </div>
@@ -53,7 +53,7 @@
                                     {{-- <div class="input-group input-group-outline">
                                         <input type="text" class="form-control" id="policy_ar" name="policy_ar" placeholder="{{ trans('msg.admin.Cancellation Policy') }}" value="{{ $policy->policy_ar }}" required>
                                     </div> --}}
-                                    <textarea id="policy_ar" name="policy_ar" rows="10" data-sample="3" data-sample-short>{{ $policy->policy_ar ?  $policy->policy_ar : '' }}</textarea>
+                                    <textarea id="policy_ar" name="policy_ar" rows="4" data-sample="3" data-sample-short>{{ $policy->policy_ar ?  $policy->policy_ar : '' }}</textarea>
                                     <span class="text-danger error">@error('policy_ar') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid policy_ar') }}</div>
                                 </div>

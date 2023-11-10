@@ -32,28 +32,28 @@ class ManageCancellationPolicy extends Controller
         }
     }
 
-    public function edit(Request $request) {
-        return $request->all();exit;
-        
+    public function edit(Request $request) {        
         $id = $request->id;
-        $role = CancellationPolicy::find($id);
+        $policy = CancellationPolicy::find($id);
     
-        if (!$role) {
-            return redirect()->back()->with('error', trans('msg.admin.Role not found'));
+        if (!$policy) {
+            return redirect()->back()->with('error', trans('msg.admin.Cancellation Policy Not Found'));
         }
         
         $data = [
-                'role' => $request->role ? $request->role : $role->role,
-                'privileges' => $request->privilege ? implode(',',$request->privilege) : $role->privileges,
-                'status' => $request->status ? $request->status : $role->status
+                'policy_en' => $request->policy_en ? $request->policy_en : $policy->policy_en,
+                'policy_ar' => $request->policy_ar ? $request->policy_ar : $policy->policy_ar,
+                'before_7_days' => $request->before_7_days ? $request->before_7_days : $policy->before_7_days,
+                'within_24_hours' => $request->within_24_hours ? $request->within_24_hours : $policy->within_24_hours,
+                'less_than_24_hours' => $request->less_than_24_hours ? $request->less_than_24_hours : $policy->less_than_24_hours,
             ];
     
-        $update = CancellationPolicy::where('id',$id)->update($data);
+        $update = CancellationPolicy::where('id', '=', $id)->update($data);
 
         if ($update) {
-            return redirect()->route('role.list')->with('success', trans('msg.admin.Role updated successfully').'.');
+            return redirect()->route('cancellation-policy.list')->with('success', trans('msg.admin.Cancellation Policy Updated Successfully').'.');
         } else {
-            return redirect()->back()->with('error', trans('msg.admin.Unable to update Role, Please try again').'.');
+            return redirect()->back()->with('error', trans('msg.admin.Failed to Update Cancellation Policy').'.');
         }
             
     }
