@@ -138,6 +138,9 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::prefix('notification-history')->group(function () {
         Route::get('list' , [ManageNotifications::class, 'list'])->name('notification-history.list');
+        // Route::get('list', function () {
+        //     return view('admin.notification-history.list');
+        // })->name('notification-history.list');
     });
 
 });

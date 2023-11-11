@@ -133,6 +133,8 @@ class AuthController extends Controller
                         $message = [
                             'title' => trans('msg.notification.user_registered_title'),
                             'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
+                            'name' => $name,
+                            'email' => $user->email,
                             'profile' => $user->photo,
                         ];
         
@@ -516,6 +518,8 @@ class AuthController extends Controller
                     $message = [
                         'title' => trans('msg.notification.user_registered_title'),
                         'message' => trans('msg.notification.user_registered_message', ['name' => $name]),
+                        'name' => $name,
+                        'email' => $user->email,
                         'profile' => $image_url,
                     ];
     
