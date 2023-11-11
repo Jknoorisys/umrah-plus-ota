@@ -22,7 +22,7 @@
                     </thead>
                     <tbody>
                         @forelse ($notifications as $notification)
-                            <tr id="delete{{ $admin->id }}">
+                            <tr>
                                 <td class="text-sm text-center">{{ $loop->iteration }}</td>
                                 <td>
                                     <div class="d-flex px-2 py-1">
