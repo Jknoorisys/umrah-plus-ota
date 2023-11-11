@@ -85,16 +85,16 @@
                                 </div>
                                 <!-- End Header -->
                               
-                                <!-- Drop Zoon -->
-                                <div id="dropZoon" class="upload-area__drop-zoon drop-zoon">
+                               <!-- Drop Zoon -->
+                                <div id="dropZoon" class="upload-area__drop-zoon drop-zoon drop-zoon--Uploaded">
                                     <span class="drop-zoon__icon">
                                         <i class='bx bxs-file-image'></i>
                                     </span>
                                     <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
                                     <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-                                    <img src="{{ asset( $subadmin->photo) }}" id="previousProfilePhoto" class="drop-zoon__preview-image" draggable="false">
-                                    <input type="file" id="fileInput" name="photo" class="drop-zoon__file-input" value="{{ $subadmin->photo }}" accept="image/*" >
-                                    <span class="text-danger error">@error('photo') {{$message}} @enderror</span>
+                                    <img src="{{ asset($subadmin->photo) }}" style="display: block;" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
+                                    <input type="file" id="fileInput" name="image" class="drop-zoon__file-input" value="{{ old('image') }}" accept="image/*" required>
+                                    <span class="text-danger error">@error('image') {{$message}} @enderror</span>
                                     <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Profile Photo') }}</div>
                                 </div>
                                 <!-- End Drop Zoon -->
