@@ -83,10 +83,10 @@ class ManageSubAdmins extends Controller
             $data['previous_title']  = trans('msg.admin.Manage Sub Admins');
             $data['url']             = route('sub-admin.list');
             $data['title']           = trans('msg.admin.Manage Sub Admins');
-            $data['subadmin']            = $subadmin;
-            $data['roles']            = $role;
-            $data['country']             = Country::all();
-            // return $data;
+            $data['subadmin']        = $subadmin;
+            $data['roles']           = $role;
+            $data['country']         = Country::all();
+
             return view('admin.sub-admins.edit', $data);
         } else {
             return response()->json(['error' => trans('msg.admin.Sub Admin Not Found')]);
@@ -107,28 +107,31 @@ class ManageSubAdmins extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|numeric',
             'role' => 'nullable|string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
-        // Custom validation for phone field
         if ($request->filled('phone') && !is_numeric($request->phone)) {
             return redirect()->back()->with('error', trans('msg.admin.Invalid phone number format'))->withErrors(['phone' => 'Invalid phone number format']);
         }
-    
-        if ($request->hasFile('photo')) {
-            $image = $request->file('photo');
-            $imageName = time() . '.' . $image->extension();
-            $image->move(public_path('assets/uploads/admin-photos/'), $imageName);
-            $image_url = 'assets/uploads/admin-photos/' . $imageName;
+
+        $file = $request->file('photo');
+        if ($file) {
+            $oldPhotoPath = public_path($subadmin->photo);
+            if (file_exists($oldPhotoPath)) {
+                unlink($oldPhotoPath); 
+            }
+            $extension = $file->getClientOriginalExtension();
+            $image_name = time().'.'.$extension;
+            $file->move('assets/uploads/admin-photos/', $image_name);
+            $image_url = 'assets/uploads/admin-photos/'. $image_name;
         }
     
         $data = [
             'fname' => $request->filled('fname') ? $request->fname : $subadmin->fname,
             'lname' => $request->filled('lname') ? $request->lname : $subadmin->lname,
             'email' => $request->filled('email') ? $request->email : $subadmin->email,
-            'role' => $request->filled('role') ? $request->role : $subadmin->role,
+            'role'  => $request->filled('role') ? $request->role : $subadmin->role,
             'phone' => $request->filled('phone') ? $request->phone : $subadmin->phone,
-            'photo' => $request->hasFile('photo') ? $image_url : $subadmin->photo,
+            'photo' => $request->file('photo') ? $image_url : $subadmin->photo,
         ];
     
         $update = $subadmin->update($data);

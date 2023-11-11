@@ -93,9 +93,7 @@
                                     <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
                                     <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
                                     <img src="{{ asset($subadmin->photo) }}" style="display: block;" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
-                                    <input type="file" id="fileInput" name="image" class="drop-zoon__file-input" value="{{ old('image') }}" accept="image/*" required>
-                                    <span class="text-danger error">@error('image') {{$message}} @enderror</span>
-                                    <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Profile Photo') }}</div>
+                                    <input type="file" id="fileInput" name="image" class="drop-zoon__file-input" value="{{ asset($subadmin->photo) }}" accept="image/*" >
                                 </div>
                                 <!-- End Drop Zoon -->
                               
