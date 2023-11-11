@@ -105,7 +105,13 @@ return [
         'Cancelled' => 'Cancelled',
         'User deleted successfully' => 'User deleted successfully',
         'User Details' => 'User Details',
-        
+        'Hotels' => 'Hotels',
+        'Activities' => 'Activities',
+        'Transfers' => 'Transfers',
+        'Visa' => 'Visa',
+        'Ziyarat' => 'Ziyarat',
+        'Umrah' => 'Umrah',
+        'Flights' => 'Flights',
 
         // Manage Sub Admins
         'Manage Sub Admins' => 'Manage Sub Admins',

@@ -37,7 +37,7 @@
                                 </td>
                                 <td>{{ $notification->data['title'] }}</td>
                                 <td>{{ $notification->data['message'] }}</td>
-                                <td>{{ $notification->created_at->diffForHumans() }}</td>
+                                <td>{{ $notification->created_at->format('d M Y') }}</td>
                             </tr>
                         @empty
                         @endforelse

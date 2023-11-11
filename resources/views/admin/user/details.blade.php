@@ -8,8 +8,8 @@
         <div class="card card-body mx-3 mx-md-4 mt-n6">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
-                    <div class="avatar avatar-xl position-relative">
-                        <img src="{{ $user->photo ? asset($user->photo) : asset('assets/img/user-blue.jpg') }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    <div class="avatar avatar-xxl position-relative">
+                        <img src="{{ $user->photo ? asset($user->photo) : asset('assets/img/user-blue.jpg') }}" alt="profile_image" class="w-100 h-100 border-radius-lg shadow-sm">
                     </div>
                 </div>
                 <div class="col-auto my-auto">
@@ -17,37 +17,67 @@
                         <h5 class="mb-1">
                             {{ $user->fname . ' ' . $user->lname  }}
                         </h5>
-                        <p class="mb-0 font-weight-normal text-sm">
+                        <p class="mb-0 font-weight-normal text-muted text-sm">
                             {{ $user->email }}
+                        </p>
+                        <p class="mb-0 font-weight-normal text-muted text-sm">
+                            ({{ $user->country_code }}) {{ $user->phone }}
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                <div class="nav-wrapper position-relative end-0">
-                    <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
-                        <i class="material-icons text-lg position-relative">home</i>
-                            <span class="ms-1">App</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                        <i class="material-icons text-lg position-relative">email</i>
-                            <span class="ms-1">Messages</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                        <i class="material-icons text-lg position-relative">settings</i>
-                            <span class="ms-1">Settings</span>
-                        </a>
-                    </li>
-                    </ul>
-                </div>
+               
+            </div>
+            <div class="row justify-content-right">
+                <div class="col-lg-8 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <div class="nav-wrapper position-relative end-0">
+                        <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                                    {{-- <i class="material-icons text-lg position-relative">home</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Hotels') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                    {{-- <i class="material-icons text-lg position-relative">settings</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Flights') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                    {{-- <i class="material-icons text-lg position-relative">email</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Activities') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                    {{-- <i class="material-icons text-lg position-relative">settings</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Transfers') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                                    {{-- <i class="material-icons text-lg position-relative">home</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Visa') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                    {{-- <i class="material-icons text-lg position-relative">email</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Umrah') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-1 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                    {{-- <i class="material-icons text-lg position-relative">settings</i> --}}
+                                    <span class="ms-1">{{ trans('msg.admin.Ziyarat') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="row">
                 <div class="col-12 col-xl-4">
                     <div class="card card-plain h-100">
@@ -120,9 +150,9 @@
                         </p>
                         <hr class="horizontal gray-light my-4">
                         <ul class="list-group">
-                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
+                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ $user->fname . ' ' . $user->lname }}</li>
+                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ({{ $user->country_code }}) {{ $user->phone }}</li>
+                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ $user->email }}</li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; USA</li>
                             <li class="list-group-item border-0 ps-0 pb-0">
                                 <strong class="text-dark text-sm">Social:</strong> &nbsp;
@@ -358,7 +388,7 @@
                     </div>
                 </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
