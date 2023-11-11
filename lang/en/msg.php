@@ -295,14 +295,9 @@ return [
         'Notification History' => 'Notification History',
         'Notification' => 'Notification',
         'Notifications' => 'Notifications',
-        'Notification Title' => 'Notification Title',
-        'Notification Message' => 'Notification Message',
-        'Notification Sent To' => 'Notification Sent To',
-        'Notification Sent By' => 'Notification Sent By',
-        'Notification Sent On' => 'Notification Sent On',
-        'Notification Not Found' => 'Notification Not Found',
-        'Notification Details' => 'Notification Details',
-
+        'Date' => 'Date',
+        'Title' => 'Title',
+        'Message' => 'Message',
     ],
 
     'alert' => [
