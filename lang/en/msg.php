@@ -289,6 +289,20 @@ return [
         'Cancellation Policy Not Found' => 'Cancellation Policy Not Found',
         'Cancellation Policy Updated Successfully' => 'Cancellation Policy Updated Successfully',
         'Failed to Update Cancellation Policy' => 'Failed to Update Cancellation Policy',
+
+        // Manage Notification History
+        'Manage Notification History' => 'Manage Notification History',
+        'Notification History' => 'Notification History',
+        'Notification' => 'Notification',
+        'Notifications' => 'Notifications',
+        'Notification Title' => 'Notification Title',
+        'Notification Message' => 'Notification Message',
+        'Notification Sent To' => 'Notification Sent To',
+        'Notification Sent By' => 'Notification Sent By',
+        'Notification Sent On' => 'Notification Sent On',
+        'Notification Not Found' => 'Notification Not Found',
+        'Notification Details' => 'Notification Details',
+
     ],
 
     'alert' => [

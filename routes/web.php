@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ManageCancellationPolicy;
 use App\Http\Controllers\admin\ManageMarkups;
+use App\Http\Controllers\admin\ManageNotifications;
 use App\Http\Controllers\admin\ManagePromoCodes;
 use App\Http\Controllers\admin\ManageRoles;
 use App\Http\Controllers\admin\ManageSubAdmins;
@@ -133,6 +134,10 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('list' , [ManageCancellationPolicy::class, 'list'])->name('cancellation-policy.list');
         Route::get('edit/{id}' , [ManageCancellationPolicy::class, 'editForm'])->name('cancellation-policy.edit-form');
         Route::post('edit' , [ManageCancellationPolicy::class, 'edit'])->name('cancellation-policy.edit');
+    });
+
+    Route::prefix('notification-history')->group(function () {
+        Route::get('list' , [ManageNotifications::class, 'list'])->name('notification-history.list');
     });
 
 });

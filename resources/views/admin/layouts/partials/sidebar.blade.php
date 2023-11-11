@@ -1,9 +1,3 @@
-
-@php
-    $userRole = session('userRole');
-    $permissions = session('permissions');
-@endphp
-
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -25,11 +19,11 @@
             <span class="nav-link-text ms-1">{{ trans('msg.admin.Dashboard') }}</span>
           </a>
         </li>
-
-        @foreach($permissions as $permission)
+        
+        @foreach(session('permissions') as $permission)
 
           {{-- Manage Users --}}
-          @if($permission[0] == 1)
+          @if($permission == 1)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('user/list')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('user.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -40,7 +34,7 @@
             </li>
           
           {{-- Manage Sub Admins --}}
-          @elseif($permission[0] == 2)
+          @elseif($permission == 2)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('sub-admin*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('sub-admin.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -51,7 +45,7 @@
             </li>
 
           {{-- Manage Roles --}}
-          @elseif($permission[0] == 3)
+          @elseif($permission == 3)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('role*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('role.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,7 +56,7 @@
             </li>
         
           {{-- Manage Promo Codes --}}
-          @elseif($permission[0] == 4)
+          @elseif($permission == 4)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('promo-code*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('promo-code.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -73,7 +67,7 @@
             </li>
         
           {{-- Manage Markups --}}
-          @elseif($permission[0] == 5)
+          @elseif($permission == 5)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('markup*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('markup.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -84,7 +78,7 @@
             </li>
         
           {{-- Send Norification To All Users --}}
-          @elseif($permission[0] == 6)
+          @elseif($permission == 6)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('user/send-notification')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('user.send-notification-form') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -95,7 +89,7 @@
             </li>
         
           {{-- Manage Visa Countries --}}
-          @elseif($permission[0] == 7)
+          @elseif($permission == 7)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('visa-country*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('visa-country.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -106,7 +100,7 @@
             </li>
         
           {{-- Manage Visa Types --}}
-          @elseif($permission[0] == 8)
+          @elseif($permission == 8)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('visa-type*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('visa-type.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -115,9 +109,20 @@
                 <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Types') }}</span>
               </a>
             </li>
-
+            
+          {{-- Manage Notification Histories --}}
+          @elseif($permission == 9)
+            <li class="nav-item">
+              <a class="nav-link {{ (request()->is('notification-history*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('notification-history.list') }}">
+                <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">notifications</i>
+                </div>
+                <span class="nav-link-text ms-1">{{ trans('msg.admin.Notifications') }}</span>
+              </a>
+            </li>
+            
           {{-- Manage Cancellation Policy --}}
-          @elseif($permission[0] == 9)
+          @elseif($permission == 10)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('cancellation-policy*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('cancellation-policy.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">

@@ -76,9 +76,15 @@
                             <label for="service" class="form-label">{{ trans('msg.admin.Visa Types') }}</label>
                         </div>
                     </div>
-                    <div class="col-md-3 mt-4">
+                    <div class="col-md-2 mt-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="9" name="privilege[]" id="fcustomCheck1">
+                            <label for="service" class="form-label">{{ trans('msg.admin.Notifications') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="10" name="privilege[]" id="fcustomCheck1">
                             <label for="service" class="form-label">{{ trans('msg.admin.Cancellation Policies') }}</label>
                         </div>
                     </div>
