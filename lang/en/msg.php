@@ -385,6 +385,7 @@ return [
     'list' => [
         'success' => 'List Fetched Successfully',
         'failed'  => 'No Data Found',
+        'no_content' => 'No Content Found',
     ],
 
     'add' => [
