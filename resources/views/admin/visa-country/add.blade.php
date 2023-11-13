@@ -17,7 +17,7 @@
                         <ul class="nav nav-pills nav-fill p-1" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#details-tabs-icons" role="tab" aria-controls="preview" aria-selected="true">
-                                    {{ trans('msg.admin.Description') }}
+                                    {{ trans('msg.admin.Process') }}
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -32,10 +32,10 @@
                             <!-- English Tab Content -->
                             <div class="tab-pane fade show active" id="details-tabs-icons" role="tabpanel" aria-labelledby="details-tab-icons">
                                 <div class="col-md-12 mt-2">
-                                    <label for="description" class="form-label">{{ trans('msg.admin.Description') }}</label>
-                                    <textarea id="description" name="description" rows="4" data-sample="3" data-sample-short></textarea>
-                                    <span class="text-danger error">@error('description') {{$message}} @enderror</span>
-                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Description') }}</div>
+                                    <label for="process" class="form-label">{{ trans('msg.admin.Process') }}</label>
+                                    <textarea id="process" name="process" rows="4" data-sample="3" data-sample-short></textarea>
+                                    <span class="text-danger error">@error('process') {{$message}} @enderror</span>
+                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Process') }}</div>
                                 </div>
                             </div>
                     
@@ -79,7 +79,7 @@
 
 @section('customJs')
     <script data-sample="3">
-        CKEDITOR.replace('description', {
+        CKEDITOR.replace('process', {
             height: 200
         });
 

@@ -250,8 +250,8 @@ return [
         'Visa Country :status Successfully' => 'Visa Country :status Successfully',
         'Details' => 'Details',
         'Documents' => 'Documents',
-        'Description' => 'Description',
-        'Enter Valid Description' => 'Enter Valid Description',
+        'Process' => 'Process',
+        'Enter Valid Process' => 'Enter Valid Process',
         'Enter Valid Documents' => 'Enter Valid Documents',
 
         // Manage Visa Type
