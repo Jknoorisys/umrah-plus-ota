@@ -248,6 +248,11 @@ return [
         'Visa Country Updated Successfully' => 'Visa Country Updated Successfully',
         'Failed to Update Visa Country' => 'Failed to Update Visa Country',
         'Visa Country :status Successfully' => 'Visa Country :status Successfully',
+        'Details' => 'Details',
+        'Documents' => 'Documents',
+        'Description' => 'Description',
+        'Enter Valid Description' => 'Enter Valid Description',
+        'Enter Valid Documents' => 'Enter Valid Documents',
 
         // Manage Visa Type
         'Manage Visa Types' => 'Manage Visa Types',
@@ -297,6 +302,8 @@ return [
         'Cancellation Policy Not Found' => 'Cancellation Policy Not Found',
         'Cancellation Policy Updated Successfully' => 'Cancellation Policy Updated Successfully',
         'Failed to Update Cancellation Policy' => 'Failed to Update Cancellation Policy',
+        'English' => 'English',
+        'Arabic' => 'Arabic',
 
         // Manage Notification History
         'Manage Notification History' => 'Manage Notification History',

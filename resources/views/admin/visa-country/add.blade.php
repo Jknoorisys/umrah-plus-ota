@@ -10,20 +10,19 @@
         <div class="card-body">
             <div class="p-4 border rounded">
                 <div class="nav-wrapper position-relative end-0">
-                  
                 
                     <form class="row g-3 needs-validation" action="{{ route('visa-country.add') }}" method="POST" novalidate>
                         @csrf
 
                         <ul class="nav nav-pills nav-fill p-1" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-icons" role="tab" aria-controls="preview" aria-selected="true">
-                                    English
+                                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#details-tabs-icons" role="tab" aria-controls="preview" aria-selected="true">
+                                    {{ trans('msg.admin.Description') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-icons" role="tab" aria-controls="code" aria-selected="false">
-                                    Arabic
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#documnets-tabs-icons" role="tab" aria-controls="code" aria-selected="false">
+                                    {{ trans('msg.admin.Documents') }}
                                 </a>
                             </li>
                         </ul>
@@ -31,41 +30,24 @@
                         <div class="tab-content">
                            
                             <!-- English Tab Content -->
-                            <div class="tab-pane fade show active" id="profile-tabs-icons" role="tabpanel" aria-labelledby="profile-tab-icons">
+                            <div class="tab-pane fade show active" id="details-tabs-icons" role="tabpanel" aria-labelledby="details-tab-icons">
                                 <div class="col-md-12 mt-2">
-                                    <label for="policy_en" class="form-label">{{ trans('msg.admin.Cancellation Policy') }}</label>
-                                    <textarea id="policy_en" name="policy_en" rows="4" data-sample="3" data-sample-short></textarea>
-                                    <span class="text-danger error">@error('policy_en') {{$message}} @enderror</span>
-                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid policy_en') }}</div>
+                                    <label for="description" class="form-label">{{ trans('msg.admin.Description') }}</label>
+                                    <textarea id="description" name="description" rows="4" data-sample="3" data-sample-short></textarea>
+                                    <span class="text-danger error">@error('description') {{$message}} @enderror</span>
+                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Description') }}</div>
                                 </div>
                             </div>
                     
                             <!-- Arabic Tab Content -->
-                            <div class="tab-pane fade" id="dashboard-tabs-icons" role="tabpanel" aria-labelledby="dashboard-tab-icons">
+                            <div class="tab-pane fade" id="documnets-tabs-icons" role="tabpanel" aria-labelledby="documnets-tab-icons">
                                 <div class="col-md-12 mt-2">
-                                    <label for="policy_ar" class="form-label">{{ trans('msg.admin.Cancellation Policy') }}</label>
-                                    <textarea id="policy_ar" name="policy_ar" rows="4" data-sample="3" data-sample-short></textarea>
-                                    <span class="text-danger error">@error('policy_ar') {{$message}} @enderror</span>
-                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid policy_ar') }}</div>
+                                    <label for="documents" class="form-label">{{ trans('msg.admin.Documents') }}</label>
+                                    <textarea id="documents" name="documents" rows="4" data-sample="3" data-sample-short></textarea>
+                                    <span class="text-danger error">@error('documents') {{$message}} @enderror</span>
+                                    <div class="invalid-feedback">{{ trans('msg.admin.Enter Valid Documents') }}</div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6 mt-4">
-                            <label for="service" class="form-label">{{ trans('msg.admin.Service Type') }}</label>
-                            <div class="input-group input-group-outline">
-                                <select class="single-select" name="service" id="service" required>
-                                    <option value="" disabled>{{ trans('msg.admin.Choose') }}...</option>
-                                    <option value="hotel" >{{ trans('msg.admin.Hotel') }}</option>
-                                    <option value="flight" >{{ trans('msg.admin.Flight') }}</option>
-                                    <option value="transfer" >{{ trans('msg.admin.Transfer') }}</option>
-                                    <option value="activity" >{{ trans('msg.admin.Activities') }}</option>
-                                    <option value="umrah" >{{ trans('msg.admin.Umrah') }}</option>
-                                    <option value="ziyarat" >{{ trans('msg.admin.Ziyarat') }}</option>
-                                    <option value="visa" >{{ trans('msg.admin.Visa') }}</option>
-                                </select> 
-                            </div>                       
-                            <div class="invalid-feedback">{{ trans('msg.admin.Please select a valid service type') }}.</div>
                         </div>
 
                         <div class="col-md-6 mt-4">
@@ -83,14 +65,6 @@
                             </div>
                             <span class="text-danger error">@error('within_24_hours') {{$message}} @enderror</span>
                         </div>
-
-                        <div class="col-md-6 mt-4">
-                            <label for="less_than_24_hours" class="form-label">{{ trans('msg.admin.Less than 24 Hours').' (%)' }}</label>
-                            <div class="input-group input-group-outline">
-                                <input type="number" class="form-control" step="0.5" min="0" name="less_than_24_hours" placeholder="{{ trans('msg.admin.7 Days Before') }}" required>
-                            </div>
-                            <span class="text-danger error">@error('less_than_24_hours') {{$message}} @enderror</span>
-                        </div>
                     
                         <div class="col-12 mt-4">
                             <a href="{{ route('visa-country.list') }}" class="btn btn-outline-secondary px-2">{{ Str::upper(trans('msg.admin.Cancel')) }}</a>
@@ -105,16 +79,16 @@
 
 @section('customJs')
     <script data-sample="3">
-        CKEDITOR.replace('policy_en', {
+        CKEDITOR.replace('description', {
             height: 200
         });
 
-        CKEDITOR.replace('policy_ar', {
+        CKEDITOR.replace('documents', {
             height: 200
         });
     </script>
     <script>
-        var tab = new bootstrap.Tab(document.querySelector('#profile-tabs-icons'));
+        var tab = new bootstrap.Tab(document.querySelector('#details-tabs-icons'));
         tab.show();
     </script>
 @endsection
