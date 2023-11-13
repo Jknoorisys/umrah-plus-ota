@@ -36,7 +36,7 @@
                                 </td>
                                 <td>{{ $user->country_code. '-'. $user->phone }}</td>
                                 <td class="text-sm">
-                                    <span class="badge badge-sm bg-gradient-{{ $user->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $user->status }}</span>
+                                    <span class="badge badge-sm bg-{{ $user->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $user->status }}</span>
                                 </td>
                                 <td>
                                     <div class="row">
@@ -47,16 +47,14 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <a class="btn btn-outline-info btn-sm" href="{{ route('user.view', ['id' => $user->id]) }}">
+                                            <a class="btn btn-info btn-sm" href="{{ route('user.view', ['id' => $user->id]) }}">
                                                 <span class="material-icons text-md">
                                                     visibility
                                                 </span>
                                             </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleteUser('{{ $user->id }}', {{ $loop->iteration }})">
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-sm" onclick="confirmDeleteUser('{{ $user->id }}', {{ $loop->iteration }})">
                                                 <span class="material-icons text-md">
-                                                    delete
+                                                    close
                                                 </span>
                                             </button>
                                         </div>
@@ -119,11 +117,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-secondary');
-                            statusElement.classList.add('bg-gradient-info');
+                            statusElement.classList.remove('bg-secondary');
+                            statusElement.classList.add('bg-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-info');
-                            statusElement.classList.add('bg-gradient-secondary');
+                            statusElement.classList.remove('bg-info');
+                            statusElement.classList.add('bg-secondary');
                         }
                     }
                 },

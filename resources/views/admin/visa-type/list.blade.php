@@ -41,7 +41,7 @@
                                     </span>
                                 </td>
                                 <td class="text-sm">
-                                    <span class="badge badge-sm bg-gradient-{{ $type->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $type->status }}</span>
+                                    <span class="badge badge-sm bg-{{ $type->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $type->status }}</span>
                                 </td>
                                 <td>
                                     <div class="row">
@@ -52,17 +52,13 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <a class="btn btn-outline-info btn-sm" href="{{ route('visa-type.edit-form', ['id' => $type->id]) }}">
+                                            <a class="btn btn-info btn-sm" href="{{ route('visa-type.edit-form', ['id' => $type->id]) }}">
                                                 <span class="material-icons text-md">
                                                     edit
                                                 </span>
                                             </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeletetype('{{ $type->id }}', {{ $loop->iteration }})">
-                                                <span class="material-icons text-md">
-                                                    delete
-                                                </span>
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-sm" onclick="confirmDeletetype('{{ $type->id }}', {{ $loop->iteration }})">
+                                                <i class="material-icons text-md">close</i>
                                             </button>
                                         </div>
                                     </div>                                   
@@ -124,11 +120,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-secondary');
-                            statusElement.classList.add('bg-gradient-info');
+                            statusElement.classList.remove('bg-secondary');
+                            statusElement.classList.add('bg-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-info');
-                            statusElement.classList.add('bg-gradient-secondary');
+                            statusElement.classList.remove('bg-info');
+                            statusElement.classList.add('bg-secondary');
                         }
                     }
                 },

@@ -59,14 +59,13 @@
                                 <td class="text-sm text-center">{{ $loop->iteration }}</td>
                                 <td id="countryValue">{{ $country->country }}</td>
                                 <td class="text-sm">
-                                    <span class="badge badge-sm bg-gradient-{{ $country->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $country->status }}</span>
+                                    <span class="badge badge-sm bg-{{ $country->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $country->status }}</span>
                                 </td>
                                 <td>
                                     <span class="btn h4 text-{{ $country->is_featured == 'yes' ? 'warning' : 'secondary' }} material-icons featured-icon" onclick="confirmToggleFeatured(this)" data-country-id="{{ $country->id }}" data-featured="{{ $country->is_featured }}">
                                         grade
                                     </span>
                                 </td>
-                                
                                 <td>
                                     <div class="row">
                                         <div class="col-1"></div>
@@ -75,16 +74,12 @@
                                                 <input class="form-check-input btn-lg change-status" type="checkbox" id="flexSwitchCheckChecked{{ $loop->iteration }}" {{ $country->status == 'active' ? 'checked' : '' }} data-country-id="{{ $country->id }}"  data-id="{{ $loop->iteration }}">
                                             </div>
                                         </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-outline-info btn-sm" onclick="editCountry('{{ $country->id }}')">
-                                                <span class="material-icons text-md">edit</span>
+                                        <div class="col-4">
+                                            <button type="button" rel="tooltip" class="btn btn-info btn-sm" onclick="editCountry('{{ $country->id }}')">
+                                                <i class="material-icons text-md">edit</i>
                                             </button>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleteCountry('{{ $country->id }}', {{ $loop->iteration }})">
-                                                <span class="material-icons text-md">
-                                                    delete
-                                                </span>
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-sm" onclick="confirmDeleteCountry('{{ $country->id }}', {{ $loop->iteration }})">
+                                                <i class="material-icons text-md">close</i>
                                             </button>
                                         </div>
                                     </div>                                   
@@ -200,11 +195,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-secondary');
-                            statusElement.classList.add('bg-gradient-info');
+                            statusElement.classList.remove('bg-secondary');
+                            statusElement.classList.add('bg-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-info');
-                            statusElement.classList.add('bg-gradient-secondary');
+                            statusElement.classList.remove('bg-info');
+                            statusElement.classList.add('bg-secondary');
                         }
                     }
                 },

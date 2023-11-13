@@ -32,7 +32,7 @@
                             <td>{{ Str::ucfirst($code->type) }}</td>
                             <td>{{ $code->discount }}</td>
                             <td class="text-sm">
-                                <span class="badge badge-sm bg-gradient-{{ $code->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $code->status }}</span>
+                                <span class="badge badge-sm bg-{{ $code->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $code->status }}</span>
                             </td>
                             <td>
                                 <div class="row">
@@ -43,16 +43,14 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <a class="btn btn-outline-info btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
+                                        <a class="btn btn-info btn-sm" href="{{ route('promo-code.edit-form', ['id' => $code->id]) }}">
                                             <span class="material-icons text-md">
                                                 edit
                                             </span>
                                         </a>
-                                    </div>
-                                    <div class="col-2">
-                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeletecode('{{ $code->id }}', {{ $loop->iteration }})">
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-sm" onclick="confirmDeletecode('{{ $code->id }}', {{ $loop->iteration }})">
                                             <span class="material-icons text-md">
-                                                delete
+                                                close
                                             </span>
                                         </button>
                                     </div>
@@ -115,11 +113,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-secondary');
-                            statusElement.classList.add('bg-gradient-info');
+                            statusElement.classList.remove('bg-secondary');
+                            statusElement.classList.add('bg-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-info');
-                            statusElement.classList.add('bg-gradient-secondary');
+                            statusElement.classList.remove('bg-info');
+                            statusElement.classList.add('bg-secondary');
                         }
                     }
                 },

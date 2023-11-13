@@ -26,7 +26,7 @@
                             <td class="text-sm text-center">{{ $loop->iteration }}</td>
                             <td>{{ str_replace('_', ' ', Str::upper($role->role))}}</td>
                             <td class="text-sm">
-                                <span class="badge badge-sm bg-gradient-{{ $role->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $role->status }}</span>
+                                <span class="badge badge-sm bg-{{ $role->status == 'active' ? 'info' : 'secondary' }}" id="status{{ $loop->iteration }}">{{ $role->status }}</span>
                             </td>
                             <td>
                                 <div class="row">
@@ -37,18 +37,16 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                    <a class="btn btn-outline-info btn-sm" href="{{ route('role.edit-form', ['id' => $role->id]) }}">
-                                        <span class="material-icons text-md">
-                                            edit
-                                        </span>
-                                    </a>
-                                    </div>
-                                    <div class="col-2">
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleterole('{{ $role->id }}', {{ $loop->iteration }})">
-                                        <span class="material-icons text-md">
-                                            delete
-                                        </span>
-                                    </button>
+                                        <a class="btn btn-info btn-sm" href="{{ route('role.edit-form', ['id' => $role->id]) }}">
+                                            <span class="material-icons text-md">
+                                                edit
+                                            </span>
+                                        </a>
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-sm" onclick="confirmDeleterole('{{ $role->id }}', {{ $loop->iteration }})">
+                                            <span class="material-icons text-md">
+                                                close
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>                                   
                             </td>
@@ -109,11 +107,11 @@
                     if (statusElement) {
                         statusElement.textContent = isActive;
                         if (isActive === 'active') {
-                            statusElement.classList.remove('bg-gradient-warning');
-                            statusElement.classList.add('bg-gradient-primary');
+                            statusElement.classList.remove('bg-secondary');
+                            statusElement.classList.add('bg-info');
                         } else {
-                            statusElement.classList.remove('bg-gradient-primary');
-                            statusElement.classList.add('bg-gradient-warning');
+                            statusElement.classList.remove('bg-info');
+                            statusElement.classList.add('bg-secondary');
                         }
                     }
                 },

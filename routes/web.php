@@ -111,6 +111,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::prefix('visa-country')->group(function () {
         Route::get('list' , [ManageVisaCountry::class, 'list'])->name('visa-country.list');
+        Route::get('add' , [ManageVisaCountry::class, 'addForm'])->name('visa-country.add-form');
         Route::post('add' , [ManageVisaCountry::class, 'add'])->name('visa-country.add');
         Route::any('edit/{id}' , [ManageVisaCountry::class, 'editForm'])->name('visa-country.edit');
         Route::any('update' , [ManageVisaCountry::class, 'edit'])->name('visa-country.update');

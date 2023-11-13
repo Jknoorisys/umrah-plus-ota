@@ -39,7 +39,7 @@
                             <td>{{ $policy->within_24_hours }}%</td>
                             <td>{{ $policy->less_than_24_hours }}%</td>
                             <td>
-                                <a class="btn btn-outline-info btn-sm" href="{{ route('cancellation-policy.edit-form', ['id' => $policy->id]) }}">
+                                <a class="btn btn-info btn-sm" href="{{ route('cancellation-policy.edit-form', ['id' => $policy->id]) }}">
                                     <span class="material-icons text-md">
                                         edit
                                     </span>

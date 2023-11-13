@@ -18,6 +18,14 @@ class ManageVisaCountry extends Controller
         return view('admin.visa-country.list', $data);
     }
 
+    public function addForm() {
+        $data['previous_title']      = trans('msg.admin.Manage Visa Country');
+        $data['url']                 = route('visa-country.list');
+        $data['title']               = trans('msg.admin.Add Visa Country');
+        
+        return view('admin.visa-country.add', $data);
+    }
+
     public function add(Request $request) {
         $validatedData = $request->validate([
             'country' => 'required|unique:visa_countries',
