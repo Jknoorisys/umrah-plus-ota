@@ -110,8 +110,8 @@ class BookingController extends Controller
                 ])->get(config('constants.end-point') . '/transfer-api/1.0/availability/' . $data['language'] . '/from/' . $data['fromType'] . '/' . $data['fromCode'] . '/to/' . $data['toType'] . '/' . $data['toCode'] . '/' . $data['outbound'] . '/' . $inbound . '/' . $adults . '/' . $children . '/' . $infants);
                 $responseData = $response->json();
                 $status = $response->status();
-
-                if ($status == "200" && isset($responseData['services'])) {
+                    // echo json_encode($status);exit;
+                if ($status === 200 && isset($responseData['services'])) {
                     $markup = Markup::where('service','=','transfer')->first()->value('markup');
                 
                     $services = $responseData['services'];
@@ -126,6 +126,18 @@ class BookingController extends Controller
                         'message'   => trans('msg.list.success'),
                         'data'      => $services  // Return all services with marked-up prices
                     ], $status);
+                } elseif ($status === 204) {
+                    // Handle HTTP 204 (No Content) differently
+                    $responseArray = [
+                        'status'    => 'success',
+                        'message'   => trans('msg.list.no_content'),
+                        'data'      => [],  // You may choose to return an empty array or omit 'data'
+
+                    ];
+                    echo json_encode($responseArray);
+                    exit;
+                
+                
                 } else {
                     return response()->json([
                         'status'    => 'failed',
@@ -144,7 +156,7 @@ class BookingController extends Controller
                 $responseData = $response->json();
 
                 $status = $response->status();
-                if ($status == "200" && isset($responseData['services'])) {
+                if ($status === 200 && isset($responseData['services'])) {
                     $markup = Markup::where('service','=','transfer')->first()->value('markup');
                 
                     $services = $responseData['services'];
@@ -159,6 +171,18 @@ class BookingController extends Controller
                         'message'   => trans('msg.list.success'),
                         'data'      => $services  // Return all services with marked-up prices
                     ], $status);
+                } elseif ($status === 204) {
+                    // Handle HTTP 204 (No Content) differently
+                    $responseArray = [
+                        'status'    => 'success',
+                        'message'   => trans('msg.list.no_content'),
+                        'data'      => [],  // You may choose to return an empty array or omit 'data'
+
+                    ];
+                    echo json_encode($responseArray);
+                    exit;
+                
+                
                 } else {
                     return response()->json([
                         'status'    => 'failed',
