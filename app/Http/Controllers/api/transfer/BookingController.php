@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use App\Models\Markup;
 
 class BookingController extends Controller
 {
@@ -108,14 +109,22 @@ class BookingController extends Controller
                     'Content-Type' => 'application/json',
                 ])->get(config('constants.end-point') . '/transfer-api/1.0/availability/' . $data['language'] . '/from/' . $data['fromType'] . '/' . $data['fromCode'] . '/to/' . $data['toType'] . '/' . $data['toCode'] . '/' . $data['outbound'] . '/' . $inbound . '/' . $adults . '/' . $children . '/' . $infants);
                 $responseData = $response->json();
-
                 $status = $response->status();
 
-                if ($status == "200") {
+                if ($status == "200" && isset($responseData['services'])) {
+                    $markup = Markup::where('service','=','transfer')->first()->value('markup');
+                
+                    $services = $responseData['services'];
+                
+                    foreach ($services as &$service) {
+                        $price = $service['price']['totalAmount'];
+                        $service['price']['totalAmount'] = $price + ($price * $markup / 100);
+                    }
+                
                     return response()->json([
                         'status'    => 'success',
                         'message'   => trans('msg.list.success'),
-                        'data'      => $responseData
+                        'data'      => $services  // Return all services with marked-up prices
                     ], $status);
                 } else {
                     return response()->json([
@@ -135,12 +144,20 @@ class BookingController extends Controller
                 $responseData = $response->json();
 
                 $status = $response->status();
-
-                if ($status == "200") {
+                if ($status == "200" && isset($responseData['services'])) {
+                    $markup = Markup::where('service','=','transfer')->first()->value('markup');
+                
+                    $services = $responseData['services'];
+                
+                    foreach ($services as &$service) {
+                        $price = $service['price']['totalAmount'];
+                        $service['price']['totalAmount'] = $price + ($price * $markup / 100);
+                    }
+                
                     return response()->json([
                         'status'    => 'success',
                         'message'   => trans('msg.list.success'),
-                        'data'      => $responseData
+                        'data'      => $services  // Return all services with marked-up prices
                     ], $status);
                 } else {
                     return response()->json([
@@ -245,8 +262,8 @@ class BookingController extends Controller
                 ])->post(config('constants.end-point').'/transfer-api/1.0/availability/routes/en/2/0/0');
                 // echo json_encode(config('constants.end-point').'/transfer-api/1.0/availability/routes/'.$language.'/'.$adults.'/'.$children.'/'.$infants.'?'.$queryString);exit;
                 $responseData = $response->json();
-                echo json_encode($response);
-                exit;
+                // echo json_encode($response);
+                // exit;
                 $status = $response->status();
                 // echo json_encode("Hello");exit;
 
