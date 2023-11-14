@@ -12,7 +12,7 @@ class ManageEmbassy extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Embassy');
-        $data['embassies']               = Embassy::orderBy('created_at', 'desc')->get();
+        $data['embassies']           = Embassy::orderBy('created_at', 'desc')->get();
         
         return view('admin.embassy.list', $data);
     }

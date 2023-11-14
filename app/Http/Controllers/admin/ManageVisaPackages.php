@@ -14,7 +14,7 @@ class ManageVisaPackages extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Visa Package');
-        $data['packages']           = VisaPackages::orderBy('created_at', 'desc')->get();
+        $data['packages']            = VisaPackages::orderBy('created_at', 'desc')->get();
         
         return view('admin.visa-package.list', $data);
     }

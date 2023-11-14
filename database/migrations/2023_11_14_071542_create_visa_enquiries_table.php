@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('travellers');
             $table->integer('price');
             $table->enum('status', ['pending', 'inprogress', 'approved', 'cancelled'])->default('pending');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

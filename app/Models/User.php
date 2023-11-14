@@ -76,6 +76,11 @@ class User extends Authenticatable  implements JWTSubject
     {
         return $this->hasMany(UserAddress::class);
     }
+
+    public function visaEnquiries(): HasMany
+    {
+        return $this->hasMany(VisaEnquiry::class);
+    }
     
     public function getJWTIdentifier()
     {
