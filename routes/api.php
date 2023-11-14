@@ -18,6 +18,7 @@ use App\Http\Controllers\api\hotels\payments\PaymentController as HotelPaymentCo
 use App\Http\Controllers\api\activity\payments\PaymentController as ActivityPaymentController;
 use App\Http\Controllers\api\transfer\payments\PaymentController as TransferPaymentController;
 use App\Http\Controllers\api\visa\VisaController;
+use App\Http\Controllers\api\ziyarat\ZiyaratController as EnquiryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -190,6 +191,7 @@ Route::middleware(['localization'])->group(function () {
     // Ziyarat Packages API by Javeriya
     Route::prefix('ziyarat')->group(function () {
         Route::post('list' , [ZiyaratController::class, 'list']);
+        Route::post('sendEnquiry' , [EnquiryController::class, 'sendEnquiry']);
     });
 
     Route::prefix('promocode')->group(function () {
