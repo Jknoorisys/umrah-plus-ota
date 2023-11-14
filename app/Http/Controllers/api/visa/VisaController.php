@@ -152,7 +152,7 @@ class VisaController extends Controller
             } else {
                 return response()->json([
                     'status'    => 'failed',
-                    'message'   => trans('msg.details.failed'),
+                    'message'   => trans('msg.detail.failed'),
                 ], 400);
             }
         } catch (\Throwable $e) {

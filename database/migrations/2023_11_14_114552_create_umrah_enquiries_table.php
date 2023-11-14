@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visa_enquiries', function (Blueprint $table) {
+        Schema::create('umrah_enquiries', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('visa_type_id');
+            $table->string('umrah_package');
+            $table->string('name');
+            $table->string('country');
             $table->string('email');
             $table->integer('mobile');
             $table->integer('travellers');
             $table->integer('price');
-            $table->enum('status', ['pending', 'inprogress', 'approved', 'cancelled'])->default('pending');
+            $table->date('date');
+            $table->enum('status', ['pending', 'inprogress', 'booked', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visa_enquiries');
+        Schema::dropIfExists('umrah_enquiries');
     }
 };

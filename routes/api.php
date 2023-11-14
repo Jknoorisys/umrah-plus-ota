@@ -186,12 +186,14 @@ Route::middleware(['localization'])->group(function () {
     Route::prefix('umrah')->group(function () {
         Route::post('list' , [UmrahController::class, 'list']);
         Route::post('view' , [UmrahController::class, 'view']);
+        Route::post('send-enquiry' , [UmrahController::class, 'sendEnquiry'])->middleware('jwt.verify');
+
     });
 
     // Ziyarat Packages API by Javeriya
     Route::prefix('ziyarat')->group(function () {
         Route::post('list' , [ZiyaratController::class, 'list']);
-        Route::post('sendEnquiry' , [EnquiryController::class, 'sendEnquiry']);
+        Route::post('sendEnquiry' , [EnquiryController::class, 'sendEnquiry'])->middleware('jwt.verify');
     });
 
     Route::prefix('promocode')->group(function () {

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
-class ZiyaratEnquiry extends Model
+class UmrahEnquiry extends Model
 {
     use HasApiTokens, HasFactory, SoftDeletes;
 
@@ -18,7 +18,7 @@ class ZiyaratEnquiry extends Model
 
     protected $fillable = [
         'country',
-        'ziyarat_package',
+        'umrah_package',
         'user_id',
         'date',
         'email',
@@ -53,5 +53,4 @@ class ZiyaratEnquiry extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

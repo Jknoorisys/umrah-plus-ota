@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class VisaEnquiry extends Model
 {
@@ -41,5 +43,10 @@ class VisaEnquiry extends Model
         static::creating(function ($model) {
             $model->id = (string) Str::uuid();
         });
+    }
+
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

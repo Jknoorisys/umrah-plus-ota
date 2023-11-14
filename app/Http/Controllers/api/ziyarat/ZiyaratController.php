@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\ZiyaratEnquiry;
+use App\Models\Admin;
+use App\Models\User;
+use App\Notifications\AdminNotification;
+
 
 class ZiyaratController extends Controller
 {
@@ -20,7 +24,8 @@ class ZiyaratController extends Controller
             'travellers' => 'required|numeric',
             'price' => 'required|numeric',
             'country' => 'required|string',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'user_id'   => ['required', 'alpha_dash', Rule::notIn('undefined')],
 
         ]);
 
@@ -37,6 +42,7 @@ class ZiyaratController extends Controller
             $price = $request->price * $request->travellers;
             $data = [
                 'ziyarat_package' => $request->ziyarat_package,
+                'user_id'   => $request->user_id,
                 'email' => $request->email,
                 'name' => $request->name,
                 'mobile' => $request->mobile,
@@ -49,10 +55,24 @@ class ZiyaratController extends Controller
             $enquiry = ZiyaratEnquiry::create($data);
             if($enquiry)
             {
+                $user = User::where('id', '=', $request->user_id)->first();
+                    $admin = Admin::where('role', 'super_admin')->first(); 
+                    if ($admin && $user) {
+                        $name = $user->fname . ' ' . $user->lname;
+                        $message = [
+                            'title' => trans('msg.notification.ziyarat_enquiry_title'),
+                            'message' => trans('msg.notification.ziyarat_enquiry_message', ['name' => $name]),
+                            'name' => $name,
+                            'email' => $request->email,
+                            'profile' => $user->photo ? $user->photo : '',
+                        ];
+
+                        $admin->notify(new AdminNotification($message));
+                    }
                 return response()->json([
                     'status'    => 'success',
                     'message'   =>  trans('msg.enquiry.success'),
-                    'data'      => $enquiry,
+                  
                 ], 200);
             } else {
                 return response()->json([
