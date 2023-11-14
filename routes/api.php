@@ -203,6 +203,5 @@ Route::middleware(['localization'])->group(function () {
         Route::post('send-enquiry' , [VisaController::class, 'sendEnquiry'])->middleware('jwt.verify');
     });
 
-
 });
 
