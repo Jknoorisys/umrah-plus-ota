@@ -20,7 +20,7 @@ class VisaEnquiry extends Model
     ];
 
     protected $fillable = [
-        'name',
+        'user_id',
         'email',
         'visa_type_id',
         'mobile',

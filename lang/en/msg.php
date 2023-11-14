@@ -457,6 +457,11 @@ return [
         'failed'  => 'Booking Failed',
     ],
 
+    'enquiry' => [
+        'success' => 'Enquiry Sent',
+        'failed'  => 'Unable to send Enquiry, please try again...',
+    ],
+
     'booking-cancel' => [
         'success' => 'Booking Cancelled',
         'failed'  => 'Booking Cancellation Failed',

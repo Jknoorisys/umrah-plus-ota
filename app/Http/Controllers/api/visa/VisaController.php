@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\visa;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Embassy;
+use App\Models\User;
 use App\Models\VisaCountry;
 use App\Models\VisaEnquiry;
 use App\Models\VisaPackage;
@@ -93,7 +94,7 @@ class VisaController extends Controller
     public function sendEnquiry(Request $request) {
         $validator = Validator::make($request->all(), [
             'visa_type_id'   => ['required', 'alpha_dash', Rule::notIn('undefined')],
-            'name' => 'required',
+            'user_id'   => ['required', 'alpha_dash', Rule::notIn('undefined')],
             'email' => 'required|email',
             'mobile' => 'required|numeric',
             'travellers' => 'required|numeric'
@@ -112,7 +113,7 @@ class VisaController extends Controller
             if (!empty($visaType)) {
                 $visaPrice = $visaType->fees * $request->travellers;
                 $data = [
-                    'name' => $request->name,
+                    'user_id' => $request->user_id,
                     'email' => $request->email,
                     'mobile' => $request->mobile,
                     'travellers' => $request->travellers,
@@ -123,14 +124,16 @@ class VisaController extends Controller
                 $visa = VisaEnquiry::create($data);
 
                 if ($visa) {
+                    $user = User::where('id', '=', $request->user_id)->first();
                     $admin = Admin::where('role', 'super_admin')->first(); 
-                    if ($admin) {
+                    if ($admin && $user) {
+                        $name = $user->fname . ' ' . $user->lname;
                         $message = [
                             'title' => trans('msg.notification.visa_enquiry_title'),
-                            'message' => trans('msg.notification.visa_enquiry_message', ['name' => $request->name]),
-                            'name' => $request->name,
+                            'message' => trans('msg.notification.visa_enquiry_message', ['name' => $name]),
+                            'name' => $name,
                             'email' => $request->email,
-                            'profile' => '',
+                            'profile' => $user->photo ? $user->photo : '',
                         ];
 
                         $admin->notify(new AdminNotification($message));
@@ -138,21 +141,18 @@ class VisaController extends Controller
                     
                     return response()->json([
                         'status'    => 'success',
-                        'message'   =>  trans('msg.list.success'),
-                        'data'      => $visaType,
+                        'message'   =>  trans('msg.enquiry.success'),
                     ], 200);
                 } else {
                     return response()->json([
                         'status'    => 'failed',
-                        'message'   => trans('msg.list.failed'),
-                        'data'      => []
+                        'message'   => trans('msg.enquiry.failed'),
                     ], 400);
                 }
             } else {
                 return response()->json([
                     'status'    => 'failed',
-                    'message'   => trans('msg.list.no_content'),
-                    'data'      => []
+                    'message'   => trans('msg.details.failed'),
                 ], 400);
             }
         } catch (\Throwable $e) {
