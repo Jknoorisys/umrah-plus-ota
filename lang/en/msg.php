@@ -404,6 +404,8 @@ return [
         'password_reset_title' => 'Reset Password Request',
         'visa_enquiry_title' => 'New Visa Enquiry',
         'visa_enquiry_message' => ':name has Applied for Visa',
+        'ziyarat_enquiry_title' => 'New Ziyarat Enquiry',
+        'ziyarat_enquiry_message' => ':name has Applied for Ziyarat',
     ],
 
     'registration' => [
