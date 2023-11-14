@@ -122,10 +122,11 @@
                                 <span class="visually-hidden">unread notifications</span>
                             </span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown-menu dropdown-menu-end p-1 me-sm-n1" aria-labelledby="dropdownMenuButton">
                             @if (Auth::guard('admin')->user()->unreadNotifications->count() > 0)
                                 <a href="{{ route('notification-history.list') }}" rel="noopener noreferrer" class="btn text-secondary cursor-pointer">{{ trans('msg.admin.View All Notifications') }}</a>
                                 <a href="{{ route('mark-all-read') }}" rel="noopener noreferrer" class="text-secondary float-end"><i class="btn material-icons">mark_email_read</i></a>
+                                <hr class="dark horizontal mt-0">
                             @endif
                             @forelse(Auth::guard('admin')->user()->unreadNotifications as $notification)
                                 <li class="mb-2">
