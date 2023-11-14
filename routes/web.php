@@ -33,7 +33,7 @@ Route::get('setlocale/{locale}', function ($locale) {
 })->name('setlocale');
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', function () {
+    Route::any('/', function () {
         return view('login');
     })->name('/');
 
