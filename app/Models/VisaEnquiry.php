@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class VisaPackage extends Model
+class VisaEnquiry extends Model
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $primaryKey = 'id';
@@ -47,4 +46,5 @@ class VisaPackage extends Model
     {
         return $this->hasMany(VisaTypes::class);
     }
+
 }
