@@ -200,7 +200,7 @@ Route::middleware(['localization'])->group(function () {
     Route::prefix('visa')->group(function () {
         Route::post('visa-packages' , [VisaController::class, 'getVisaPackages']);
         Route::post('visa-package-details' , [VisaController::class, 'getVisaPackage']);
-        Route::post('send-enquiry' , [VisaController::class, 'sendEnquiry']);
+        Route::post('send-enquiry' , [VisaController::class, 'sendEnquiry'])->middleware('jwt.verify');
     });
 
 
