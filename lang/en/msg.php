@@ -402,6 +402,9 @@ return [
         'user_registered_message' => ':name registered successfully.',
         'password_reset_request' => ':email have requested to reset his/her password',
         'password_reset_title' => 'Reset Password Request',
+        'visaPackage' => 'Visa Enquiry',
+        'enquiry' => 'New Enquiry on visa',
+        'userenquiry' => 'Your Enquiry has been submitted successfully',
 
     ],
 

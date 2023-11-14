@@ -325,7 +325,7 @@ class BookingController extends Controller
     }
 
 
-    public function confirmGPS(Request $request)
+    public function confirmBooking(Request $request)
     {
         try{
             $validator = Validator::make($request->all(), [
@@ -357,11 +357,137 @@ class BookingController extends Controller
                 'X-Signature' => $signature,
                 'Content-Type' => 'application/json',
                 
-            ])->put(config('constants.end-point').'/transfer-api/1.0/bookings',$data);
+            ])->post(config('constants.end-point').'/transfer-api/1.0/bookings',$data);
             
             $status = $response->status();
             if ($status === 200) {
                 $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function bookingDetail(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'reference' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            
+            
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.transfer.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') .'/transfer-api/1.0/bookings/'.$request->language.'/reference/'.$request->reference);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
+            $status = $response->status();
+            // return $response;
+            if ($status == 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => trans('msg.list.success'),
+                    'data' => $responseData,
+                ], $status);
+            } else {
+                $responseData = $response->json();
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('msg.list.failed'),
+                    'data' => $responseData,
+                ], $status);
+            }
+
+        }
+        catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => trans('msg.error'),
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function bookingList(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'language' => 'required',
+                'fromDate' => 'required|date',
+                'toDate' => 'required|date',
+                'dateType' => 'required',
+                'offset',
+                'limit'
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => $validator->errors(),
+                    'message' => trans('msg.validation'),
+                ], 400);
+            }
+            $data = [
+                
+                'fromDate' => $request->fromDate,
+                'toDate' => $request->toDate,
+                'dateType' => $request->dateType,
+                'offset' => $request->offset ? $request->offset : '',
+                'limit' => $request->limit ? $request->limit : '',
+            ];
+
+            
+            $queryString = http_build_query($data);
+            $signature = self::calculateSignature();
+
+            $response = Http::withHeaders([
+                'Api-key' => config('constants.transfer.Api-key'),
+                'X-Signature' => $signature,
+                'Content-Type' => 'application/json',
+            ])->get(config('constants.end-point') .'/transfer-api/1.0/bookings/'.$request->language.'?'.$queryString);
+            // echo json_encode(config('constants.end-point') . '/activity-api/3.0/bookings?'.$queryString);exit;
+            $status = $response->status();
+            // return $response;
+            if ($status == 200) {
+                $responseData = $response->json();
+                // echo json_encode($status);exit;
 
                 return response()->json([
                     'status' => 'success',

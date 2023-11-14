@@ -17,6 +17,7 @@ use App\Http\Controllers\api\user\ProfileController as UserProfileController;
 use App\Http\Controllers\api\hotels\payments\PaymentController as HotelPaymentController;
 use App\Http\Controllers\api\activity\payments\PaymentController as ActivityPaymentController;
 use App\Http\Controllers\api\transfer\payments\PaymentController as TransferPaymentController;
+use App\Http\Controllers\api\visa\VisaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -81,14 +82,14 @@ Route::middleware(['localization'])->group(function () {
         Route::post('AvailableRoutes' , [TransferBookingController::class, 'AvailableRoutes']);
 
         // BOOKING
-        Route::post('confirmGPS' , [TransferBookingController::class, 'confirmGPS']);
+        Route::post('confirmBooking' , [TransferBookingController::class, 'confirmBooking']);
 
         // POST BOOKING
-        Route::get('booking-list' , [BookingController::class, 'bookingList']);
-        Route::get('booking-details' , [BookingController::class, 'bookingDetails']);
-        Route::post('booking-change' , [BookingController::class, 'bookingChange']);
-        Route::delete('booking-cancel' , [BookingController::class, 'bookingCancel']);
-        Route::post('reconfirmations' , [BookingController::class, 'bookingReconfirmation']);
+        Route::get('bookingList' , [TransferBookingController::class, 'bookingList']);
+        Route::get('bookingDetail' , [TransferBookingController::class, 'bookingDetail']);
+        Route::post('booking-change' , [TransferBookingController::class, 'bookingChange']);
+        Route::delete('booking-cancel' , [TransferBookingController::class, 'bookingCancel']);
+        Route::post('reconfirmations' , [TransferBookingController::class, 'bookingReconfirmation']);
     });
 
     // Activities APIs by Aaisha
@@ -195,5 +196,12 @@ Route::middleware(['localization'])->group(function () {
         Route::post('list' , [PromoCodeController::class, 'GetPromoCode']);
         Route::post('validate' , [PromoCodeController::class, 'validatePromoCode']);
     });
+
+    Route::prefix('visa')->group(function () {
+        Route::get('visaType' , [VisaController::class, 'getVisaType']);
+        Route::post('sendEnquiry' , [VisaController::class, 'sendEnquiry']);
+    });
+
+
 });
 
