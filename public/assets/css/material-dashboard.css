@@ -24979,6 +24979,7 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
 .page-item.active .page-link {
   box-shadow: 0 3px 5px -1px rgb(144 144 147 / 88%), 0 2px 3px -1px rgb(88 90 115 / 56%);
   color: #fff;
+  font-weight: bold;
 }
 
 .page-item .page-link,
