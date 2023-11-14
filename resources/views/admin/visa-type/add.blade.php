@@ -12,17 +12,17 @@
                 <form class="row g-3 needs-validation" action="{{ route('visa-type.add') }}" method="POST" novalidate>
                     @csrf
                     <div class="col-md-3">
-                        <label for="country_id" class="form-label">{{ trans('msg.admin.Select Country') }}</label>
+                        <label for="package_id" class="form-label">{{ trans('msg.admin.Select Country') }}</label>
                         <div class="input-group input-group-outline">
-                            <select class="single-select" name="country_id" id="country_id" required>
-                                <option disabled {{ old('country_id') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
-                                @forelse ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->country }}</option>
+                            <select class="single-select" name="package_id" id="package_id" required>
+                                <option disabled {{ old('package_id') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
+                                @forelse ($packages as $package)
+                                    <option value="{{ $package->id }}">{{ $package->country }}</option>
                                 @empty
                                 @endforelse
                             </select>
                         </div>
-                        <span class="text-danger error">@error('country_id') {{$message}} @enderror</span>
+                        <span class="text-danger error">@error('package_id') {{$message}} @enderror</span>
                         <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Country') }}.</div>
                     </div>
                     <div class="col-md-9">

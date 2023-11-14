@@ -55,9 +55,4 @@ class VisaCountry extends Model
             $model->id = (string) Str::uuid();
         });
     }
-
-    public function visaTypes(): HasMany
-    {
-        return $this->hasMany(VisaTypes::class);
-    }
 }

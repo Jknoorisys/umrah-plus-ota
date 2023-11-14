@@ -22,7 +22,7 @@ class VisaTypes extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'country_id',
+        'package_id',
         'type',
         'processing_time',
         'stay_period',
@@ -63,8 +63,8 @@ class VisaTypes extends Model
         });
     }
 
-    public function country(): BelongsTo
+    public function package(): BelongsTo
     {
-        return $this->belongsTo(VisaCountry::class);
+        return $this->belongsTo(VisaPackages::class);
     }
 }

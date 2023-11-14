@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ManageCancellationPolicy;
+use App\Http\Controllers\admin\ManageEmbassy;
 use App\Http\Controllers\admin\ManageMarkups;
 use App\Http\Controllers\admin\ManageNotifications;
 use App\Http\Controllers\admin\ManagePromoCodes;
@@ -9,6 +10,7 @@ use App\Http\Controllers\admin\ManageRoles;
 use App\Http\Controllers\admin\ManageSubAdmins;
 use App\Http\Controllers\admin\ManageUsers;
 use App\Http\Controllers\admin\ManageVisaCountry;
+use App\Http\Controllers\admin\ManageVisaPackages;
 use App\Http\Controllers\admin\ManageVisaTypes;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\App;
@@ -118,6 +120,27 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('delete' , [ManageVisaCountry::class, 'delete'])->name('visa-country.delete');
         Route::post('change-status' , [ManageVisaCountry::class, 'changeStatus'])->name('visa-country.change-status');
         Route::post('toggle-featured', [ManageVisaCountry::class, 'toggleFeatured'])->name('visa-country.toggle-featured');
+    });
+
+    Route::prefix('embassy')->group(function () {
+        Route::get('list' , [ManageEmbassy::class, 'list'])->name('embassy.list');
+        Route::get('add' , [ManageEmbassy::class, 'addForm'])->name('embassy.add-form');
+        Route::post('add' , [ManageEmbassy::class, 'add'])->name('embassy.add');
+        Route::any('edit/{id}' , [ManageEmbassy::class, 'editForm'])->name('embassy.edit-form');
+        Route::any('edit' , [ManageEmbassy::class, 'edit'])->name('embassy.edit');
+        Route::post('delete' , [ManageEmbassy::class, 'delete'])->name('embassy.delete');
+        Route::post('change-status' , [ManageEmbassy::class, 'changeStatus'])->name('embassy.change-status');
+    });
+
+    Route::prefix('visa-package')->group(function () {
+        Route::get('list' , [ManageVisaPackages::class, 'list'])->name('visa-package.list');
+        Route::get('add' , [ManageVisaPackages::class, 'addForm'])->name('visa-package.add-form');
+        Route::post('add' , [ManageVisaPackages::class, 'add'])->name('visa-package.add');
+        Route::any('edit/{id}' , [ManageVisaPackages::class, 'editForm'])->name('visa-package.edit-form');
+        Route::any('edit' , [ManageVisaPackages::class, 'edit'])->name('visa-package.edit');
+        Route::post('delete' , [ManageVisaPackages::class, 'delete'])->name('visa-package.delete');
+        Route::post('change-status' , [ManageVisaPackages::class, 'changeStatus'])->name('visa-package.change-status');
+        Route::post('toggle-featured', [ManageVisaPackages::class, 'toggleFeatured'])->name('visa-package.toggle-featured');
     });
 
     Route::prefix('visa-type')->group(function () {

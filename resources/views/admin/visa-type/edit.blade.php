@@ -13,19 +13,19 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $type->id }}">
                     <div class="col-md-3">
-                        <label for="country_id" class="form-label">{{ trans('msg.admin.Select Country') }}</label>
+                        <label for="package_id" class="form-label">{{ trans('msg.admin.Select Country') }}</label>
                         <div class="input-group input-group-outline">
-                            <select class="single-select" name="country_id" id="country_id" required>
-                                <option disabled {{ old('country_id') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
-                                @forelse ($countries as $country)
-                                    <option value="{{ $country->id }}" {{ $type->country_id == $country->id ? 'selected' : '' }}>
-                                        {{ $country->country }}
+                            <select class="single-select" name="package_id" id="package_id" required>
+                                <option disabled {{ old('package_id') == '' ? 'selected' : '' }}>{{ trans('msg.admin.Choose') }}...</option>
+                                @forelse ($packages as $package)
+                                    <option value="{{ $package->id }}" {{ $type->package_id == $package->id ? 'selected' : '' }}>
+                                        {{ $package->country }}
                                     </option>
                                 @empty
                                 @endforelse
                             </select>
                         </div>
-                        <span class="text-danger error">@error('country_id') {{$message}} @enderror</span>
+                        <span class="text-danger error">@error('package_id') {{$message}} @enderror</span>
                         <div class="invalid-feedback">{{ trans('msg.admin.Select Valid Country') }}.</div>
                     </div>
                     <div class="col-md-9">

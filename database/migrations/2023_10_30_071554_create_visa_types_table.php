@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('visa_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('country_id');
-            $table->foreign('country_id')->references('id')->on('visa_countries')->onDelete('cascade');
+            $table->uuid('package_id');
+            $table->foreign('package_id')->references('id')->on('visa_packages')->onDelete('cascade');
             $table->string('type');
             $table->string('processing_time');
             $table->string('stay_period');

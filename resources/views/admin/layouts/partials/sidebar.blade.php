@@ -89,7 +89,7 @@
             </li>
         
           {{-- Manage Visa Countries --}}
-          @elseif($permission == 7)
+          {{-- @elseif($permission == 7)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('visa-country*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('visa-country.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -97,10 +97,32 @@
                 </div>
                 <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Countries') }}</span>
               </a>
+            </li> --}}
+
+          {{-- Manage Embassy --}}
+          @elseif($permission == 7)
+            <li class="nav-item">
+              <a class="nav-link {{ (request()->is('embassy*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('embassy.list') }}">
+                <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">corporate_fare</i>
+                </div>
+                <span class="nav-link-text ms-1">{{ trans('msg.admin.Embassy') }}</span>
+              </a>
+            </li>
+
+          {{-- Manage Visa Packages --}}
+          @elseif($permission == 8)
+            <li class="nav-item">
+              <a class="nav-link {{ (request()->is('visa-package*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('visa-package.list') }}">
+                <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">flag</i>
+                </div>
+                <span class="nav-link-text ms-1">{{ trans('msg.admin.Visa Packages') }}</span>
+              </a>
             </li>
         
           {{-- Manage Visa Types --}}
-          @elseif($permission == 8)
+          @elseif($permission == 9)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('visa-type*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('visa-type.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -111,7 +133,7 @@
             </li>
             
           {{-- Manage Notification Histories --}}
-          @elseif($permission == 9)
+          @elseif($permission == 10)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('notification-history*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('notification-history.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -122,7 +144,7 @@
             </li>
             
           {{-- Manage Cancellation Policy --}}
-          @elseif($permission == 10)
+          @elseif($permission == 11)
             <li class="nav-item">
               <a class="nav-link {{ (request()->is('cancellation-policy*')) ? 'active bg-gradient-info text-white' : 'text-dark' }}" href="{{ route('cancellation-policy.list') }}">
                 <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">

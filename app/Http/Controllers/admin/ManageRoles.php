@@ -55,12 +55,12 @@ class ManageRoles extends Controller
             $data['code']            = $code;
             $data['selectedPrivileges']      = $explode;
             $data['allPrivileges']           = ['1' => trans('msg.admin.Users'), '2' => trans('msg.admin.Sub Admins'), '3' => trans('msg.admin.Roles'), '4' => trans('msg.admin.Promo Codes'), 
-            '5' => trans('msg.admin.Markups'), '6' => trans('msg.admin.Send Notification'), '7' => trans('msg.admin.Visa Countries'), '8' => trans('msg.admin.Visa Types'), '9' => trans('msg.admin.Notifications'), 
-            '10' => trans('msg.admin.Cancellation Policies')];
+            '5' => trans('msg.admin.Markups'), '6' => trans('msg.admin.Send Notification'), '7' => trans('msg.admin.Embassy'), '8' => trans('msg.admin.Visa Packages'), '9' => trans('msg.admin.Visa Types'), '10' => trans('msg.admin.Notifications'), 
+            '11' => trans('msg.admin.Cancellation Policies')];
 
             return view('admin.roles.edit', $data);
         } else {
-            return response()->json(['error' => trans('msg.admin.Role Not Found')]);
+            return back()->with('error', trans('msg.admin.Role Not Found'));
         }
     }
 

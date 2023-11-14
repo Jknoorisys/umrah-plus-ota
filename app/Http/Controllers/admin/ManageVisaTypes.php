@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Markup;
 use App\Models\VisaCountry;
+use App\Models\VisaPackages;
 use App\Models\VisaTypes;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ class ManageVisaTypes extends Controller
         $data['previous_title']      = trans('msg.admin.Dashboard');
         $data['url']                 = route('dashboard');
         $data['title']               = trans('msg.admin.Manage Visa Types');
-        $data['types']               = VisaTypes::with('country')->orderBy('created_at', 'desc')->get();
+        $data['types']               = VisaTypes::with('package')->orderBy('created_at', 'desc')->get();
         
         return view('admin.visa-type.list', $data);
     }
@@ -24,7 +25,7 @@ class ManageVisaTypes extends Controller
         $data['previous_title']      = trans('msg.admin.Manage Visa Types');
         $data['url']                 = route('visa-type.list');
         $data['title']               = trans('msg.admin.Add Visa Type');
-        $data['countries']           = VisaCountry::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
+        $data['packages']            = VisaPackages::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
         
         return view('admin.visa-type.add', $data);
     }
@@ -32,7 +33,7 @@ class ManageVisaTypes extends Controller
     public function add(Request $request) {
 
         $validatedData = $request->validate([
-            'country_id' => 'required',
+            'package_id' => 'required',
             'type' => 'required',
             'processing_time' => 'required',
             'stay_period' => 'required',
@@ -58,8 +59,9 @@ class ManageVisaTypes extends Controller
             $data['previous_title']  = trans('msg.admin.Manage Visa Types');
             $data['url']             = route('visa-type.list');
             $data['title']           = trans('msg.admin.Edit Visa Type');
-            $data['countries']       = VisaCountry::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
+            $data['packages']        = VisaPackages::where('status', '=', 'active')->orderBy('created_at', 'desc')->get();
             $data['type']            = $type;
+
             return view('admin.visa-type.edit', $data);
         } else {
             return response()->json(['error' => trans('msg.admin.Visa Type Not Found')]);
@@ -76,7 +78,7 @@ class ManageVisaTypes extends Controller
         }
 
         $validatedData = $request->validate([
-            'country_id' => 'required',
+            'package_id' => 'required',
             'type' => 'required',
             'processing_time' => 'required',
             'stay_period' => 'required',
