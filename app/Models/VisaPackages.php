@@ -62,6 +62,6 @@ class VisaPackages extends Model
 
     public function visaTypes(): HasMany
     {
-        return $this->hasMany(VisaTypes::class);
+        return $this->hasMany(VisaTypes::class, 'package_id', 'id');
     }
 }

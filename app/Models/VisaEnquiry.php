@@ -20,6 +20,7 @@ class VisaEnquiry extends Model
     ];
 
     protected $fillable = [
+        'name',
         'email',
         'visa_type_id',
         'mobile',
@@ -41,10 +42,4 @@ class VisaEnquiry extends Model
             $model->id = (string) Str::uuid();
         });
     }
-
-    public function visaTypes(): HasMany
-    {
-        return $this->hasMany(VisaTypes::class);
-    }
-
 }
