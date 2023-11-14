@@ -21,7 +21,11 @@ class VisaController extends Controller
 {
     public function getVisaPackages(Request $request) {
         try {
-            $packages = VisaPackages::where('status', '=', 'active')->get();
+            $packages = VisaPackages::where('status', '=', 'active')
+                                    ->with(['visaTypes' => function ($query) {
+                                        $query->where('status', 'active');
+                                    }])
+                                    ->get();
 
             if (!empty($packages)) {
                 return response()->json([
