@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\visa;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\VisaCountry;
+use App\Models\VisaEnquiry;
 use App\Models\VisaPackage;
 use App\Models\VisaTypes;
 use App\Notifications\AdminNotification;
@@ -96,7 +97,7 @@ class VisaController extends Controller
                     'price' => $visaPrice,
                 ];
                 
-                $visa = VisaPackage::create($data);
+                $visa = VisaEnquiry::create($data);
                 
 
                 $price = $data['price'];

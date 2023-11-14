@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visa_packages', function (Blueprint $table) {
+        Schema::create('visa_enquiries', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('visa_type_id');
             $table->string('email');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visa_packages');
+        Schema::dropIfExists('visa_enquiries');
     }
 };
