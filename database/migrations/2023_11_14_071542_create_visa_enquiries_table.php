@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('visa_enquiries', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('visa_type_id');
+            $table->string('visa_type_id');
             $table->string('name');
             $table->string('email');
             $table->integer('mobile');

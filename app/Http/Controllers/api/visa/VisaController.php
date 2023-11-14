@@ -123,7 +123,7 @@ class VisaController extends Controller
                 $visa = VisaEnquiry::create($data);
 
                 if ($visa) {
-                    $admin = Admin::where('role', 'super_admin')->first(); // Replace 'admin' with your actual admin role
+                    $admin = Admin::where('role', 'super_admin')->first(); 
                     if ($admin) {
                         $message = [
                             'title' => trans('msg.notification.visa_enquiry_title'),
