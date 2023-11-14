@@ -474,6 +474,11 @@ return [
         'inactive' => 'Account blocked by Admin',
     ],   
 
+    'enquiry' => [
+        'success' => 'Enquiry Sent Successful',
+        'failed'  => 'Enquiry Sending Failed',
+    ],
+
     'login' => [
         'success' => 'Login Successful',
         'failed'  => 'Login Failed',
