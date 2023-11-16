@@ -30,7 +30,7 @@ class ManageUsers extends Controller
             $data['url']             = route('user.list');
             $data['title']           = trans('msg.admin.User Details');
             $data['user']            = $user;
-            $data['visa_enquiries']  = $user->visaEnquiries()->where('user_id', '=', $id)->orderBy('created_at', 'desc')->get();
+            // $data['visa_enquiries']  = $user->visaEnquiries()->where('user_id', '=', $id)->orderBy('created_at', 'desc')->get();
             
             return view('admin.user.details', $data);
         } else {
