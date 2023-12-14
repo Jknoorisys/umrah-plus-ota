@@ -82,7 +82,7 @@
                 </div>
                 </div>
                 <div class="card-body">
-                <h6 class="mb-0 ">Website Views</h6>
+                <h6 class="mb-0 ">Hotel Booking</h6>
                 <p class="text-sm ">Last Campaign Performance</p>
                 <hr class="dark horizontal">
                 <div class="d-flex ">
@@ -102,7 +102,7 @@
                 </div>
                 </div>
                 <div class="card-body">
-                <h6 class="mb-0 "> Daily Sales </h6>
+                <h6 class="mb-0 "> Flight Booking </h6>
                 <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
                 <hr class="dark horizontal">
                 <div class="d-flex ">
@@ -122,7 +122,7 @@
                 </div>
                 </div>
                 <div class="card-body">
-                <h6 class="mb-0 ">Completed Tasks</h6>
+                <h6 class="mb-0 ">Umrah and Ziyarat Booking</h6>
                 <p class="text-sm ">Last Campaign Performance</p>
                 <hr class="dark horizontal">
                 <div class="d-flex ">
@@ -133,13 +133,13 @@
             </div>
         </div>
     </div>
-    <div class="row mb-4">
+    <div class="row mb-4 d-none">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
             <div class="card">
                 <div class="card-header pb-0">
                 <div class="row">
                     <div class="col-lg-6 col-7">
-                    <h6>Projects</h6>
+                    <h6>Bookings</h6>
                     <p class="text-sm mb-0">
                         <i class="fa fa-check text-info" aria-hidden="true"></i>
                         <span class="font-weight-bold ms-1">30 done</span> this month
@@ -164,9 +164,9 @@
                     <table class="table align-items-center mb-0">
                     <thead>
                         <tr>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Platforms</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Users</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
                         </tr>
                     </thead>
@@ -178,7 +178,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-xd.svg') }}" class="avatar avatar-sm me-3" alt="xd">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Material XD Version</h6>
+                                <h6 class="mb-0 text-sm">Hotels</h6>
                             </div>
                             </div>
                         </td>
@@ -221,7 +221,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-atlassian.svg') }}" class="avatar avatar-sm me-3" alt="atlassian">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Add Progress Track</h6>
+                                <h6 class="mb-0 text-sm">Flights</h6>
                             </div>
                             </div>
                         </td>
@@ -258,7 +258,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-slack.svg') }}" class="avatar avatar-sm me-3" alt="team7">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Fix Platform Errors</h6>
+                                <h6 class="mb-0 text-sm">Tranfers</h6>
                             </div>
                             </div>
                         </td>
@@ -295,7 +295,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-spotify.svg') }}" class="avatar avatar-sm me-3" alt="spotify">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Launch our Mobile App</h6>
+                                <h6 class="mb-0 text-sm">Activities</h6>
                             </div>
                             </div>
                         </td>
@@ -338,7 +338,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-jira.svg') }}" class="avatar avatar-sm me-3" alt="jira">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Add the New Pricing Page</h6>
+                                <h6 class="mb-0 text-sm">Umrah and Ziyarat</h6>
                             </div>
                             </div>
                         </td>
@@ -372,7 +372,7 @@
                                 <img src="{{ asset('assets/img/small-logos/logo-invision.svg') }}" class="avatar avatar-sm me-3" alt="invision">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Redesign New Online Shop</h6>
+                                <h6 class="mb-0 text-sm">Visa</h6>
                             </div>
                             </div>
                         </td>
